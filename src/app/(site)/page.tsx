@@ -22,6 +22,16 @@ const WHY = [
   },
 ];
 
+const CATEGORIES: { type: string; image: string }[] = [
+  { type: "Travel Trailer", image: "/images/camper-jayflight.jpg" },
+  { type: "Camper Van", image: "/images/camper-solis.jpg" },
+  { type: "Class C Motorhome", image: "/images/camper-four-winds.jpg" },
+  { type: "Class A Motorhome", image: "/images/camper-leprechaun.jpg" },
+  { type: "Fifth Wheel", image: "/images/camper-cougar.jpg" },
+  { type: "Pop-Up", image: "/images/camper-popup.jpg" },
+  { type: "Teardrop", image: "/images/camper-teardrop.jpg" },
+];
+
 const STATS = [
   { value: "120", label: "Point inspection on every unit" },
   { value: "1,900+", label: "Campers delivered since 2009" },
@@ -40,8 +50,26 @@ export default async function HomePage() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="overflow-hidden bg-white pb-16 pt-16 md:pb-24 md:pt-24">
-        <div className="section text-center">
+      <section className="relative overflow-hidden bg-white pb-16 pt-16 md:pb-24 md:pt-24">
+        {/* Looping background video — poster covers it until it plays. */}
+        <video
+          className="absolute inset-0 h-full w-full object-cover"
+          src="/video/rv-road.mp4"
+          poster="/images/hero-road.jpg"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
+        />
+        <div
+          className="absolute inset-0 bg-white/78"
+          aria-hidden="true"
+        />
+
+        <div className="section relative text-center">
           <Reveal>
             <h1 className="text-balance text-[clamp(2.5rem,6.5vw,4.5rem)] font-semibold leading-[1.04] tracking-[-0.02em] text-ink">
               Used campers,
@@ -67,7 +95,7 @@ export default async function HomePage() {
           </Reveal>
         </div>
 
-        <Reveal delay={240} className="section mt-14 md:mt-20">
+        <Reveal delay={240} className="section relative mt-14 md:mt-20">
           <HeroSlideshow />
         </Reveal>
       </section>
@@ -97,6 +125,53 @@ export default async function HomePage() {
             {shown.map((product: any, i: number) => (
               <Reveal key={product.slug} delay={i * 70} as="div" className="h-full">
                 <ProductCard product={product} />
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Shop by category ─────────────────────────────────── */}
+      <section className="bg-alt py-16 md:py-24">
+        <div className="section">
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-semibold tracking-[-0.015em] text-ink">
+                Shop by category.
+              </h2>
+              <Link
+                href="/shop"
+                className="group inline-flex items-center gap-1.5 text-[17px] text-accent transition-colors duration-[120ms] hover:underline"
+              >
+                See all inventory
+                <i
+                  className="fa-solid fa-chevron-right text-[12px] transition-transform duration-[160ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
+            </div>
+          </Reveal>
+
+          <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-3 lg:grid-cols-4">
+            {CATEGORIES.map((cat, i) => (
+              <Reveal key={cat.type} delay={i * 60} as="div">
+                <Link
+                  href={`/shop?type=${encodeURIComponent(cat.type)}`}
+                  className="group block"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-line-soft">
+                    <Image
+                      src={cat.image}
+                      alt={cat.type}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <p className="mt-3 text-center text-[15px] font-medium text-ink transition-colors duration-[120ms] group-hover:text-accent">
+                    {cat.type}
+                  </p>
+                </Link>
               </Reveal>
             ))}
           </div>

@@ -232,6 +232,46 @@
     font-size: 1.125rem;
   }
 
+  /* Slightly tighter pills on phones — same shape, less bulk. */
+  @media (max-width: 640px) {
+    .btn-primary,
+    .btn-secondary,
+    .btn-ghost,
+    .btn-dark {
+      padding: 0.58rem 1.15rem;
+      font-size: 1rem;
+    }
+    .btn-sm {
+      padding: 0.4rem 0.85rem;
+    }
+    .btn-lg {
+      padding: 0.75rem 1.5rem;
+      font-size: 1.0625rem;
+    }
+  }
+
+  /* ── Route entrance (fade + rise) ───────────────────────────── */
+  @keyframes page-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-enter {
+    animation: page-enter 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .page-enter {
+      animation: none;
+    }
+  }
+
   /* ── Section rhythm ────────────────────────────────────────── */
   .section {
     @apply mx-auto w-full;

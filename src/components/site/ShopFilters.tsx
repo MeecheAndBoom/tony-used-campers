@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PRODUCT_TYPES } from "@/lib/constants";
 
@@ -20,14 +21,28 @@ export function ShopFilters({
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
+  const [pending, startTransition] = useTransition();
 
-  const active = (key: string) => params.get(key) ?? "";
+  // Optimistic mirror of the URL so chips/selects flip the instant you
+  // click, even while the server round-trip is still in flight.
+  const [optimistic, setOptimistic] = useState<Record<string, string>>({});
+  const serverKey = params.toString();
+  useEffect(() => {
+    setOptimistic({});
+  }, [serverKey]);
+
+  const active = (key: string) =>
+    key in optimistic ? optimistic[key] : (params.get(key) ?? "");
 
   function set(key: string, value: string) {
-    const next = new URLSearchParams(params.toString());
-    if (value) next.set(key, value);
-    else next.delete(key);
-    router.replace(`${pathname}?${next.toString()}`, { scroll: false });
+    const base = new URLSearchParams(params.toString());
+    if (value) base.set(key, value);
+    else base.delete(key);
+
+    setOptimistic((prev) => ({ ...prev, [key]: value }));
+    startTransition(() => {
+      router.replace(`${pathname}?${base.toString()}`, { scroll: false });
+    });
   }
 
   const chip = (on: boolean) =>
@@ -38,7 +53,11 @@ export function ShopFilters({
     }`;
 
   return (
-    <div className="sticky top-12 z-30 -mx-6 border-b border-line-soft bg-white/85 px-6 backdrop-blur-xl">
+    <div
+      className={`sticky top-12 z-30 -mx-6 border-b border-line-soft bg-white/85 px-6 backdrop-blur-xl transition-opacity duration-200 ${
+        pending ? "opacity-70" : ""
+      }`}
+    >
       <div className="flex flex-col gap-4 py-5">
         {/* Type chips */}
         <div className="rail" role="group" aria-label="Filter by type">

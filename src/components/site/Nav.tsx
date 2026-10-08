@@ -77,6 +77,14 @@ export function Nav() {
 
         <div className="flex items-center gap-1">
           <Link
+            href="/search"
+            aria-label="Search"
+            className="grid h-9 w-9 place-items-center rounded-full text-[15px] text-ink-soft transition-colors duration-[120ms] hover:bg-black/5 hover:text-ink"
+          >
+            <i className="fa-solid fa-magnifying-glass" aria-hidden="true" />
+          </Link>
+
+          <Link
             href="/cart"
             aria-label={`Cart, ${count} item${count === 1 ? "" : "s"}`}
             className="relative grid h-9 w-9 place-items-center rounded-full text-[15px] text-ink-soft transition-colors duration-[120ms] hover:bg-black/5 hover:text-ink"
