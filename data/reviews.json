@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Danielle R.",
+    "city": "Royal Oak, MI",
+    "rating": 5,
+    "title": "Exactly as described, zero surprises",
+    "body": "We bought a 2020 Cherokee after touring three other lots. Tony's team sent a full inspection report before we even drove out. Paid by Zelle on a Tuesday and we were camping at Holly Oaks that Friday.",
+    "purchased": "Forest River Cherokee 264BH",
+    "date": "2026-07-18T10:00:00.000Z",
+    "published": true,
+    "id": "seed-0"
+  },
+  {
+    "name": "Marcus T.",
+    "city": "Detroit, MI",
+    "rating": 5,
+    "title": "They answered every question",
+    "body": "First-time buyer, so I asked a lot. Never once felt rushed. The payment details came through email within an hour of placing the order and the tracking page showed exactly where things stood.",
+    "purchased": "Keystone Bullet 243BHS",
+    "date": "2026-06-30T10:00:00.000Z",
+    "published": true,
+    "id": "seed-1"
+  },
+  {
+    "name": "Priya S.",
+    "city": "Ann Arbor, MI",
+    "rating": 5,
+    "title": "Delivered to our driveway",
+    "body": "They handled delivery to Ann Arbor, walked us through every system on the Airstream, and followed up a week later to check in. That follow-up is why we referred two neighbors.",
+    "purchased": "Airstream Flying Cloud 23FB",
+    "date": "2026-06-12T10:00:00.000Z",
+    "published": true,
+    "id": "seed-2"
+  },
+  {
+    "name": "Kevin H.",
+    "city": "Warren, MI",
+    "rating": 4,
+    "title": "Solid experience, minor wait",
+    "body": "Unit needed one part that took a few days to arrive. They told me up front instead of letting me find out at pickup. Trailer has been flawless for four trips since.",
+    "purchased": "Jayco Jay Flight SLX 245",
+    "date": "2026-05-27T10:00:00.000Z",
+    "published": true,
+    "id": "seed-3"
+  },
+  {
+    "name": "Alicia M.",
+    "city": "Dearborn, MI",
+    "rating": 5,
+    "title": "The inspection is the selling point",
+    "body": "120-point report, underbody photos, tire dates. I've bought two RVs before and never seen that level of detail from a used dealer. The Minnie Winnie started on the first try all season.",
+    "purchased": "Winnebago Minnie Winnie 22R",
+    "date": "2026-05-09T10:00:00.000Z",
+    "published": true,
+    "id": "seed-4"
+  },
+  {
+    "name": "Tom & Renee B.",
+    "city": "Port Huron, MI",
+    "rating": 5,
+    "title": "Trade-in was painless",
+    "body": "Brought our old pop-up on trade, left with the Solis. Valuation was fair and honest, and everything was done in one afternoon. We'll be back when we upgrade again.",
+    "purchased": "Winnebago Solis 59PX",
+    "date": "2026-04-21T10:00:00.000Z",
+    "published": true,
+    "id": "seed-5"
+  }
+]

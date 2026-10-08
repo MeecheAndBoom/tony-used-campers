@@ -6,7 +6,7 @@ import { money } from "@/lib/format";
 import { getProducts } from "@/lib/products";
 import { getReviews, ratingSummary } from "@/lib/reviews";
 import { HeroSlideshow } from "@/components/site/HeroSlideshow";
-import { SITE } from "@/lib/constants";
+import { getSettings } from "@/lib/settings";
 const WHY = [
   {
     title: "120-point inspection",
@@ -44,6 +44,7 @@ export default async function HomePage() {
     getProducts({ featured: true }),
     getReviews(),
   ]);
+  const { site } = await getSettings();
   const shown = featured.slice(0, 4);
   const { average, count } = ratingSummary(reviews);
 
@@ -79,7 +80,7 @@ export default async function HomePage() {
           <Reveal delay={90}>
             <p className="text-balance mx-auto mt-6 max-w-[640px] text-[clamp(1.0625rem,2vw,1.3125rem)] leading-relaxed text-muted">
               Inspected, honestly priced and sold from Detroit since 2009.
-              Shop {SITE.location.split(",")[0]}&apos;s best-stocked lot of
+              Shop {site.location.split(",")[0]}&apos;s best-stocked lot of
               pre-owned trailers, vans and motorhomes.
             </p>
           </Reveal>
@@ -223,7 +224,7 @@ export default async function HomePage() {
             </h2>
             <p className="mt-5 text-[17px] leading-relaxed text-muted">
               Tony started wrenching on campers out of a two-bay garage in
-              2009. Today the family runs {SITE.address.split(",")[0]} with the
+              2009. Today the family runs {site.address.split(",")[0]} with the
               same rule: nothing leaves the lot until we&apos;d camp in it
               ourselves.
             </p>

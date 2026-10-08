@@ -1,6 +1,8 @@
 import { listEnquiries, markEnquiryHandled } from "@/lib/enquiries";
 import { redirect } from "next/navigation";
 import { dateTime } from "@/lib/format";
+import { DeleteButton } from "@/components/admin/DeleteButton";
+import { replyToEnquiryAction, deleteEnquiryAction } from "@/lib/actions/admin";
 
 async function handleAction(formData: FormData) {
   "use server";
@@ -19,8 +21,8 @@ export default async function EnquiriesPage() {
           Enquiries
         </h1>
         <p className="mt-1 text-[15px] text-muted">
-          Contact, finance, sell and review submissions. Reply directly to the
-          sender's email.
+          Contact, finance, sell and review submissions. Write a reply below and
+          it&apos;s emailed to the sender (SMTP), or delete once resolved.
         </p>
       </div>
 
@@ -66,13 +68,34 @@ export default async function EnquiriesPage() {
               <p className="mt-1 text-[14px] text-muted">Vehicle: {enq.vehicle}</p>
             )}
 
-            <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-line-soft pt-4">
-              <a
-                href={`mailto:${enq.email}?subject=Re: ${encodeURIComponent(enq.subject ?? "Your enquiry")}`}
-                className="text-[14px] text-accent hover:underline"
-              >
-                Reply by email →
-              </a>
+            {/* Reply box — emails the sender and marks handled */}
+            <form action={replyToEnquiryAction} className="mt-5 border-t border-line-soft pt-4">
+              <input type="hidden" name="id" value={enq.id} />
+              <label htmlFor={`reply-${enq.id}`} className="field-label">
+                Reply to {enq.email}
+              </label>
+              <textarea
+                id={`reply-${enq.id}`}
+                name="reply"
+                rows={3}
+                className="field"
+                placeholder="Draft your reply… (sent by email, sender marked handled)"
+              />
+              <div className="mt-3 flex flex-wrap items-center gap-4">
+                <button type="submit" className="btn btn-sm btn-primary">
+                  Send reply
+                </button>
+                <a
+                  href={`mailto:${enq.email}?subject=Re: ${encodeURIComponent(enq.subject ?? "Your enquiry")}`}
+                  className="text-[14px] text-accent hover:underline"
+                >
+                  Open in mail app →
+                </a>
+              </div>
+            </form>
+
+            {/* Row actions — siblings, never nested inside the reply form */}
+            <div className="mt-3 flex flex-wrap items-center gap-4">
               {!enq.handled && (
                 <form action={handleAction}>
                   <input type="hidden" name="id" value={enq.id} />
@@ -81,6 +104,10 @@ export default async function EnquiriesPage() {
                   </button>
                 </form>
               )}
+              <form action={deleteEnquiryAction}>
+                <input type="hidden" name="id" value={enq.id} />
+                <DeleteButton label="Delete enquiry" message="Delete this enquiry? This can't be undone." />
+              </form>
             </div>
           </article>
         ))}

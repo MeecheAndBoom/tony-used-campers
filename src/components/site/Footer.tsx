@@ -1,60 +1,66 @@
 import Link from "next/link";
 import { SITE } from "@/lib/constants";
+import type { SiteInfo } from "@/lib/settings";
 
-const COLUMNS: { heading: string; links: { href: string; label: string }[] }[] =
-  [
-    {
-      heading: "Shop",
-      links: [
-        { href: "/shop", label: "All campers" },
-        { href: "/shop?type=Travel+Trailer", label: "Travel trailers" },
-        { href: "/shop?type=Camper+Van", label: "Camper vans" },
-        { href: "/shop?type=Class+C+Motorhome", label: "Motorhomes" },
-        { href: "/shop?type=Pop-Up", label: "Pop-ups" },
-        { href: "/cart", label: "Your cart" },
-      ],
-    },
-    {
-      heading: "Company",
-      links: [
-        { href: "/about", label: "About us" },
-        { href: "/services", label: "Services" },
-        { href: "/testimonials", label: "Reviews" },
-        { href: "/contact", label: "Contact" },
-        { href: "/track", label: "Track an order" },
-      ],
-    },
-    {
-      heading: "Support",
-      links: [
-        { href: "/legal/shipping", label: "Shipping & delivery" },
-        { href: "/legal/returns", label: "Returns & refunds" },
-        { href: "/legal/finance-disclosure", label: "Finance disclosure" },
-        { href: "/contact", label: "Talk to a specialist" },
-        { href: `tel:${SITE.phoneHref}`, label: SITE.phone },
-      ],
-    },
-    {
-      heading: "Legal",
-      links: [
-        { href: "/legal/terms", label: "Terms & conditions" },
-        { href: "/legal/privacy", label: "Privacy policy" },
-        { href: "/legal/cookies", label: "Cookies policy" },
-        { href: "/legal/accessibility", label: "Accessibility" },
-        { href: "/legal/disclaimer", label: "Disclaimer" },
-        { href: "/sitemap", label: "Sitemap" },
-      ],
-    },
-  ];
+const COLUMNS: { heading: string; links: { href: string; label: string }[] }[] = [
+  {
+    heading: "Shop",
+    links: [
+      { href: "/shop", label: "All campers" },
+      { href: "/shop?type=Travel+Trailer", label: "Travel trailers" },
+      { href: "/shop?type=Camper+Van", label: "Camper vans" },
+      { href: "/shop?type=Class+C+Motorhome", label: "Motorhomes" },
+      { href: "/shop?type=Pop-Up", label: "Pop-ups" },
+      { href: "/cart", label: "Your cart" },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { href: "/about", label: "About us" },
+      { href: "/services", label: "Services" },
+      { href: "/testimonials", label: "Reviews" },
+      { href: "/contact", label: "Contact" },
+      { href: "/track", label: "Track an order" },
+    ],
+  },
+  {
+    heading: "Support",
+    links: [
+      { href: "/legal/shipping", label: "Shipping & delivery" },
+      { href: "/legal/returns", label: "Returns & refunds" },
+      { href: "/legal/finance-disclosure", label: "Finance disclosure" },
+      { href: "/contact", label: "Talk to a specialist" },
+    ],
+  },
+  {
+    heading: "Legal",
+    links: [
+      { href: "/legal/terms", label: "Terms & conditions" },
+      { href: "/legal/privacy", label: "Privacy policy" },
+      { href: "/legal/cookies", label: "Cookies policy" },
+      { href: "/legal/accessibility", label: "Accessibility" },
+      { href: "/legal/disclaimer", label: "Disclaimer" },
+      { href: "/sitemap", label: "Sitemap" },
+    ],
+  },
+];
 
-export function Footer() {
+export function Footer({ site }: { site?: SiteInfo }) {
   const year = new Date().getFullYear();
+  const info = site ?? (SITE as unknown as SiteInfo);
+  const supportPhone = { href: `tel:${info.phoneHref}`, label: info.phone };
+  const columns = COLUMNS.map((column) =>
+    column.heading === "Support"
+      ? { ...column, links: [...column.links, supportPhone] }
+      : column,
+  );
 
   return (
     <footer className="mt-auto bg-alt text-muted">
       <div className="section py-12 md:py-16">
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
-          {COLUMNS.map((column) => (
+          {columns.map((column) => (
             <div key={column.heading}>
               <h3 className="mb-3 text-[12px] font-semibold tracking-[0.02em] text-ink">
                 {column.heading}
@@ -77,16 +83,16 @@ export function Footer() {
 
         <div className="mt-12 border-t border-line pt-6">
           <p className="text-[12px] leading-relaxed">
-            {SITE.name} · {SITE.address} · {SITE.phone} ·{" "}
+            {info.name} · {info.address} · {info.phone} ·{" "}
             <a
-              href={`mailto:${SITE.email}`}
+              href={`mailto:${info.email}`}
               className="transition-colors duration-[120ms] hover:text-ink hover:underline"
             >
-              {SITE.email}
+              {info.email}
             </a>
           </p>
           <p className="mt-2 text-[12px] leading-relaxed">
-            Copyright © {year} {SITE.name}, LLC. All rights reserved. ·{" "}
+            Copyright © {year} {info.name}, LLC. All rights reserved. ·{" "}
             <Link
               href="/legal/privacy"
               className="hover:text-ink hover:underline"

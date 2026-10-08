@@ -7,7 +7,7 @@ import { ProductCard } from "@/components/ui/ProductCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { money } from "@/lib/format";
 import { getProduct, getProducts } from "@/lib/products";
-import { SITE } from "@/lib/constants";
+import { getSettings } from "@/lib/settings";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -29,6 +29,7 @@ export default async function ProductPage({ params }: Props) {
   const related = (await getProducts({ type: product.type }))
     .filter((p) => p.slug !== product.slug)
     .slice(0, 3);
+  const { site } = await getSettings();
 
   const specs: { label: string; value: string }[] = [
     { label: "Year", value: String(product.year) },
@@ -107,7 +108,7 @@ export default async function ProductPage({ params }: Props) {
           <div className="mt-8 rounded-card bg-alt p-5">
             <p className="text-[14px] leading-relaxed text-muted">
               <strong className="font-semibold text-ink">120-point inspection</strong>{" "}
-              included on this unit. Pickup at {SITE.address}, or delivery
+              included on this unit. Pickup at {site.address}, or delivery
               anywhere in the Lower Peninsula.
             </p>
           </div>

@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 import { getProducts } from "@/lib/products";
 import { newReference, saveOrder, type OrderRecord } from "@/lib/orders";
 import { sendOrderPlacedEmails } from "@/lib/notifications";
-import { PAYMENT_METHODS } from "@/lib/constants";
+import { getSettings } from "@/lib/settings";
 
 const addressSchema = z.object({
   line1: z.string().trim().max(160).optional(),
@@ -94,7 +94,8 @@ export async function placeOrder(
   const deliveryFee = data.delivery.method === "delivery" ? 0 : 0;
   const total = subtotal + deliveryFee;
 
-  const knownMethod = PAYMENT_METHODS.some(
+  const { paymentMethods } = await getSettings();
+  const knownMethod = paymentMethods.some(
     (m) => m.id === data.payment.method,
   );
   const method = knownMethod ? data.payment.method : "other";
@@ -124,7 +125,7 @@ export async function placeOrder(
         ? { methodOther: data.payment.methodOther }
         : {}),
       label:
-        PAYMENT_METHODS.find((m) => m.id === method)?.label ??
+        paymentMethods.find((m) => m.id === method)?.label ??
         data.payment.methodOther ??
         "Other",
       status: "pending",

@@ -1,8 +1,11 @@
 import { findOrder, updateOrder } from "@/lib/orders";
 import { notFound } from "next/navigation";
 import { dateTime, money } from "@/lib/format";
-import { ORDER_STATUSES, PAYMENT_METHODS } from "@/lib/constants";
+import { ORDER_STATUSES } from "@/lib/constants";
+import { getSettings } from "@/lib/settings";
 import { updateAction } from "../page";
+import { replyToOrderAction, deleteOrderAction } from "@/lib/actions/admin";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 
 export default async function OrderDetailPage({
   params,
@@ -12,6 +15,8 @@ export default async function OrderDetailPage({
   const { ref } = await params;
   const order = await findOrder(ref);
   if (!order) notFound();
+
+  const { site } = await getSettings();
 
   return (
     <>
@@ -102,7 +107,7 @@ export default async function OrderDetailPage({
                       ]
                         .filter(Boolean)
                         .join(", ") || "—"
-                    : "Pickup at lot — 4120 Michigan Ave, Detroit, MI 48208"}
+                    : `Pickup at lot — ${site.address}`}
                 </dd>
               </div>
               {order.customer.notes && (
@@ -129,6 +134,30 @@ export default async function OrderDetailPage({
                 </li>
               ))}
             </ul>
+          </div>
+
+          {/* Reply to customer */}
+          <div className="rounded-card bg-white p-6">
+            <h2 className="text-[18px] font-semibold tracking-[-0.01em]">
+              Reply to customer
+            </h2>
+            <p className="mt-1 text-[14px] text-muted">
+              Emailed to {order.customer.email} via SMTP (no status change, no
+              auto-reply emails). For updates that notify the client, use the
+              status controls instead.
+            </p>
+            <form action={replyToOrderAction} className="mt-4 space-y-3">
+              <input type="hidden" name="ref" value={order.reference} />
+              <textarea
+                name="reply"
+                rows={4}
+                className="field"
+                placeholder="Write a message to the customer…"
+              />
+              <button type="submit" className="btn btn-primary">
+                Send reply
+              </button>
+            </form>
           </div>
         </div>
 
@@ -183,7 +212,7 @@ export default async function OrderDetailPage({
                   className="field"
                   defaultValue={
                     order.payment.instructions ??
-                    `Pay to: Tony Used Campers\n\nMail cashier's check to:\n4120 Michigan Ave, Detroit, MI 48208\n\nReference: ${order.reference}`
+                    `Pay to: ${site.name}\n\nMail cashier's check to:\n${site.address}\n\nReference: ${order.reference}`
                   }
                 />
               </div>
@@ -235,6 +264,22 @@ export default async function OrderDetailPage({
               <button type="submit" className="btn btn-primary w-full">
                 Apply status update
               </button>
+            </form>
+          </div>
+
+          <div className="rounded-card border border-danger/30 bg-white p-6">
+            <h2 className="text-[18px] font-semibold tracking-[-0.01em]">
+              Danger zone
+            </h2>
+            <p className="mt-1 text-[14px] text-muted">
+              Permanently removes this order and its history.
+            </p>
+            <form action={deleteOrderAction} className="mt-4">
+              <input type="hidden" name="ref" value={order.reference} />
+              <DeleteButton
+                label="Delete order"
+                message={`Delete order ${order.reference} and all its history? This can't be undone.`}
+              />
             </form>
           </div>
         </div>

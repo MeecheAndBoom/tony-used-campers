@@ -1,12 +1,15 @@
 import type { Metadata } from "next";
 import { CheckoutForm } from "@/components/site/CheckoutForm";
+import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "Checkout",
   description: "Complete your camper order — pickup or delivery from Detroit.",
 };
 
-export default function CheckoutPage() {
+export default async function CheckoutPage() {
+  const { site, paymentMethods } = await getSettings();
+
   return (
     <div className="bg-white">
       <section className="section pb-20 pt-16 md:pb-28 md:pt-24">
@@ -18,7 +21,7 @@ export default function CheckoutPage() {
           phone, then email secure payment details.
         </p>
         <div className="mt-12">
-          <CheckoutForm />
+          <CheckoutForm paymentMethods={paymentMethods} pickupAddress={site.address} />
         </div>
       </section>
     </div>

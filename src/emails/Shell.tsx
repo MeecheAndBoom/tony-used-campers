@@ -13,6 +13,7 @@ import {
 } from "@react-email/components";
 import type { ReactNode } from "react";
 import { SITE } from "@/lib/constants";
+import type { SiteInfo } from "@/lib/settings";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -31,6 +32,7 @@ export function EmailShell({
   reference,
   children,
   footerNote,
+  site = SITE as unknown as SiteInfo,
 }: {
   preview: string;
   heading: string;
@@ -38,6 +40,7 @@ export function EmailShell({
   reference?: string;
   children: ReactNode;
   footerNote?: string;
+  site?: SiteInfo;
 }) {
   return (
     <Html>
@@ -71,7 +74,7 @@ export function EmailShell({
                 href={siteUrl}
                 className="text-[15px] font-semibold tracking-[-0.01em] text-ink no-underline"
               >
-                Tony Used Campers
+                {site.name}
               </Link>
               {reference ? (
                 <Text className="m-0 text-[13px] text-muted">{reference}</Text>
@@ -95,10 +98,10 @@ export function EmailShell({
                 </Text>
               ) : null}
               <Text className="m-0 text-[13px] leading-relaxed text-muted">
-                {SITE.name} · {SITE.address} · {SITE.phone}
+                {site.name} · {site.address} · {site.phone}
               </Text>
               <Text className="m-0 mt-2 text-[12px] text-muted">
-                © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+                © {new Date().getFullYear()} {site.name}. All rights reserved.
                 {" · "}
                 <Link href={`${siteUrl}/legal/privacy`} className="text-muted underline">
                   Privacy

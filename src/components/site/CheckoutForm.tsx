@@ -2,18 +2,24 @@
 
 import Link from "next/link";
 import { useState, useTransition } from "react";
-import { PAYMENT_METHODS } from "@/lib/constants";
 import { money } from "@/lib/format";
 import { cartSubtotal, useCartStore } from "@/store/cart";
 import { placeOrder, type PlaceOrderInput } from "@/lib/actions/orders";
+import type { PaymentMethodSetting } from "@/lib/settings";
 
 type Errors = Record<string, string[]>;
 
-export function CheckoutForm() {
+export function CheckoutForm({
+  paymentMethods = [],
+  pickupAddress = "4120 Michigan Ave, Detroit, MI 48208",
+}: {
+  paymentMethods?: PaymentMethodSetting[];
+  pickupAddress?: string;
+}) {
   const items = useCartStore((s) => s.items);
   const subtotal = cartSubtotal(items);
 
-  const [method, setMethod] = useState("card");
+  const [method, setMethod] = useState(paymentMethods[0]?.id ?? "card");
   const [delivery, setDelivery] = useState<"pickup" | "delivery">("pickup");
   const [errors, setErrors] = useState<Errors>({});
   const [formError, setFormError] = useState("");
@@ -177,7 +183,7 @@ export function CheckoutForm() {
                 {
                   id: "pickup" as const,
                   title: "Pickup in Detroit",
-                  body: "4120 Michigan Ave — weekdays 9–6, Sat 10–5.",
+                  body: `${pickupAddress} — in person, inspected before you take it.`,
                 },
                 {
                   id: "delivery" as const,
@@ -286,7 +292,7 @@ export function CheckoutForm() {
           </p>
 
           <div className="mt-6 space-y-3" role="radiogroup" aria-label="Payment method">
-            {PAYMENT_METHODS.map((option) => (
+            {(paymentMethods.length ? paymentMethods : [{ id: "card", label: "Card", hint: "Card payment" }]).map((option) => (
               <label
                 key={option.id}
                 className={`flex cursor-pointer items-start gap-3.5 rounded-card border p-4 transition-all duration-[160ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${

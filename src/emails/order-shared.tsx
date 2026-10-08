@@ -2,15 +2,19 @@ import { Section, Text } from "@react-email/components";
 import type { OrderRecord } from "@/lib/orders";
 import { money } from "@/lib/format";
 import { PAYMENT_METHODS, SITE } from "@/lib/constants";
+import type { PaymentMethodSetting, SiteInfo } from "@/lib/settings";
 import { DetailRow, EmailBody, EmailButton, EmailShell } from "./Shell";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
-export function paymentLabel(order: OrderRecord) {
+export function paymentLabel(
+  order: OrderRecord,
+  methods: PaymentMethodSetting[] = PAYMENT_METHODS as PaymentMethodSetting[],
+) {
   if (order.payment.method === "other") {
     return order.payment.methodOther || order.payment.label || "Other";
   }
-  const known = PAYMENT_METHODS.find((m) => m.id === order.payment.method);
+  const known = methods.find((m) => m.id === order.payment.method);
   return known?.label ?? order.payment.label;
 }
 
@@ -49,13 +53,21 @@ export function TotalsRows({ order }: { order: OrderRecord }) {
 }
 
 /** Email 1 — order received (client). */
-export function OrderReceivedEmail({ order }: { order: OrderRecord }) {
+export function OrderReceivedEmail({
+  order,
+  site,
+}: {
+  order: OrderRecord;
+  site?: SiteInfo;
+}) {
   const first = order.customer.name.split(" ")[0] || "there";
+  const info = site ?? (SITE as unknown as SiteInfo);
   return (
     <EmailShell
       preview={`Order received — ${order.reference}`}
       heading="We got your order."
       reference={order.reference}
+      site={info}
       footerNote="Keep this reference handy — you'll need it with your email address to track your order any time."
     >
       <EmailBody>
@@ -80,7 +92,7 @@ export function OrderReceivedEmail({ order }: { order: OrderRecord }) {
               ]
                 .filter(Boolean)
                 .join(", ") || "Address to be confirmed on our call"
-            : `Pickup at our lot — ${SITE.address}`}
+            : `Pickup at our lot — ${info.address}`}
         </Text>
         <Text className="m-0 mt-1 text-[14px] text-muted">
           Payment method: {paymentLabel(order)}

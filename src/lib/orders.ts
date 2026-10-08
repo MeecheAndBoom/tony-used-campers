@@ -152,6 +152,23 @@ export async function updateOrder(
   return orders[index];
 }
 
+export async function deleteOrder(reference: string): Promise<boolean> {
+  if (hasDatabase()) {
+    try {
+      await connectDB();
+      const res = await Order.deleteOne({ reference });
+      if (res.deletedCount) return true;
+    } catch {
+      /* fall through to the local store */
+    }
+  }
+  const orders = await readLocal();
+  const next = orders.filter((o) => o.reference !== reference);
+  if (next.length === orders.length) return false;
+  await writeLocal(next);
+  return true;
+}
+
 export async function allCustomers() {
   const orders = await listOrders();
   return orders.map((o) => ({ email: o.customer.email, reference: o.reference }));

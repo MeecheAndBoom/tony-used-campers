@@ -43,9 +43,11 @@ export type Product = {
 
 export type Review = {
   name: string;
-  city: string;
+  /** Optional — reviews may be submitted without a city. */
+  city?: string;
   rating: number;
-  title: string;
+  /** Optional — reviews may be submitted without a title. */
+  title?: string;
   body: string;
   purchased?: string;
   date: string;

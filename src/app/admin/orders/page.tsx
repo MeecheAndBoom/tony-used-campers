@@ -1,8 +1,9 @@
 import { listOrders, updateOrder } from "@/lib/orders";
 import { redirect } from "next/navigation";
 import { dateTime, money } from "@/lib/format";
-import { ORDER_STATUSES, PAYMENT_METHODS } from "@/lib/constants";
 import { sendPaymentInstructions, sendPaymentConfirmed, sendStatusUpdate } from "@/lib/notifications";
+import { deleteOrderAction } from "@/lib/actions/admin";
+import { DeleteButton } from "@/components/admin/DeleteButton";
 
 async function updateAction(formData: FormData) {
   "use server";
@@ -131,12 +132,21 @@ export default async function OrdersPage() {
                   </td>
                   <td className="px-5 py-3 text-muted">{order.status}</td>
                   <td className="px-5 py-3 text-right">
-                    <a
-                      href={`/admin/orders/${order.reference}`}
-                      className="text-[13px] text-accent hover:underline"
-                    >
-                      Open
-                    </a>
+                    <div className="flex flex-wrap items-center justify-end gap-4">
+                      <a
+                        href={`/admin/orders/${order.reference}`}
+                        className="text-[13px] text-accent hover:underline"
+                      >
+                        Open
+                      </a>
+                      <form action={deleteOrderAction}>
+                        <input type="hidden" name="ref" value={order.reference} />
+                        <DeleteButton
+                          label="Delete"
+                          message={`Delete order ${order.reference}? This can't be undone.`}
+                        />
+                      </form>
+                    </div>
                   </td>
                 </tr>
               ))}

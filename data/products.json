@@ -1,0 +1,458 @@
+[
+  {
+    "slug": "jayco-jay-flight-slx-245-2019",
+    "title": "Jayco Jay Flight SLX 245",
+    "brand": "Jayco",
+    "model": "Jay Flight SLX 245BHS",
+    "year": 2019,
+    "condition": "used",
+    "type": "Travel Trailer",
+    "price": 18900,
+    "listPrice": 26450,
+    "monthlyFrom": 289,
+    "stockNumber": "TUC-19-JF245",
+    "specs": {
+      "length": "28' 4\"",
+      "sleeps": "6",
+      "weight": "5,290 lb",
+      "axles": "2",
+      "slides": "0"
+    },
+    "description": "One-owner family trailer kept under a cover its whole life. Bunkhouse layout with a full queen suite, dinette that converts and an outside kitchen for Michigan summer nights.",
+    "features": [
+      "Queen walk-around bedroom",
+      "Double bunkhouse",
+      "Outside camp kitchen",
+      "13,500 BTU A/C + furnace",
+      "Power tongue jack and awning",
+      "New Goodyear tires (2024)"
+    ],
+    "images": [
+      "/images/camper-jayflight.jpg",
+      "/images/gallery-lounge.jpg",
+      "/images/gallery-bed.jpg",
+      "/images/gallery-kitchen.jpg"
+    ],
+    "status": "live",
+    "featured": true,
+    "createdAt": "2026-08-14T10:00:00.000Z"
+  },
+  {
+    "slug": "forest-river-cherokee-264bh-2020",
+    "title": "Forest River Cherokee 264BH",
+    "brand": "Forest River",
+    "model": "Cherokee 264BH",
+    "year": 2020,
+    "condition": "used",
+    "type": "Travel Trailer",
+    "price": 21500,
+    "listPrice": 29900,
+    "monthlyFrom": 329,
+    "stockNumber": "TUC-20-C264",
+    "specs": {
+      "length": "32' 1\"",
+      "sleeps": "8",
+      "weight": "5,860 lb",
+      "axles": "2",
+      "slides": "1"
+    },
+    "description": "Sleeps eight without feeling like it. Deep slide-out opens the whole living space, and the rear bunks plus sofa make it the easiest family camper we stock.",
+    "features": [
+      "Single deep slide-out",
+      "Rear double bunks",
+      "Large pass-through storage",
+      "Full bath with radius shower",
+      "LED package throughout",
+      "Bluetooth stereo"
+    ],
+    "images": [
+      "/images/camper-cherokee.jpg",
+      "/images/gallery-dining.jpg",
+      "/images/gallery-bed.jpg",
+      "/images/services-interior.jpg"
+    ],
+    "status": "live",
+    "featured": true,
+    "createdAt": "2026-08-16T10:00:00.000Z"
+  },
+  {
+    "slug": "keystone-bullet-243bhs-2018",
+    "title": "Keystone Bullet 243BHS",
+    "brand": "Keystone",
+    "model": "Bullet 243BHS",
+    "year": 2018,
+    "condition": "used",
+    "type": "Travel Trailer",
+    "price": 17450,
+    "listPrice": 24200,
+    "monthlyFrom": 265,
+    "stockNumber": "TUC-18-B243",
+    "specs": {
+      "length": "28' 9\"",
+      "sleeps": "7",
+      "weight": "5,190 lb",
+      "axles": "2",
+      "slides": "1"
+    },
+    "description": "Light enough for a half-ton tow, big enough for the whole crew. Fully inspected with fresh seals, serviced brakes and a new battery bank.",
+    "features": [
+      "Half-ton towable",
+      "Slide-out dinette",
+      "Walk-through pass-through storage",
+      "Furrion range and microwave",
+      "Solar-ready 30-amp service",
+      "Inspection completed 07/2026"
+    ],
+    "images": [
+      "/images/camper-bullet.jpg",
+      "/images/gallery-kitchen.jpg",
+      "/images/life-camp.jpg",
+      "/images/gallery-lounge.jpg"
+    ],
+    "status": "live",
+    "featured": false,
+    "createdAt": "2026-08-18T10:00:00.000Z"
+  },
+  {
+    "slug": "grand-design-imagine-2400bh-2021",
+    "title": "Grand Design Imagine 2400BH",
+    "brand": "Grand Design",
+    "model": "Imagine 2400BH",
+    "year": 2021,
+    "condition": "used",
+    "type": "Travel Trailer",
+    "price": 26900,
+    "listPrice": 35800,
+    "monthlyFrom": 409,
+    "stockNumber": "TUC-21-I2400",
+    "specs": {
+      "length": "28' 11\"",
+      "sleeps": "8",
+      "weight": "5,795 lb",
+      "axles": "2",
+      "slides": "1"
+    },
+    "description": "Our cleanest late-model trailer. Previous owner upgraded to a memory-foam mattress, added a backup camera and never missed a service interval.",
+    "features": [
+      "Three-year factory warranty remaining",
+      "Noise-damp travel trailer construction",
+      "Unidirectional power awning",
+      "Kitchen island with farmhouse sink",
+      "Prep for solar and camera",
+      "Service records included"
+    ],
+    "images": [
+      "/images/camper-imagine.jpg",
+      "/images/gallery-dining.jpg",
+      "/images/life-lawn.jpg",
+      "/images/gallery-bed.jpg"
+    ],
+    "status": "live",
+    "featured": true,
+    "createdAt": "2026-08-20T10:00:00.000Z"
+  },
+  {
+    "slug": "airstream-flying-cloud-23fb-2016",
+    "title": "Airstream Flying Cloud 23FB",
+    "brand": "Airstream",
+    "model": "Flying Cloud 23FB",
+    "year": 2016,
+    "condition": "used",
+    "type": "Travel Trailer",
+    "price": 54900,
+    "listPrice": 69900,
+    "monthlyFrom": 825,
+    "stockNumber": "TUC-16-A23FB",
+    "specs": {
+      "length": "23' 7\"",
+      "sleeps": "4",
+      "weight": "5,020 lb",
+      "axles": "2",
+      "slides": "0"
+    },
+    "description": "The silver bullet, serviced by our shop since 2019. Rear twin layout converts to a queen, panoramic windows on both sides, and a full en-suite bath.",
+    "features": [
+      "Hand-welded aluminum body",
+      "Panoramic rear windows",
+      "Convertible rear bed",
+      "Alde hydronic heating",
+      "Stainless interior with butcher block",
+      "Documented service history"
+    ],
+    "images": [
+      "/images/camper-airstream.jpg",
+      "/images/gallery-lounge.jpg",
+      "/images/gallery-kitchen.jpg",
+      "/images/life-camp.jpg"
+    ],
+    "status": "live",
+    "featured": true,
+    "createdAt": "2026-08-21T10:00:00.000Z"
+  },
+  {
+    "slug": "keystone-cougar-29bhs-fifth-wheel-2018",
+    "title": "Keystone Cougar 29BHS Fifth Wheel",
+    "brand": "Keystone",
+    "model": "Cougar 29BHS",
+    "year": 2018,
+    "condition": "used",
+    "type": "Fifth Wheel",
+    "price": 27900,
+    "listPrice": 37400,
+    "monthlyFrom": 425,
+    "stockNumber": "TUC-18-C29BHS",
+    "specs": {
+      "length": "32' 8\"",
+      "sleeps": "8",
+      "weight": "9,140 lb",
+      "axles": "2",
+      "slides": "2"
+    },
+    "description": "Two opposing slides give you a real living room. Gooseneck hitch, frameless windows and a rear entertainment center — built for long stays.",
+    "features": [
+      "Dual opposing slide-outs",
+      "Above-bed bunkhouse",
+      "Frameless safety glass",
+      "Rear entertainment center",
+      "60-gallon fresh tank",
+      "Underbelly enclosed and heated"
+    ],
+    "images": [
+      "/images/camper-cougar.jpg",
+      "/images/gallery-dining.jpg",
+      "/images/services-interior.jpg",
+      "/images/gallery-lounge.jpg"
+    ],
+    "status": "live",
+    "featured": false,
+    "createdAt": "2026-08-23T10:00:00.000Z"
+  },
+  {
+    "slug": "winnebago-minnie-winnie-22r-2017",
+    "title": "Winnebago Minnie Winnie 22R",
+    "brand": "Winnebago",
+    "model": "Minnie Winnie 22R",
+    "year": 2017,
+    "condition": "used",
+    "type": "Class C Motorhome",
+    "price": 42500,
+    "listPrice": 54900,
+    "monthlyFrom": 645,
+    "stockNumber": "TUC-17-MW22R",
+    "specs": {
+      "length": "23' 2\"",
+      "sleeps": "5",
+      "weight": "9,360 lb",
+      "axles": "2",
+      "slides": "0"
+    },
+    "description": "Class C convenience on a Ford E-450 chassis with 41k miles. Cab-over bunk, full galley and a rear corner bed — park anywhere a van can.",
+    "features": [
+      "41,200 miles",
+      "Ford V10, service complete",
+      "Cab-over double bunk",
+      "Rear corner queen",
+      "Generator runs on demand",
+      "Backup camera and side cameras"
+    ],
+    "images": [
+      "/images/camper-minnie-winnie.jpg",
+      "/images/gallery-bed.jpg",
+      "/images/gallery-kitchen.jpg",
+      "/images/life-lot.jpg"
+    ],
+    "status": "live",
+    "featured": true,
+    "createdAt": "2026-08-25T10:00:00.000Z"
+  },
+  {
+    "slug": "thor-four-winds-28z-2019",
+    "title": "Thor Motor Coach Four Winds 28Z",
+    "brand": "Thor Motor Coach",
+    "model": "Four Winds 28Z",
+    "year": 2019,
+    "condition": "used",
+    "type": "Class C Motorhome",
+    "price": 49900,
+    "listPrice": 63500,
+    "monthlyFrom": 749,
+    "stockNumber": "TUC-19-F28Z",
+    "specs": {
+      "length": "29' 6\"",
+      "sleeps": "8",
+      "weight": "10,500 lb",
+      "axles": "2",
+      "slides": "1"
+    },
+    "description": "Bunkhouse Class C with a full wall slide — kids get their own beds, adults get a private rear suite. 28k gentle highway miles.",
+    "features": [
+      "28,400 miles",
+      "Full-wall slide-out",
+      "Double bunk beds",
+      "Rear private bedroom",
+      "32\" TV and swivel cab seats",
+      "Onan 4k generator"
+    ],
+    "images": [
+      "/images/camper-four-winds.jpg",
+      "/images/gallery-lounge.jpg",
+      "/images/gallery-dining.jpg",
+      "/images/life-camp.jpg"
+    ],
+    "status": "live",
+    "featured": false,
+    "createdAt": "2026-08-27T10:00:00.000Z"
+  },
+  {
+    "slug": "winnebago-view-24v-2017",
+    "title": "Winnebago View 24V",
+    "brand": "Winnebago",
+    "model": "View 24V",
+    "year": 2017,
+    "condition": "used",
+    "type": "Class A Motorhome",
+    "price": 72500,
+    "listPrice": 92300,
+    "monthlyFrom": 1085,
+    "stockNumber": "TUC-17-V24V",
+    "specs": {
+      "length": "24' 6\"",
+      "sleeps": "4",
+      "weight": "10,500 lb",
+      "axles": "2",
+      "slides": "1"
+    },
+    "description": "Diesel Sprinter chassis, 33mpg highway and a floorplan that lives like a studio. Slide-out dinette, corner bath and a queen that folds away.",
+    "features": [
+      "33,800 miles · Mercedes diesel",
+      "Slide-out U-shaped dinette",
+      "Corner bath with separate shower",
+      "Truma comfort heating",
+      "Powered entry steps and awning",
+      "Navigation and camera package"
+    ],
+    "images": [
+      "/images/camper-leprechaun.jpg",
+      "/images/gallery-bed.jpg",
+      "/images/services-interior.jpg",
+      "/images/life-lawn.jpg"
+    ],
+    "status": "live",
+    "featured": true,
+    "createdAt": "2026-08-29T10:00:00.000Z"
+  },
+  {
+    "slug": "winnebago-solis-59px-2021",
+    "title": "Winnebago Solis 59PX",
+    "brand": "Winnebago",
+    "model": "Solis 59PX",
+    "year": 2021,
+    "condition": "used",
+    "type": "Camper Van",
+    "price": 78900,
+    "listPrice": 96500,
+    "monthlyFrom": 1175,
+    "stockNumber": "TUC-21-S59PX",
+    "specs": {
+      "length": "21' 3\"",
+      "sleeps": "4",
+      "weight": "9,050 lb",
+      "axles": "2",
+      "slides": "0"
+    },
+    "description": "Pop-top camper van built on the Ram ProMaster. Sleeps four, wet bath, galley with induction cooktop — city parking friendly and campsite ready.",
+    "features": [
+      "24,100 miles",
+      "Plywood pop-top sleeping loft",
+      "Wet bath with cassette toilet",
+      "Induction cooktop and fridge",
+      "180-watt solar and inverter",
+      "All-season insulation package"
+    ],
+    "images": [
+      "/images/camper-solis.jpg",
+      "/images/services-interior.jpg",
+      "/images/life-camp.jpg",
+      "/images/gallery-kitchen.jpg"
+    ],
+    "status": "live",
+    "featured": false,
+    "createdAt": "2026-09-01T10:00:00.000Z"
+  },
+  {
+    "slug": "forest-river-flagstaff-mac-206st-2019",
+    "title": "Forest River Flagstaff MAC 206ST",
+    "brand": "Forest River",
+    "model": "Flagstaff MAC 206ST",
+    "year": 2019,
+    "condition": "used",
+    "type": "Pop-Up",
+    "price": 9450,
+    "listPrice": 13200,
+    "monthlyFrom": 145,
+    "stockNumber": "TUC-19-P206",
+    "specs": {
+      "length": "15' 8\"",
+      "sleeps": "6",
+      "weight": "1,845 lb",
+      "axles": "1",
+      "slides": "0"
+    },
+    "description": "The easiest way into camping. Tows behind almost anything, sets up in ten minutes, and the heated king bed plus full galley cover you from April through October.",
+    "features": [
+      "Tows with most crossovers",
+      "Heated king bed",
+      "Full galley with three-burner stove",
+      "Convertible dinette",
+      "Sewer hose and power cord included",
+      "Canvas inspected and treated"
+    ],
+    "images": [
+      "/images/camper-popup.jpg",
+      "/images/life-camp.jpg",
+      "/images/gallery-dining.jpg",
+      "/images/life-lawn.jpg"
+    ],
+    "status": "live",
+    "featured": false,
+    "createdAt": "2026-09-03T10:00:00.000Z"
+  },
+  {
+    "slug": "nucamp-tab-320s-2019",
+    "title": "nuCamp T@B 320 S",
+    "brand": "KZ RV",
+    "model": "T@B 320 S",
+    "year": 2019,
+    "condition": "used",
+    "type": "Teardrop",
+    "price": 15900,
+    "listPrice": 21400,
+    "monthlyFrom": 239,
+    "stockNumber": "TUC-19-T320",
+    "specs": {
+      "length": "15' 1\"",
+      "sleeps": "2",
+      "weight": "1,760 lb",
+      "axles": "1",
+      "slides": "0"
+    },
+    "description": "Compact teardrop with a rear galley and a dry bath — no wet-bath compromise. Lightweight enough for a small SUV and a two-night getaway.",
+    "features": [
+      "Aliner-built hard side",
+      "Rear galley with sink and fridge",
+      "Alde hydronic heat",
+      "Bathroom with shower",
+      "Roof rack and solar prep",
+      "Freshwater tank and pump"
+    ],
+    "images": [
+      "/images/camper-teardrop.jpg",
+      "/images/gallery-kitchen.jpg",
+      "/images/gallery-lounge.jpg",
+      "/images/life-lot.jpg"
+    ],
+    "status": "live",
+    "featured": false,
+    "createdAt": "2026-09-05T10:00:00.000Z"
+  }
+]

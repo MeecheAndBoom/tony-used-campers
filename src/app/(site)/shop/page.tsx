@@ -4,7 +4,7 @@ import { ProductCard } from "@/components/ui/ProductCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { ShopFilters } from "@/components/site/ShopFilters";
 import { catalogBrands, getProducts } from "@/lib/products";
-import { SITE } from "@/lib/constants";
+import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "Shop used campers",
@@ -46,6 +46,7 @@ export default async function ShopPage({ searchParams }: Props) {
     ...(params.q ? { q: params.q } : {}),
   });
   const sorted = sortProducts(products, params.sort ?? "featured");
+  const { site } = await getSettings();
 
   return (
     <div className="bg-white">
@@ -79,7 +80,7 @@ export default async function ShopPage({ searchParams }: Props) {
               Try clearing a filter, or call the lot — fresh trade-ins land
               every week and sell fast.
             </p>
-            <a href={`tel:${SITE.phoneHref}`} className="btn btn-primary mt-6">
+            <a href={`tel:${site.phoneHref}`} className="btn btn-primary mt-6">
               Call the lot
             </a>
           </div>

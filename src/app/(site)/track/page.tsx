@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { findOrder, type OrderRecord } from "@/lib/orders";
 import { dateTime, money } from "@/lib/format";
-import { SITE, TRACKING_STEPS, type OrderStatus } from "@/lib/constants";
+import { TRACKING_STEPS, type OrderStatus } from "@/lib/constants";
+import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "Track your order",
@@ -19,6 +20,8 @@ export default async function TrackPage({ searchParams }: Props) {
   const params = await searchParams;
   const reference = (params.ref ?? "").trim();
   const email = (params.email ?? "").trim();
+
+  const { site } = await getSettings();
 
   let order: OrderRecord | null = null;
   let lookupError = "";
@@ -91,14 +94,26 @@ export default async function TrackPage({ searchParams }: Props) {
             </p>
           )}
 
-          {order && <TrackingResult order={order} />}
+          {order && (
+            <TrackingResult order={order} pickupAddress={site.address} phone={site.phone} phoneHref={site.phoneHref} />
+          )}
         </div>
       </section>
     </div>
   );
 }
 
-function TrackingResult({ order }: { order: OrderRecord }) {
+function TrackingResult({
+  order,
+  pickupAddress,
+  phone,
+  phoneHref,
+}: {
+  order: OrderRecord;
+  pickupAddress: string;
+  phone: string;
+  phoneHref: string;
+}) {
   const currentIndex = TRACKING_STEPS.findIndex(
     (step) => step.status === order.status,
   );
@@ -152,7 +167,7 @@ function TrackingResult({ order }: { order: OrderRecord }) {
                   ]
                     .filter(Boolean)
                     .join(", ") || "To be confirmed"
-                : SITE.address}
+                : pickupAddress}
             </p>
           </div>
           <div>
@@ -310,10 +325,10 @@ function TrackingResult({ order }: { order: OrderRecord }) {
       <p className="text-[14px] text-muted">
         Need help? Call{" "}
         <a
-          href={`tel:${SITE.phoneHref}`}
+          href={`tel:${phoneHref}`}
           className="font-medium text-accent hover:underline"
         >
-          {SITE.phone}
+          {phone}
         </a>{" "}
         and quote {order.reference}.
       </p>

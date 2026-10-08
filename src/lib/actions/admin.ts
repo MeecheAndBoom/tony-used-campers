@@ -1,0 +1,220 @@
+"use server";
+
+import { redirect } from "next/navigation";
+import {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  type ProductInput,
+} from "@/lib/products";
+import {
+  createReview,
+  updateReview,
+  deleteReview,
+  setReviewPublished,
+} from "@/lib/reviews";
+import { deleteOrder, findOrder } from "@/lib/orders";
+import { deleteEnquiry, listEnquiries, markEnquiryHandled } from "@/lib/enquiries";
+import { updateSettings, type PaymentMethodSetting, type SiteInfo } from "@/lib/settings";
+import { sendOrderReply, sendEnquiryReply } from "@/lib/notifications";
+
+const PRODUCT_TYPES = [
+  "Travel Trailer",
+  "Camper Van",
+  "Class C Motorhome",
+  "Class A Motorhome",
+  "Fifth Wheel",
+  "Pop-Up",
+  "Teardrop",
+];
+
+/* ───────────────────────── Products ───────────────────────── */
+
+function parseProduct(formData: FormData): ProductInput {
+  const str = (name: string) => String(formData.get(name) ?? "").trim();
+  const num = (name: string) => {
+    const v = Number(formData.get(name) ?? "");
+    return Number.isFinite(v) ? v : undefined;
+  };
+  const lines = (name: string) =>
+    str(name)
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .filter(Boolean);
+
+  return {
+    slug: str("slug") || undefined,
+    title: str("title"),
+    brand: str("brand"),
+    model: str("model"),
+    year: Number(str("year")) || new Date().getFullYear(),
+    condition: (str("condition") === "new" ? "new" : "used") as "used" | "new",
+    type: (PRODUCT_TYPES.includes(str("type")) ? str("type") : "Travel Trailer") as ProductInput["type"],
+    price: Number(str("price")) || 0,
+    listPrice: num("listPrice"),
+    monthlyFrom: num("monthlyFrom"),
+    stockNumber: str("stockNumber"),
+    specs: {
+      length: str("specsLength"),
+      sleeps: str("specsSleeps"),
+      weight: str("specsWeight"),
+      axles: str("specsAxles"),
+      slides: str("specsSlides"),
+    },
+    description: str("description"),
+    features: lines("features"),
+    images: lines("images"),
+    status: (str("status") === "draft" ? "draft" : "live") as "live" | "draft",
+    featured: formData.get("featured") === "on",
+  };
+}
+
+export async function createProductAction(formData: FormData) {
+  const input = parseProduct(formData);
+  if (!input.title || !input.brand || !input.model) {
+    redirect("/admin/products/new?error=missing-fields");
+  }
+  await createProduct(input);
+  redirect("/admin/products");
+}
+
+export async function updateProductAction(formData: FormData) {
+  const slug = String(formData.get("slug") ?? "");
+  if (!slug) redirect("/admin/products");
+  const input = parseProduct(formData);
+  await updateProduct(slug, input);
+  redirect("/admin/products");
+}
+
+export async function deleteProductAction(formData: FormData) {
+  const slug = String(formData.get("slug") ?? "");
+  if (slug) await deleteProduct(slug);
+  redirect("/admin/products");
+}
+
+/* ───────────────────────── Reviews ───────────────────────── */
+
+export async function createReviewAction(formData: FormData) {
+  await createReview({
+    name: String(formData.get("name") ?? "").trim(),
+    city: String(formData.get("city") ?? "").trim() || undefined,
+    rating: Number(formData.get("rating")) || 5,
+    title: String(formData.get("title") ?? "").trim() || undefined,
+    body: String(formData.get("body") ?? "").trim(),
+    purchased: String(formData.get("purchased") ?? "").trim() || undefined,
+    published: formData.get("published") === "on",
+  });
+  redirect("/admin/reviews");
+}
+
+export async function editReviewAction(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+  if (!id) redirect("/admin/reviews");
+  await updateReview(id, {
+    name: String(formData.get("name") ?? "").trim(),
+    city: String(formData.get("city") ?? "").trim() || undefined,
+    rating: Number(formData.get("rating")) || 5,
+    title: String(formData.get("title") ?? "").trim() || undefined,
+    body: String(formData.get("body") ?? "").trim(),
+    purchased: String(formData.get("purchased") ?? "").trim() || undefined,
+    published: formData.get("published") === "on",
+  });
+  redirect("/admin/reviews");
+}
+
+export async function publishReviewAction(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+  if (id) await setReviewPublished(id, true);
+  redirect("/admin/reviews");
+}
+
+export async function unpublishReviewAction(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+  if (id) await setReviewPublished(id, false);
+  redirect("/admin/reviews");
+}
+
+export async function deleteReviewAction(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+  if (id) await deleteReview(id);
+  redirect("/admin/reviews");
+}
+
+/* ───────────────────────── Orders ───────────────────────── */
+
+export async function deleteOrderAction(formData: FormData) {
+  const ref = String(formData.get("ref") ?? "").trim();
+  if (ref) await deleteOrder(ref);
+  redirect("/admin/orders");
+}
+
+/** Reply to an order's customer via SMTP from the order detail page. */
+export async function replyToOrderAction(formData: FormData) {
+  const ref = String(formData.get("ref") ?? "").trim();
+  const message = String(formData.get("reply") ?? "").trim();
+  if (ref && message) {
+    const order = await findOrder(ref);
+    if (order) await sendOrderReply(order, message);
+  }
+  redirect(`/admin/orders/${encodeURIComponent(ref)}`);
+}
+
+/* ───────────────────────── Enquiries ───────────────────────── */
+
+/** Reply to an enquiry via SMTP and mark it handled. */
+export async function replyToEnquiryAction(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+  const message = String(formData.get("reply") ?? "").trim();
+  if (id && message) {
+    const enquiries = await listEnquiries();
+    const enquiry = enquiries.find((e) => e.id === id);
+    if (enquiry) await sendEnquiryReply(enquiry, message);
+    await markEnquiryHandled(id);
+  }
+  redirect("/admin/enquiries");
+}
+
+export async function deleteEnquiryAction(formData: FormData) {
+  const id = String(formData.get("id") ?? "");
+  if (id) await deleteEnquiry(id);
+  redirect("/admin/enquiries");
+}
+
+/* ───────────────────────── Settings ───────────────────────── */
+
+function parseHours(formData: FormData) {
+  const days = formData.getAll("hoursDays").map((d) => String(d).trim());
+  const times = formData.getAll("hoursTime").map((t) => String(t).trim());
+  return days
+    .map((d, i) => ({ days: d, time: times[i] ?? "" }))
+    .filter((h) => h.days || h.time);
+}
+
+export async function saveSettingsAction(formData: FormData) {
+  const site: Partial<SiteInfo> = {
+    name: String(formData.get("name") ?? "").trim(),
+    tagline: String(formData.get("tagline") ?? "").trim(),
+    location: String(formData.get("location") ?? "").trim(),
+    address: String(formData.get("address") ?? "").trim(),
+    phone: String(formData.get("phone") ?? "").trim(),
+    email: String(formData.get("salesEmail") ?? "").trim(),
+    adminEmail: String(formData.get("adminEmail") ?? "").trim(),
+    hours: parseHours(formData),
+  };
+  const stripped = site.phone?.replace(/[^+\d]/g, "");
+  if (stripped && stripped.length >= 10) site.phoneHref = stripped;
+
+  const ids = formData.getAll("methodId").map((id) => String(id));
+  const labels = formData.getAll("methodLabel").map((l) => String(l).trim());
+  const hints = formData.getAll("methodHint").map((h) => String(h).trim());
+  const paymentMethods: PaymentMethodSetting[] = ids
+    .map((id, i) => ({
+      id: id.trim() || `method-${i + 1}`,
+      label: labels[i] ?? "",
+      hint: hints[i] ?? "",
+    }))
+    .filter((m) => m.label);
+
+  await updateSettings({ site, paymentMethods });
+  redirect("/admin/settings?saved=1");
+}

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Accordion } from "@/components/ui/Accordion";
 import { Reveal } from "@/components/ui/Reveal";
-import { SITE } from "@/lib/constants";
+import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -79,7 +79,8 @@ const DELIVERY = [
   },
 ];
 
-export default function FAQPage() {
+export default async function FAQPage() {
+  const { site } = await getSettings();
   const groups = [
     { title: "Buying", items: BUYING },
     { title: "Paying", items: PAYING },
@@ -146,10 +147,10 @@ export default function FAQPage() {
             <p className="mt-2 text-[15px] leading-relaxed text-muted">
               Call{" "}
               <a
-                href={`tel:${SITE.phoneHref}`}
+                href={`tel:${site.phoneHref}`}
                 className="text-accent hover:underline"
               >
-                {SITE.phone}
+                {site.phone}
               </a>{" "}
               or send a message — we answer within one business day.
             </p>

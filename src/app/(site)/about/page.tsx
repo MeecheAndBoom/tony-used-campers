@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
-import { SITE } from "@/lib/constants";
+import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "About",
@@ -53,7 +53,9 @@ const STATS = [
   { value: "4.9", label: "Average rating, 380 reviews" },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { site } = await getSettings();
+
   return (
     <div className="bg-white">
       {/* Hero */}
@@ -218,7 +220,7 @@ export default function AboutPage() {
               </Link>
             </div>
             <p className="mt-6 text-[14px] text-white/55">
-              {SITE.address} · {SITE.hours[0].time} weekdays
+              {site.address} · {site.hours[0]?.time ?? ""} weekdays
             </p>
           </Reveal>
         </div>

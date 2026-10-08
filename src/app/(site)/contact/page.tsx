@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/site/ContactForm";
 import { Reveal } from "@/components/ui/Reveal";
-import { SITE } from "@/lib/constants";
+import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -9,7 +9,9 @@ export const metadata: Metadata = {
     "Call, email or visit the lot — Tony Used Campers, 4120 Michigan Ave, Detroit, MI.",
 };
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const { site } = await getSettings();
+
   return (
     <div className="bg-white">
       <section className="section pb-16 pt-16 md:pb-20 md:pt-24">
@@ -42,10 +44,10 @@ export default function ContactPage() {
               Visit the lot
             </h2>
             <p className="mt-3 text-[15px] leading-relaxed text-muted">
-              {SITE.address}
+              {site.address}
             </p>
             <a
-              href={`https://maps.google.com/?q=${encodeURIComponent(SITE.address)}`}
+              href={`https://maps.google.com/?q=${encodeURIComponent(site.address)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-3 inline-block text-[14px] text-accent hover:underline"
@@ -57,7 +59,7 @@ export default function ContactPage() {
             <div className="mt-5 grid aspect-[16/10] place-items-center rounded-box bg-alt-deep">
               <p className="text-center text-[13px] text-muted">
                 <i className="fa-solid fa-location-dot mb-2 block text-[22px] text-accent" aria-hidden="true" />
-                Detroit, Michigan
+                {site.location}
               </p>
             </div>
           </div>
@@ -67,7 +69,7 @@ export default function ContactPage() {
               Hours
             </h2>
             <dl className="mt-3 space-y-2 text-[14px]">
-              {SITE.hours.map((row) => (
+              {site.hours.map((row) => (
                 <div key={row.days} className="flex justify-between gap-4">
                   <dt className="text-muted">{row.days}</dt>
                   <dd className="m-0 text-ink">{row.time}</dd>
@@ -83,10 +85,10 @@ export default function ContactPage() {
             <ul className="mt-3 space-y-2.5 text-[15px]">
               <li>
                 <a
-                  href={`tel:${SITE.phoneHref}`}
+                  href={`tel:${site.phoneHref}`}
                   className="text-accent hover:underline"
                 >
-                  {SITE.phone}
+                  {site.phone}
                 </a>
                 <span className="block text-[13px] text-muted">
                   Sales &amp; questions
@@ -94,10 +96,10 @@ export default function ContactPage() {
               </li>
               <li>
                 <a
-                  href={`mailto:${SITE.email}`}
+                  href={`mailto:${site.email}`}
                   className="text-accent hover:underline"
                 >
-                  {SITE.email}
+                  {site.email}
                 </a>
                 <span className="block text-[13px] text-muted">Email</span>
               </li>

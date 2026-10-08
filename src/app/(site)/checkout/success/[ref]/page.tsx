@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ClearCartOnMount } from "@/components/site/ClearCartOnMount";
 import { findOrder } from "@/lib/orders";
-import { SITE } from "@/lib/constants";
+import { getSettings } from "@/lib/settings";
 
 type Props = { params: Promise<{ ref: string }> };
 
@@ -28,6 +28,7 @@ export default async function OrderSuccessPage({ params }: Props) {
   const { ref } = await params;
   const order = await findOrder(ref.toUpperCase());
   if (!order) notFound();
+  const { site } = await getSettings();
 
   return (
     <div className="bg-white">
@@ -87,10 +88,10 @@ export default async function OrderSuccessPage({ params }: Props) {
             <p className="text-[15px] text-muted">
               Questions right now? Call{" "}
               <a
-                href={`tel:${SITE.phoneHref}`}
+                href={`tel:${site.phoneHref}`}
                 className="font-medium text-accent hover:underline"
               >
-                {SITE.phone}
+                {site.phone}
               </a>{" "}
               and reference {order.reference}.
             </p>

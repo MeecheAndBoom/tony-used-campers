@@ -15,7 +15,7 @@ const LINKS = [
   { href: "/track", label: "Track Order" },
 ] as const;
 
-export function Nav() {
+export function Nav({ siteName = SITE.name }: { siteName?: string }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -51,7 +51,7 @@ export function Nav() {
           <Link
             href="/"
             className="text-[15px] font-semibold tracking-[-0.01em] text-ink"
-            aria-label={`${SITE.name} home`}
+            aria-label={`${siteName} home`}
           >
             Tony<span className="text-muted-light font-normal"> Used </span>
             Campers

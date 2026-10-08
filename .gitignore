@@ -43,3 +43,6 @@ next-env.d.ts
 # dev server log
 dev.log
 *.log
+
+# rendered email fallback (dev SMTP stand-in) — runtime output, not source
+/data/outbox/

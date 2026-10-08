@@ -98,6 +98,23 @@ export async function markEnquiryHandled(id: string): Promise<void> {
   }
 }
 
+export async function deleteEnquiry(id: string): Promise<boolean> {
+  if (hasDatabase()) {
+    try {
+      await connectDB();
+      const res = await Enquiry.deleteOne({ id });
+      if (res.deletedCount) return true;
+    } catch {
+      /* fall through to the local store */
+    }
+  }
+  const records = await readLocal();
+  const next = records.filter((r) => r.id !== id);
+  if (next.length === records.length) return false;
+  await writeLocal(next);
+  return true;
+}
+
 export type ReviewInput = {
   name: string;
   city?: string;
@@ -111,6 +128,7 @@ export type ReviewInput = {
 /** Reviews land as unpublished until an admin approves them. */
 export async function saveReview(input: ReviewInput): Promise<void> {
   const record = {
+    id: `rev_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 8)}`,
     ...input,
     date: new Date().toISOString(),
     published: false,
