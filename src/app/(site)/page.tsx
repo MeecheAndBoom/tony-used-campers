@@ -4,8 +4,8 @@ import { ProductCard } from "@/components/ui/ProductCard";
 import { Reveal } from "@/components/ui/Reveal";
 import { money } from "@/lib/format";
 import { getProducts } from "@/lib/products";
-import { getReviews, ratingSummary } from "@/lib/reviews";
 import { HeroSlideshow } from "@/components/site/HeroSlideshow";
+import { SITE } from "@/lib/constants";
 const WHY = [
   {
     title: "120-point inspection",
@@ -93,7 +93,7 @@ export default async function HomePage() {
           </Reveal>
 
           <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {shown.map((product, i) => (
+            {shown.map((product: any, i: number) => (
               <Reveal key={product.slug} delay={i * 70} as="div" className="h-full">
                 <ProductCard product={product} />
               </Reveal>
@@ -209,7 +209,7 @@ export default async function HomePage() {
           </Reveal>
 
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {reviews.slice(0, 3).map((review, i) => (
+            {reviews.slice(0, 3).map((review: any, i: number) => (
               <Reveal key={review.name} delay={i * 80} as="div">
                 <figure className="flex h-full flex-col rounded-card border border-line-soft bg-white p-7">
                   <div
