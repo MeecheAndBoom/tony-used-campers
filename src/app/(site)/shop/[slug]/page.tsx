@@ -148,11 +148,14 @@ export default async function ProductPage({ params }: Props) {
               Similar campers.
             </h2>
           </Reveal>
-          <div className="mt-9 grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((item, i) => (
-              <Reveal key={item.slug} delay={(i % 3) * 70}>
+          <div className="rail mt-9">
+            {related.map((item) => (
+              <div
+                key={item.slug}
+                className="w-[280px] sm:w-[320px]"
+              >
                 <ProductCard product={item} />
-              </Reveal>
+              </div>
             ))}
           </div>
         </section>

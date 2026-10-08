@@ -110,8 +110,7 @@ export function Footer() {
           </p>
           <p className="mt-3 text-[11px] leading-relaxed text-muted-light">
             Prices exclude tax, title, registration and doc fees. Vehicles are
-            sold as-is unless otherwise stated. Placeholder business details —
-            swap via environment variables before launch.
+            sold as-is unless otherwise stated.
           </p>
         </div>
       </div>

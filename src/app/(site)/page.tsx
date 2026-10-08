@@ -152,27 +152,26 @@ export default async function HomePage() {
             </div>
           </Reveal>
 
-          <div className="mt-10 grid grid-cols-2 gap-x-5 gap-y-9 sm:grid-cols-3 lg:grid-cols-4">
-            {CATEGORIES.map((cat, i) => (
-              <Reveal key={cat.type} delay={i * 60} as="div">
-                <Link
-                  href={`/shop?type=${encodeURIComponent(cat.type)}`}
-                  className="group block"
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-line-soft">
-                    <Image
-                      src={cat.image}
-                      alt={cat.type}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-                    />
-                  </div>
-                  <p className="mt-3 text-center text-[15px] font-medium text-ink transition-colors duration-[120ms] group-hover:text-accent">
-                    {cat.type}
-                  </p>
-                </Link>
-              </Reveal>
+          <div className="rail mt-10">
+            {CATEGORIES.map((cat) => (
+              <Link
+                key={cat.type}
+                href={`/shop?type=${encodeURIComponent(cat.type)}`}
+                className="group flex w-[86px] shrink-0 flex-col items-center gap-2.5"
+              >
+                <span className="grid h-[50px] w-[50px] shrink-0 place-items-center overflow-hidden rounded-full bg-line-soft ring-1 ring-black/5 transition-transform duration-[300ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105">
+                  <Image
+                    src={cat.image}
+                    alt={cat.type}
+                    width={50}
+                    height={50}
+                    className="h-full w-full object-cover"
+                  />
+                </span>
+                <span className="text-center text-[12px] font-medium leading-tight text-ink transition-colors duration-[120ms] group-hover:text-accent">
+                  {cat.type}
+                </span>
+              </Link>
             ))}
           </div>
         </div>

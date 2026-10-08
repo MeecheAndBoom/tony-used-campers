@@ -48,16 +48,18 @@ export function RouteProgress() {
     const onPopState = () => show();
 
     // Next updates the URL through history — cover router.push/replace too.
+    // Next can call these from React's insertion phase, where setState is not
+    // allowed, so history-driven shows are always deferred out of that stack.
     const origPush = history.pushState.bind(history);
     const origReplace = history.replaceState.bind(history);
     history.pushState = (...args) => {
       const result = origPush(...args);
-      show();
+      window.setTimeout(show, 0);
       return result;
     };
     history.replaceState = (...args) => {
       const result = origReplace(...args);
-      show();
+      window.setTimeout(show, 0);
       return result;
     };
 
