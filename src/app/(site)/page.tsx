@@ -2,7 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { Reveal } from "@/components/ui/Reveal";
+import { money } from "@/lib/format";
+import { getProducts } from "@/lib/products";
+import { getReviews, ratingSummary } from "@/lib/reviews";
 import { HeroSlideshow } from "@/components/site/HeroSlideshow";
+import { SITE } from "@/lib/constants";
 const WHY = [
   {
     title: "120-point inspection",
