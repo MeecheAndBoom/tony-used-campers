@@ -1,0 +1,63 @@
+
+> tony-used-campers@0.1.0 build
+> next build
+
+▲ Next.js 16.4.0 (Turbopack)
+⚠ Warning: Next.js ignored package-lock.json in C:\Users\misha\Desktop\Mishael Sema\Websites because it is outside the current Git repository (C:\Users\misha\Desktop\Mishael Sema\Websites\tony-used-campers).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+✓ Running next.config.ts took 232ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.9s
+  Running TypeScript ...
+  Finished TypeScript in 10.8s ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/36) ...
+  Generating static pages using 11 workers (9/36) 
+  Generating static pages using 11 workers (18/36) 
+  Generating static pages using 11 workers (27/36) 
+✓ Generating static pages using 11 workers (36/36) in 1864ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ƒ /admin
+├ ƒ /admin/enquiries
+├ ƒ /admin/login
+├ ƒ /admin/orders
+├ ƒ /admin/orders/[ref]
+├ ƒ /admin/products
+├ ƒ /admin/reviews
+├ ƒ /admin/settings
+├ ○ /cart
+├ ○ /checkout
+├ ƒ /checkout/success/[ref]
+├ ○ /contact
+├ ○ /faq
+├ ○ /finance
+├ ○ /first-time-buyers
+├   /legal/[slug]
+│ ├ ● /legal/privacy
+│ ├ ● /legal/terms
+│ ├ ● /legal/cookies
+│ └ ● [+5 more paths]
+├ ○ /robots.txt
+├ ƒ /search
+├ ○ /sell
+├ ○ /services
+├ ƒ /shop
+├ ƒ /shop/[slug]
+├ ○ /sitemap
+├ ○ /sitemap.xml
+├ ○ /testimonials
+├ ƒ /track
+└ ○ /why-buy-from-us
+
+
+○  (Static)   prerendered as static content
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+

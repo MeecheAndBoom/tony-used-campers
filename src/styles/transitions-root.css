@@ -1,0 +1,65 @@
+/* transitions-dev motion tokens (from the transitions-dev skill) */
+:root {
+  /* Duration */
+  --duration-instant: 80ms;
+  --duration-fast: 120ms;
+  --duration-normal: 180ms;
+  --duration-medium: 240ms;
+  --duration-slow: 320ms;
+  --duration-slower: 480ms;
+  --duration-slowest: 700ms;
+
+  /* Easing */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-soft: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --ease-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --ease-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+
+  /* Distance */
+  --distance-xs: 2px;
+  --distance-sm: 4px;
+  --distance-md: 8px;
+  --distance-lg: 16px;
+  --distance-xl: 24px;
+  --distance-2xl: 40px;
+  --distance-3xl: 64px;
+  --distance-full: 100%;
+
+  /* Scale */
+  --scale-none: 1;
+  --scale-sm: 0.95;
+  --scale-md: 0.97;
+  --scale-lg: 1.01;
+  --scale-xl: 1.04;
+  --scale-2xl: 1.08;
+
+  /* Blur */
+  --blur-none: 0px;
+  --blur-sm: 4px;
+  --blur-md: 8px;
+  --blur-lg: 16px;
+
+  /* Semantic */
+  --motion-fast: var(--duration-fast);
+  --motion-normal: var(--duration-normal);
+  --motion-slow: var(--duration-slow);
+  --motion-hover: var(--duration-normal);
+  --motion-press: var(--duration-instant);
+  --motion-focus: var(--duration-fast);
+  --motion-enter: var(--duration-medium);
+  --motion-exit: var(--duration-normal);
+  --motion-animate-in: var(--duration-medium);
+  --motion-animate-out: var(--duration-normal);
+  --motion-expand: var(--duration-slow);
+  --motion-collapse: var(--duration-medium);
+  --motion-swap: var(--duration-medium);
+  --motion-move: var(--duration-slow);
+  --motion-drawer: var(--duration-slow);
+  --motion-popover: var(--duration-fast);
+  --motion-toast: var(--duration-medium);
+  --motion-spinner: 800ms;
+}
