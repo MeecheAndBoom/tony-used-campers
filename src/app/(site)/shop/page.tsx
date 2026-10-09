@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { ProductCard } from "@/components/ui/ProductCard";
+import { ShopResults } from "@/components/ui/ShopResults";
 import { Reveal } from "@/components/ui/Reveal";
 import { ShopFilters } from "@/components/site/ShopFilters";
 import { catalogBrands, getProducts } from "@/lib/products";
@@ -85,13 +85,7 @@ export default async function ShopPage({ searchParams }: Props) {
             </a>
           </div>
         ) : (
-          <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {sorted.map((product, i) => (
-              <Reveal key={product.slug} delay={(i % 3) * 70}>
-                <ProductCard product={product} />
-              </Reveal>
-            ))}
-          </div>
+          <ShopResults products={sorted} />
         )}
       </section>
     </div>

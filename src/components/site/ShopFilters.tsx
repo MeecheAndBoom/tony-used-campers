@@ -3,6 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { PRODUCT_TYPES } from "@/lib/constants";
+import { ShopViewToggle } from "@/components/ui/ShopViewToggle";
 
 const SORTS = [
   { id: "featured", label: "Featured" },
@@ -119,6 +120,8 @@ export function ShopFilters({
           <span className="ml-auto text-[14px] text-muted">
             {count} {count === 1 ? "camper" : "campers"}
           </span>
+
+          <ShopViewToggle />
         </div>
       </div>
     </div>
