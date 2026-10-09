@@ -114,27 +114,26 @@ export default async function HomePage() {
             </div>
           </Reveal>
 
-          <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 md:gap-6">
-            {categories.map((cat, i) => (
-              <Reveal key={cat.id} delay={i * 60} as="div">
-                <Link
-                  href={`/shop?type=${encodeURIComponent(cat.name)}`}
-                  className="group block"
-                >
-                  <div className="relative aspect-square overflow-hidden border border-line-soft bg-white">
-                    <Image
-                      src={cat.image}
-                      alt={cat.name}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      className="object-cover transition-transform duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
-                    />
-                  </div>
-                  <p className="mt-3.5 text-center text-[15px] font-medium leading-tight text-ink transition-colors duration-[120ms] group-hover:text-accent">
-                    {cat.name}
-                  </p>
-                </Link>
-              </Reveal>
+          <div className="rail mt-10">
+            {categories.map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/shop?type=${encodeURIComponent(cat.name)}`}
+                className="group block w-[150px]"
+              >
+                <div className="relative aspect-[4/3] overflow-hidden border border-line-soft bg-transparent">
+                  <Image
+                    src={cat.image}
+                    alt={cat.name}
+                    fill
+                    sizes="150px"
+                    className="object-contain transition-transform duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+                  />
+                </div>
+                <p className="mt-3 text-center text-[14px] font-medium leading-tight text-ink transition-colors duration-[120ms] group-hover:text-accent">
+                  {cat.name}
+                </p>
+              </Link>
             ))}
           </div>
         </div>
