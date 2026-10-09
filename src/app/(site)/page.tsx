@@ -121,7 +121,7 @@ export default async function HomePage() {
                 href={`/shop?type=${encodeURIComponent(cat.name)}`}
                 className="group block w-[150px]"
               >
-                <div className="relative aspect-[4/3] overflow-hidden border border-line-soft bg-transparent">
+                <div className="relative aspect-[4/3] overflow-hidden bg-transparent">
                   <Image
                     src={cat.image}
                     alt={cat.name}
