@@ -5,6 +5,7 @@ import {
   Heading,
   Hr,
   Html,
+  Img,
   Link,
   Preview,
   Section,
@@ -68,13 +69,16 @@ export function EmailShell({
       >
         <Body className="m-0 bg-alt font-sans text-ink">
           <Container className="mx-auto max-w-[600px] bg-white px-5 py-8">
-            {/* Header: wordmark left, reference right */}
+            {/* Header: logo left, reference right */}
             <Section className="flex items-center justify-between">
-              <Link
-                href={siteUrl}
-                className="text-[15px] font-semibold tracking-[-0.01em] text-ink no-underline"
-              >
-                {site.name}
+              <Link href={siteUrl} className="no-underline">
+                <Img
+                  src={`${siteUrl}/tony-campers-logo.PNG`}
+                  alt={site.name}
+                  width={500}
+                  height={500}
+                  style={{ width: "auto", height: 32 }}
+                />
               </Link>
               {reference ? (
                 <Text className="m-0 text-[13px] text-muted">{reference}</Text>

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SITE } from "@/lib/constants";
@@ -50,11 +51,17 @@ export function Nav({ siteName = SITE.name }: { siteName?: string }) {
         <div className="flex items-center gap-8">
           <Link
             href="/"
-            className="text-[15px] font-semibold tracking-[-0.01em] text-ink"
+            className="block"
             aria-label={`${siteName} home`}
           >
-            Tony<span className="text-muted-light font-normal"> Used </span>
-            Campers
+            <Image
+              src="/tony-campers-logo.PNG"
+              alt={siteName}
+              width={500}
+              height={500}
+              priority
+              className="h-7 w-auto object-contain"
+            />
           </Link>
 
           <ul className="hidden items-center gap-7 lg:flex">

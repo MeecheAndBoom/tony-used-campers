@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { SITE } from "@/lib/constants";
 import type { SiteInfo } from "@/lib/settings";
 
@@ -59,6 +60,20 @@ export function Footer({ site }: { site?: SiteInfo }) {
   return (
     <footer className="mt-auto bg-alt text-muted">
       <div className="section py-12 md:py-16">
+        <Link
+          href="/"
+          aria-label={`${info.name} home`}
+          className="mb-10 inline-block"
+        >
+          <Image
+            src="/tony-campers-logo.PNG"
+            alt={info.name}
+            width={500}
+            height={500}
+            className="h-9 w-auto object-contain"
+          />
+        </Link>
+
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
           {columns.map((column) => (
             <div key={column.heading}>

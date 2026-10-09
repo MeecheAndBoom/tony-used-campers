@@ -30,7 +30,32 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: site.name,
       locale: "en_US",
       type: "website",
+      images: [
+        {
+          url: "/tony-campers-og.png",
+          width: 1200,
+          height: 630,
+          alt: `${site.name} — ${site.tagline}`,
+        },
+      ],
     },
+    twitter: {
+      card: "summary_large_image",
+      title: `${site.name} — ${site.tagline}`,
+      description:
+        "Inspected used campers, travel trailers and motorhomes in Detroit, Michigan.",
+      images: ["/tony-campers-og.png"],
+    },
+    icons: {
+      icon: [
+        { url: "/favicon.ico", sizes: "any" },
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      ],
+      apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    },
+    manifest: "/site.webmanifest",
+    other: { "theme-color": "#ffffff" },
     robots: { index: true, follow: true },
   };
 }
