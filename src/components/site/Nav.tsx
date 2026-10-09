@@ -57,8 +57,8 @@ export function Nav({ siteName = SITE.name }: { siteName?: string }) {
             <Image
               src="/tony-campers-logo.png"
               alt={siteName}
-              width={1023}
-              height={561}
+              width={2117}
+              height={743}
               priority
               className="h-10 w-auto object-contain"
             />

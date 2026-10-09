@@ -75,8 +75,8 @@ export function EmailShell({
                 <Img
                   src={`${siteUrl}/tony-campers-logo.png`}
                   alt={site.name}
-                  width={1023}
-                  height={561}
+                  width={2117}
+                  height={743}
                   style={{ width: "auto", height: 32 }}
                 />
               </Link>

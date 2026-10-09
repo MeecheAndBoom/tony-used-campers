@@ -68,8 +68,8 @@ export function Footer({ site }: { site?: SiteInfo }) {
           <Image
             src="/tony-campers-logo.png"
             alt={info.name}
-            width={1023}
-            height={561}
+            width={2117}
+            height={743}
             className="h-12 w-auto object-contain"
           />
         </Link>
