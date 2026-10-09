@@ -114,19 +114,19 @@ export default async function HomePage() {
             </div>
           </Reveal>
 
-          <div className="rail mt-10">
+          <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 md:gap-6">
             {categories.map((cat) => (
               <Link
                 key={cat.id}
                 href={`/shop?type=${encodeURIComponent(cat.name)}`}
-                className="group block w-[150px]"
+                className="group block"
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-transparent">
                   <Image
                     src={cat.image}
                     alt={cat.name}
                     fill
-                    sizes="150px"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     className="object-contain transition-transform duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
                   />
                 </div>
