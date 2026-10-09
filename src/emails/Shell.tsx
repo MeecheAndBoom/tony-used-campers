@@ -73,10 +73,10 @@ export function EmailShell({
             <Section className="flex items-center justify-between">
               <Link href={siteUrl} className="no-underline">
                 <Img
-                  src={`${siteUrl}/tony-campers-logo.PNG`}
+                  src={`${siteUrl}/tony-campers-logo.png`}
                   alt={site.name}
-                  width={500}
-                  height={500}
+                  width={1023}
+                  height={561}
                   style={{ width: "auto", height: 32 }}
                 />
               </Link>

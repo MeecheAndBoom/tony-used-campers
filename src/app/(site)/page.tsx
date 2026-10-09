@@ -7,6 +7,7 @@ import { getProducts } from "@/lib/products";
 import { getReviews, ratingSummary } from "@/lib/reviews";
 import { HeroSlideshow } from "@/components/site/HeroSlideshow";
 import { getSettings } from "@/lib/settings";
+import { getCategories } from "@/lib/categories";
 const WHY = [
   {
     title: "120-point inspection",
@@ -22,16 +23,6 @@ const WHY = [
   },
 ];
 
-const CATEGORIES: { type: string; image: string }[] = [
-  { type: "Travel Trailer", image: "/images/camper-jayflight.jpg" },
-  { type: "Camper Van", image: "/images/camper-solis.jpg" },
-  { type: "Class C Motorhome", image: "/images/camper-four-winds.jpg" },
-  { type: "Class A Motorhome", image: "/images/camper-leprechaun.jpg" },
-  { type: "Fifth Wheel", image: "/images/camper-cougar.jpg" },
-  { type: "Pop-Up", image: "/images/camper-popup.jpg" },
-  { type: "Teardrop", image: "/images/camper-teardrop.jpg" },
-];
-
 const STATS = [
   { value: "120", label: "Point inspection on every unit" },
   { value: "1,900+", label: "Campers delivered since 2009" },
@@ -40,9 +31,10 @@ const STATS = [
 ];
 
 export default async function HomePage() {
-  const [featured, reviews] = await Promise.all([
+  const [featured, reviews, categories] = await Promise.all([
     getProducts({ featured: true }),
     getReviews(),
+    getCategories(),
   ]);
   const { site } = await getSettings();
   const shown = featured.slice(0, 4);
@@ -101,6 +93,53 @@ export default async function HomePage() {
         </Reveal>
       </section>
 
+      {/* ── Shop by category ─────────────────────────────────── */}
+      <section className="bg-alt py-16 md:py-24">
+        <div className="section">
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-semibold tracking-[-0.015em] text-ink">
+                Shop by category.
+              </h2>
+              <Link
+                href="/shop"
+                className="group inline-flex items-center gap-1.5 text-[17px] text-accent transition-colors duration-[120ms] hover:underline"
+              >
+                See all inventory
+                <i
+                  className="fa-solid fa-chevron-right text-[12px] transition-transform duration-[160ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Link>
+            </div>
+          </Reveal>
+
+          <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 md:gap-6">
+            {categories.map((cat, i) => (
+              <Reveal key={cat.id} delay={i * 60} as="div">
+                <Link
+                  href={`/shop?type=${encodeURIComponent(cat.name)}`}
+                  className="group block"
+                >
+                  <div className="relative aspect-square overflow-hidden border border-line-soft bg-white">
+                    <Image
+                      src={cat.image}
+                      alt={cat.name}
+                      fill
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      className="object-cover transition-transform duration-[400ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <p className="mt-3.5 text-center text-[15px] font-medium leading-tight text-ink transition-colors duration-[120ms] group-hover:text-accent">
+                    {cat.name}
+                  </p>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── Featured inventory ───────────────────────────────── */}
       <section className="bg-white py-16 md:py-24">
         <div className="section">
@@ -127,52 +166,6 @@ export default async function HomePage() {
               <Reveal key={product.slug} delay={i * 70} as="div" className="h-full">
                 <ProductCard product={product} />
               </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Shop by category ─────────────────────────────────── */}
-      <section className="bg-alt py-16 md:py-24">
-        <div className="section">
-          <Reveal>
-            <div className="flex flex-wrap items-end justify-between gap-4">
-              <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-semibold tracking-[-0.015em] text-ink">
-                Shop by category.
-              </h2>
-              <Link
-                href="/shop"
-                className="group inline-flex items-center gap-1.5 text-[17px] text-accent transition-colors duration-[120ms] hover:underline"
-              >
-                See all inventory
-                <i
-                  className="fa-solid fa-chevron-right text-[12px] transition-transform duration-[160ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </Link>
-            </div>
-          </Reveal>
-
-          <div className="rail mt-10">
-            {CATEGORIES.map((cat) => (
-              <Link
-                key={cat.type}
-                href={`/shop?type=${encodeURIComponent(cat.type)}`}
-                className="group flex w-[86px] shrink-0 flex-col items-center gap-2.5"
-              >
-                <span className="grid h-[50px] w-[50px] shrink-0 place-items-center overflow-hidden rounded-full bg-line-soft ring-1 ring-black/5 transition-transform duration-[300ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105">
-                  <Image
-                    src={cat.image}
-                    alt={cat.type}
-                    width={50}
-                    height={50}
-                    className="h-full w-full object-cover"
-                  />
-                </span>
-                <span className="text-center text-[12px] font-medium leading-tight text-ink transition-colors duration-[120ms] group-hover:text-accent">
-                  {cat.type}
-                </span>
-              </Link>
             ))}
           </div>
         </div>

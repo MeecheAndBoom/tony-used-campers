@@ -55,12 +55,12 @@ export function Nav({ siteName = SITE.name }: { siteName?: string }) {
             aria-label={`${siteName} home`}
           >
             <Image
-              src="/tony-campers-logo.PNG"
+              src="/tony-campers-logo.png"
               alt={siteName}
-              width={500}
-              height={500}
+              width={1023}
+              height={561}
               priority
-              className="h-7 w-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
           </Link>
 

@@ -66,11 +66,11 @@ export function Footer({ site }: { site?: SiteInfo }) {
           className="mb-10 inline-block"
         >
           <Image
-            src="/tony-campers-logo.PNG"
+            src="/tony-campers-logo.png"
             alt={info.name}
-            width={500}
-            height={500}
-            className="h-9 w-auto object-contain"
+            width={1023}
+            height={561}
+            className="h-12 w-auto object-contain"
           />
         </Link>
 

@@ -1,0 +1,37 @@
+[
+  {
+    "id": "travel-trailer",
+    "name": "Travel Trailer",
+    "image": "/images/carav-cat/Travel Trailer.png"
+  },
+  {
+    "id": "camper-van",
+    "name": "Camper Van",
+    "image": "/images/carav-cat/Camper Van.png"
+  },
+  {
+    "id": "class-c-motorhome",
+    "name": "Class C Motorhome",
+    "image": "/images/carav-cat/Class C Motorhome.png"
+  },
+  {
+    "id": "class-a-motorhome",
+    "name": "Class A Motorhome",
+    "image": "/images/carav-cat/Class A Motorhome.png"
+  },
+  {
+    "id": "fifth-wheel",
+    "name": "Fifth Wheel",
+    "image": "/images/carav-cat/Fifth Wheel.png"
+  },
+  {
+    "id": "pop-up",
+    "name": "Pop-Up",
+    "image": "/images/carav-cat/Pop-Up.png"
+  },
+  {
+    "id": "teardrop",
+    "name": "Teardrop",
+    "image": "/images/carav-cat/Teardrop.png"
+  }
+]

@@ -16,6 +16,11 @@ import {
 import { deleteOrder, findOrder } from "@/lib/orders";
 import { deleteEnquiry, listEnquiries, markEnquiryHandled } from "@/lib/enquiries";
 import { updateSettings, type PaymentMethodSetting, type SiteInfo } from "@/lib/settings";
+import {
+  createCategory,
+  updateCategory,
+  deleteCategory,
+} from "@/lib/categories";
 import { sendOrderReply, sendEnquiryReply } from "@/lib/notifications";
 
 const PRODUCT_TYPES = [
@@ -178,6 +183,29 @@ export async function deleteEnquiryAction(formData: FormData) {
   const id = String(formData.get("id") ?? "");
   if (id) await deleteEnquiry(id);
   redirect("/admin/enquiries");
+}
+
+/* ───────────────────────── Categories ───────────────────────── */
+
+export async function createCategoryAction(formData: FormData) {
+  const name = String(formData.get("name") ?? "").trim();
+  const image = String(formData.get("image") ?? "").trim();
+  if (name) await createCategory({ name, image });
+  redirect("/admin/categories");
+}
+
+export async function updateCategoryAction(formData: FormData) {
+  const id = String(formData.get("id") ?? "").trim();
+  const name = String(formData.get("name") ?? "").trim();
+  const image = String(formData.get("image") ?? "").trim();
+  if (id && name) await updateCategory(id, { name, image });
+  redirect("/admin/categories?saved=1");
+}
+
+export async function deleteCategoryAction(formData: FormData) {
+  const id = String(formData.get("id") ?? "").trim();
+  if (id) await deleteCategory(id);
+  redirect("/admin/categories");
 }
 
 /* ───────────────────────── Settings ───────────────────────── */
