@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getProducts } from "@/lib/products";
+import { getBlogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
   title: "Sitemap",
@@ -35,6 +36,7 @@ const GROUPS: { heading: string; links: { href: string; label: string }[] }[] = 
       { href: "/sell", label: "Sell or trade your camper" },
       { href: "/first-time-buyers", label: "First-time buyer's guide" },
       { href: "/faq", label: "FAQ" },
+      { href: "/blog", label: "Blog & buying guides" },
     ],
   },
   {
@@ -53,7 +55,7 @@ const GROUPS: { heading: string; links: { href: string; label: string }[] }[] = 
 ];
 
 export default async function SitemapPage() {
-  const products = await getProducts();
+  const [products, posts] = await Promise.all([getProducts(), getBlogPosts()]);
 
   return (
     <div className="bg-white">
@@ -88,6 +90,24 @@ export default async function SitemapPage() {
               </ul>
             </div>
           ))}
+        </div>
+
+        <div className="mt-14">
+          <h2 className="mb-4 text-[13px] font-semibold tracking-[0.02em] text-ink">
+            Blog ({posts.length})
+          </h2>
+          <ul className="grid gap-x-8 gap-y-2 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+              <li key={post.slug}>
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="text-[15px] text-muted transition-colors hover:text-accent"
+                >
+                  {post.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="mt-14">

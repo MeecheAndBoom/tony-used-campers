@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getProducts } from "@/lib/products";
+import { getBlogPosts } from "@/lib/blog";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -13,10 +14,9 @@ const STATIC_PAGES = [
   "/sell",
   "/first-time-buyers",
   "/faq",
+  "/blog",
   "/testimonials",
   "/contact",
-  "/track",
-  "/search",
   "/sitemap",
   "/legal/privacy",
   "/legal/terms",
@@ -28,24 +28,35 @@ const STATIC_PAGES = [
   "/legal/finance-disclosure",
 ];
 
+/** Utility routes — reachable but noindexed, so they stay out of the index. */
+const EXCLUDED = new Set(["/track", "/search"]);
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const products = await getProducts();
+  const [products, posts] = await Promise.all([getProducts(), getBlogPosts()]);
   const now = new Date();
 
   return [
-    ...STATIC_PAGES.map((path) => ({
+    ...STATIC_PAGES.filter((path) => !EXCLUDED.has(path)).map((path) => ({
       url: `${siteUrl}${path}`,
       lastModified: now,
       changeFrequency: (path === "" || path === "/shop"
         ? "daily"
-        : "monthly") as "daily" | "monthly",
-      priority: path === "" ? 1 : path === "/shop" ? 0.9 : 0.6,
+        : path === "/blog"
+          ? "weekly"
+          : "monthly") as "daily" | "weekly" | "monthly",
+      priority: path === "" ? 1 : path === "/shop" ? 0.9 : path === "/blog" ? 0.8 : 0.6,
     })),
     ...products.map((product) => ({
       url: `${siteUrl}/shop/${product.slug}`,
       lastModified: now,
       changeFrequency: "weekly" as const,
       priority: 0.8,
+    })),
+    ...posts.map((post) => ({
+      url: `${siteUrl}/blog/${post.slug}`,
+      lastModified: post.updatedAt ? new Date(post.updatedAt) : new Date(post.date),
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
     })),
   ];
 }

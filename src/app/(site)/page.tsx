@@ -8,6 +8,9 @@ import { getReviews, ratingSummary } from "@/lib/reviews";
 import { HeroSlideshow } from "@/components/site/HeroSlideshow";
 import { getSettings } from "@/lib/settings";
 import { getCategories } from "@/lib/categories";
+import { getBlogPosts } from "@/lib/blog";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { localBusinessJsonLd, websiteJsonLd, blogJsonLd } from "@/lib/seo";
 const WHY = [
   {
     title: "120-point inspection",
@@ -31,10 +34,11 @@ const STATS = [
 ];
 
 export default async function HomePage() {
-  const [featured, reviews, categories] = await Promise.all([
+  const [featured, reviews, categories, posts] = await Promise.all([
     getProducts({ featured: true }),
     getReviews(),
     getCategories(),
+    getBlogPosts(),
   ]);
   const { site } = await getSettings();
   const shown = featured.slice(0, 4);
@@ -42,6 +46,9 @@ export default async function HomePage() {
 
   return (
     <>
+      <JsonLd data={websiteJsonLd()} />
+      <JsonLd data={localBusinessJsonLd(site, { average, count })} />
+      <JsonLd data={blogJsonLd(posts)} />
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-white pb-16 pt-16 md:pb-24 md:pt-24">
         {/* Looping background video — poster covers it until it plays. */}

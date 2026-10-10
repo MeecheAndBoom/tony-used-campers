@@ -4,6 +4,7 @@ import { CartView } from "@/components/site/CartView";
 export const metadata: Metadata = {
   title: "Your bag",
   description: "Review the campers you've reserved before checkout.",
+  robots: { index: false, follow: false },
 };
 
 export default function CartPage() {

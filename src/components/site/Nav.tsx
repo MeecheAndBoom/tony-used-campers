@@ -9,6 +9,7 @@ import { cartCount, useCartStore } from "@/store/cart";
 
 const LINKS = [
   { href: "/shop", label: "Shop" },
+  { href: "/blog", label: "Blog" },
   { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
   { href: "/testimonials", label: "Reviews" },

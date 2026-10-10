@@ -2,12 +2,29 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Accordion } from "@/components/ui/Accordion";
 import { Reveal } from "@/components/ui/Reveal";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getSettings } from "@/lib/settings";
+import { breadcrumbJsonLd, faqJsonLd, SITE_KEYWORDS } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "FAQ",
   description:
-    "Answers about buying used campers, inspections, delivery, payment, trade-ins and service — Tony Used Campers.",
+    "Answers about buying used campers, inspections, delivery, payment, trade-ins and service — Tony Used Campers, Detroit MI.",
+  keywords: [
+    ...SITE_KEYWORDS,
+    "RV dealer FAQ",
+    "used camper delivery",
+    "RV trade-in value",
+    "RV financing FAQ",
+  ],
+  alternates: { canonical: "/faq" },
+  openGraph: {
+    title: "FAQ — Tony Used Campers",
+    description:
+      "Straight answers on buying used campers, payment, delivery, trade-ins and after-sale service.",
+    url: "/faq",
+    type: "website",
+  },
 };
 
 const BUYING = [
@@ -89,6 +106,15 @@ export default async function FAQPage() {
 
   return (
     <div className="bg-white">
+      <JsonLd
+        data={faqJsonLd([...BUYING, ...PAYING, ...DELIVERY])}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "FAQ" },
+        ])}
+      />
       <section className="section pb-10 pt-16 md:pt-24">
         <Reveal>
           <h1 className="text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-ink">

@@ -2,15 +2,18 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { getProducts } from "@/lib/products";
+import { getBlogPosts } from "@/lib/blog";
 import { money } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Search",
-  description: "Search Tony Used Campers inventory and site pages.",
+  description: "Search Tony Used Campers inventory, guides and site pages.",
+  robots: { index: false, follow: true },
 };
 
 const SITE_LINKS = [
   { href: "/shop", label: "Shop all campers" },
+  { href: "/blog", label: "Blog & buying guides" },
   { href: "/about", label: "About us" },
   { href: "/services", label: "Services & repair" },
   { href: "/why-buy-from-us", label: "Why buy from us" },
@@ -33,6 +36,13 @@ export default async function SearchPage({ searchParams }: Props) {
   const inventory = query
     ? products.filter((p) =>
         `${p.title} ${p.brand} ${p.model} ${p.type} ${p.year} ${p.description} ${p.features.join(" ")}`
+          .toLowerCase()
+          .includes(query),
+      )
+    : [];
+  const posts = query
+    ? (await getBlogPosts()).filter((p) =>
+        `${p.title} ${p.excerpt} ${p.category} ${p.tags.join(" ")}`
           .toLowerCase()
           .includes(query),
       )
@@ -72,9 +82,9 @@ export default async function SearchPage({ searchParams }: Props) {
       <section className="section pb-20 md:pb-28">
         {query && (
           <p className="mb-8 text-[15px] text-muted">
-            {inventory.length + pages.length === 0
+            {inventory.length + posts.length + pages.length === 0
               ? "No results"
-              : `${inventory.length + pages.length} result${inventory.length + pages.length === 1 ? "" : "s"}`}
+              : `${inventory.length + posts.length + pages.length} result${inventory.length + posts.length + pages.length === 1 ? "" : "s"}`}
             {""} for “{q}”
           </p>
         )}
@@ -115,6 +125,29 @@ export default async function SearchPage({ searchParams }: Props) {
           </div>
         )}
 
+        {posts.length > 0 && (
+          <div className="mb-14">
+            <h2 className="mb-5 text-[19px] font-semibold tracking-[-0.01em]">
+              Guides
+            </h2>
+            <ul className="max-w-[640px] border-t border-line">
+              {posts.map((post) => (
+                <li key={post.slug} className="border-b border-line-soft">
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="block py-3.5 text-[16px] text-ink transition-colors hover:text-accent"
+                  >
+                    {post.title}
+                    <span className="ml-2 text-[13px] text-muted">
+                      {post.category}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         {pages.length > 0 && (
           <div className="mb-14">
             <h2 className="mb-5 text-[19px] font-semibold tracking-[-0.01em]">
@@ -136,7 +169,7 @@ export default async function SearchPage({ searchParams }: Props) {
           </div>
         )}
 
-        {query && inventory.length + pages.length === 0 && (
+        {query && inventory.length + posts.length + pages.length === 0 && (
           <div className="rounded-card bg-alt px-6 py-14 text-center">
             <h2 className="text-[20px] font-semibold">Nothing found.</h2>
             <p className="mx-auto mt-2 max-w-[420px] text-[15px] text-muted">

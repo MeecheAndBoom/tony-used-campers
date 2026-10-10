@@ -22,6 +22,13 @@ import {
   deleteCategory,
 } from "@/lib/categories";
 import { sendOrderReply, sendEnquiryReply } from "@/lib/notifications";
+import {
+  createBlogPost,
+  updateBlogPost,
+  deleteBlogPost,
+  BLOG_CATEGORIES,
+  type BlogPostInput,
+} from "@/lib/blog";
 
 const PRODUCT_TYPES = [
   "Travel Trailer",
@@ -95,6 +102,58 @@ export async function deleteProductAction(formData: FormData) {
   const slug = String(formData.get("slug") ?? "");
   if (slug) await deleteProduct(slug);
   redirect("/admin/products");
+}
+
+/* ───────────────────────── Blog ───────────────────────── */
+
+function parseBlogPost(formData: FormData): BlogPostInput {
+  const str = (name: string) => String(formData.get(name) ?? "").trim();
+  const lines = (name: string) =>
+    str(name)
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .filter(Boolean);
+
+  const category = str("category");
+  return {
+    slug: str("slug") || undefined,
+    title: str("title"),
+    excerpt: str("excerpt"),
+    category: (BLOG_CATEGORIES.includes(category as never)
+      ? category
+      : BLOG_CATEGORIES[0]) as BlogPostInput["category"],
+    tags: lines("tags"),
+    author: str("author") || "Tony Marchetti",
+    date: str("date") || new Date().toISOString().slice(0, 10),
+    image: str("image") || "/images/hero-road.jpg",
+    body: str("body"),
+    readMinutes: Number(str("readMinutes")) || undefined,
+    status: (str("status") === "draft" ? "draft" : "live") as "live" | "draft",
+    featured: formData.get("featured") === "on",
+  };
+}
+
+export async function createBlogPostAction(formData: FormData) {
+  const input = parseBlogPost(formData);
+  if (!input.title || !input.body) {
+    redirect("/admin/blog/new?error=missing-fields");
+  }
+  await createBlogPost(input);
+  redirect("/admin/blog");
+}
+
+export async function updateBlogPostAction(formData: FormData) {
+  const slug = String(formData.get("slug") ?? "");
+  if (!slug) redirect("/admin/blog");
+  const input = parseBlogPost(formData);
+  await updateBlogPost(slug, input);
+  redirect("/admin/blog");
+}
+
+export async function deleteBlogPostAction(formData: FormData) {
+  const slug = String(formData.get("slug") ?? "");
+  if (slug) await deleteBlogPost(slug);
+  redirect("/admin/blog");
 }
 
 /* ───────────────────────── Reviews ───────────────────────── */

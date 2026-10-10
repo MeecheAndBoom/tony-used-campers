@@ -5,6 +5,7 @@ import { getSettings } from "@/lib/settings";
 export const metadata: Metadata = {
   title: "Checkout",
   description: "Complete your camper order — pickup or delivery from Detroit.",
+  robots: { index: false, follow: false },
 };
 
 export default async function CheckoutPage() {

@@ -54,6 +54,39 @@ export type Review = {
   published: boolean;
 };
 
+export type BlogCategory =
+  | "Buying Guides"
+  | "Maintenance"
+  | "Owning an RV"
+  | "RV Life"
+  | "Destinations"
+  | "Dealership";
+
+export type BlogPost = {
+  slug: string;
+  title: string;
+  /** Used as the meta description and the card summary — 140–160 chars. */
+  excerpt: string;
+  category: BlogCategory;
+  tags: string[];
+  author: string;
+  /** Publish date, ISO yyyy-mm-dd. */
+  date: string;
+  /** Hero image path under /public. */
+  image: string;
+  /**
+   * Post body in lightweight Markdown: paragraphs split on blank lines,
+   * `## ` / `### ` headings, `- ` bullets, `1. ` numbered lists and `> ` quotes.
+   */
+  body: string;
+  /** Optional override — computed from the body when missing. */
+  readMinutes?: number;
+  featured?: boolean;
+  status: "live" | "draft";
+  createdAt?: string;
+  updatedAt?: string;
+};
+
 export type OrderStatus =
   | "Placed"
   | "Payment Pending"

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./globals.css";
 import { getSettings } from "@/lib/settings";
+import { SITE_KEYWORDS } from "@/lib/seo";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
@@ -14,14 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s — ${site.name}`,
     },
     description:
-      "Shop inspected used campers, travel trailers and motorhomes in Detroit, Michigan. Transparent pricing, nationwide delivery and a simple online checkout.",
-    keywords: [
-      "used campers Detroit",
-      "used RVs Michigan",
-      "used travel trailers",
-      "camper dealership Detroit",
-      "Tony Used Campers",
-    ],
+      "Shop inspected used campers, travel trailers, fifth wheels and motorhomes in Detroit, Michigan. Transparent pricing, nationwide delivery and a simple online checkout.",
+    keywords: [...SITE_KEYWORDS, site.name, `${site.name} Detroit`],
     openGraph: {
       title: `${site.name} — ${site.tagline}`,
       description:

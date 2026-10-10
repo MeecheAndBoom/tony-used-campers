@@ -5,9 +5,19 @@ import { AddToCart } from "@/components/site/AddToCart";
 import { Gallery } from "@/components/site/Gallery";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { Reveal } from "@/components/ui/Reveal";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { money } from "@/lib/format";
 import { getProduct, getProducts } from "@/lib/products";
 import { getSettings } from "@/lib/settings";
+import { SITE } from "@/lib/constants";
+import {
+  breadcrumbJsonLd,
+  productDescription,
+  productJsonLd,
+  productKeywords,
+  productTitle,
+  SITE_KEYWORDS,
+} from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -15,9 +25,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const product = await getProduct(slug);
   if (!product) return { title: "Camper not found" };
+
+  const description = productDescription(product);
   return {
-    title: `${product.title} — ${money(product.price)}`,
-    description: product.description.slice(0, 160),
+    title: productTitle(product),
+    description,
+    keywords: [...productKeywords(product), ...SITE_KEYWORDS],
+    alternates: { canonical: `/shop/${product.slug}` },
+    openGraph: {
+      type: "website",
+      title: productTitle(product),
+      description,
+      url: `/shop/${product.slug}`,
+      siteName: SITE.name,
+      locale: "en_US",
+      images: product.images.length
+        ? [{ url: product.images[0], alt: product.title }]
+        : [{ url: "/tony-campers-og.png", width: 1200, height: 630 }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: productTitle(product),
+      description,
+      images: [product.images[0] || "/tony-campers-og.png"],
+    },
   };
 }
 
@@ -44,6 +75,15 @@ export default async function ProductPage({ params }: Props) {
 
   return (
     <div className="bg-white">
+      <JsonLd data={productJsonLd(product, site)} />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: "Home", path: "/" },
+          { name: "Shop", path: "/shop" },
+          { name: product.title },
+        ])}
+      />
+
       {/* Breadcrumb */}
       <div className="section pt-20 text-[13px] text-muted md:pt-24">
         <Link href="/shop" className="transition-colors hover:text-accent">

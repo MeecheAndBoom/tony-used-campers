@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Track your order",
   description:
     "Look up your Tony Used Campers order with the email address used at checkout and your TUC reference number.",
+  robots: { index: false, follow: false },
 };
 
 type Props = {

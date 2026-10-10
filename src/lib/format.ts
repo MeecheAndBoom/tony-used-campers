@@ -6,12 +6,26 @@ export const money = (value: number, cents = false) =>
     maximumFractionDigits: cents ? 2 : 0,
   }).format(value);
 
+/**
+ * Date-only strings (yyyy-mm-dd) are parsed as local dates so a publish date
+ * never shifts a day when the server sits in a different timezone.
+ */
+const parseDate = (value: string | Date): Date => {
+  if (typeof value === "string") {
+    const dateOnly = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (dateOnly) {
+      return new Date(Number(dateOnly[1]), Number(dateOnly[2]) - 1, Number(dateOnly[3]));
+    }
+  }
+  return new Date(value);
+};
+
 export const shortDate = (value: string | Date) =>
   new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
-  }).format(new Date(value));
+  }).format(parseDate(value));
 
 export const dateTime = (value: string | Date) =>
   new Intl.DateTimeFormat("en-US", {
@@ -20,4 +34,4 @@ export const dateTime = (value: string | Date) =>
     year: "numeric",
     hour: "numeric",
     minute: "2-digit",
-  }).format(new Date(value));
+  }).format(parseDate(value));
