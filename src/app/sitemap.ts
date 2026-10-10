@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getProducts } from "@/lib/products";
 import { getBlogPosts } from "@/lib/blog";
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+import { siteOrigin } from "@/lib/seo";
 
 const STATIC_PAGES = [
   "",
@@ -34,10 +33,11 @@ const EXCLUDED = new Set(["/track", "/search"]);
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [products, posts] = await Promise.all([getProducts(), getBlogPosts()]);
   const now = new Date();
+  const siteUrl = siteOrigin();
 
   return [
     ...STATIC_PAGES.filter((path) => !EXCLUDED.has(path)).map((path) => ({
-      url: `${siteUrl}${path}`,
+      url: `${siteUrl}${path || "/"}`,
       lastModified: now,
       changeFrequency: (path === "" || path === "/shop"
         ? "daily"

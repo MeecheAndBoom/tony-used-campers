@@ -5,7 +5,7 @@ import type { SiteInfo } from "@/lib/settings";
 import { EmailBody, EmailShell, EmailButton as EmailButtonInline } from "./Shell";
 import { ItemsRows, TotalsRows, paymentLabel } from "./order-shared";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").trim().replace(/\/+$/, "");
 
 /** Email 2 — new order alert (admin). */
 export function NewOrderAlertEmail({

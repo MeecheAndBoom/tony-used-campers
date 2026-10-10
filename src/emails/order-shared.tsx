@@ -5,7 +5,7 @@ import { PAYMENT_METHODS, SITE } from "@/lib/constants";
 import type { PaymentMethodSetting, SiteInfo } from "@/lib/settings";
 import { DetailRow, EmailBody, EmailButton, EmailShell } from "./Shell";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").trim().replace(/\/+$/, "");
 
 export function paymentLabel(
   order: OrderRecord,

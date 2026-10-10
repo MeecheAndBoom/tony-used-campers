@@ -16,7 +16,7 @@ import type { ReactNode } from "react";
 import { SITE } from "@/lib/constants";
 import type { SiteInfo } from "@/lib/settings";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").trim().replace(/\/+$/, "");
 
 const theme = {
   ink: "#1d1d1f",

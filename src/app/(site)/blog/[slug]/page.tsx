@@ -40,7 +40,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `/blog/${post.slug}`,
       siteName: SITE.name,
       publishedTime: post.date,
-      modifiedTime: post.updatedAt ?? post.date,
+      // Mongo returns updatedAt as a Date; normalize so Next renders an ISO
+      // string instead of "[object Object]".
+      modifiedTime: post.updatedAt
+        ? new Date(post.updatedAt).toISOString()
+        : post.date,
       authors: [post.author],
       tags: post.tags,
       images: post.image

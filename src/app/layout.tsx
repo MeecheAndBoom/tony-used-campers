@@ -4,7 +4,7 @@ import "./globals.css";
 import { getSettings } from "@/lib/settings";
 import { SITE_KEYWORDS } from "@/lib/seo";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").trim().replace(/\/+$/, "");
 
 export async function generateMetadata(): Promise<Metadata> {
   const { site } = await getSettings();

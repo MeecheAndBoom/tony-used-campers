@@ -85,9 +85,19 @@ export function postDescription(post: BlogPostRecord): string {
 
 type JsonLd = Record<string, unknown>;
 
+/**
+ * Site origin without a trailing slash — Vercel's env often ends in "/", and
+ * concatenating "/path" onto it would emit malformed `//path` URLs in the
+ * sitemap, robots.txt and every JSON-LD graph.
+ */
+export function siteOrigin(): string {
+  return (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000")
+    .trim()
+    .replace(/\/+$/, "");
+}
+
 function url(path = ""): string {
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
-  return `${base}${path}`;
+  return `${siteOrigin()}${path}`;
 }
 
 export function websiteJsonLd(): JsonLd {
