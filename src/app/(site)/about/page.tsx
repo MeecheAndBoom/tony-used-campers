@@ -36,7 +36,7 @@ const TEAM: {
     name: "Tony Marchetti",
     role: "Founder",
     bio: "Started selling campers out of a two-space lot in 2009. Still inspects every trade-in himself.",
-    image: "/images/founder/family-portrait.webp",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/founder/family-portrait.webp",
     // Portrait source — bias upward so faces survive the 4/3 crop.
     position: "object-[center_22%]",
   },
@@ -44,13 +44,13 @@ const TEAM: {
     name: "Dana Whitfield",
     role: "Lead Technician",
     bio: "ASE-certified, 22 years in RV service. Runs the 120-point inspection and the service bays.",
-    image: "/images/services-interior.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-interior.jpg",
   },
   {
     name: "Marco Reyes",
     role: "Sales & Delivery",
     bio: "Handles deliveries from Ann Arbor to Traverse City — and the walkthrough when your camper arrives.",
-    image: "/images/life-lot.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-lot.jpg",
   },
 ];
 
@@ -85,7 +85,7 @@ export default async function AboutPage() {
       <Reveal delay={150} className="section">
         <div className="relative aspect-[16/9] overflow-hidden rounded-card bg-alt">
           <Image
-            src="/images/about-family.jpg"
+            src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/about-family.jpg"
             alt="The Tony Used Campers team on the lot"
             fill
             priority

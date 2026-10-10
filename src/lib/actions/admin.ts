@@ -125,7 +125,7 @@ function parseBlogPost(formData: FormData): BlogPostInput {
     tags: lines("tags"),
     author: str("author") || "Tony Marchetti",
     date: str("date") || new Date().toISOString().slice(0, 10),
-    image: str("image") || "/images/hero-road.jpg",
+    image: str("image") || "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/hero-road.jpg",
     body: str("body"),
     readMinutes: Number(str("readMinutes")) || undefined,
     status: (str("status") === "draft" ? "draft" : "live") as "live" | "draft",

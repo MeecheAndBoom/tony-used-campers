@@ -46,7 +46,7 @@ export default function SellPage() {
       <Reveal delay={150} className="section">
         <div className="relative aspect-[16/9] overflow-hidden rounded-card bg-alt">
           <Image
-            src="/images/life-lot.jpg"
+            src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-lot.jpg"
             alt="Campers lined up on the Tony Used Campers lot"
             fill
             priority

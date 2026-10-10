@@ -56,7 +56,7 @@ export function Nav({ siteName = SITE.name }: { siteName?: string }) {
             aria-label={`${siteName} home`}
           >
             <Image
-              src="/tony-campers-logo.png"
+              src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-logo.png"
               alt={siteName}
               width={2117}
               height={743}

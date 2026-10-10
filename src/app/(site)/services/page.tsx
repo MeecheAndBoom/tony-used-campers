@@ -27,7 +27,7 @@ const SERVICES: Service[] = [
       "Brakes, bearings, suspension and hitch setup",
       "Pre-season checkups before your first trip",
     ],
-    image: "/images/services-interior.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-interior.jpg",
   },
   {
     title: "Inspections",
@@ -38,7 +38,7 @@ const SERVICES: Service[] = [
       "Undercarriage, tires and brakes",
       "Written report with photos within 24 hours",
     ],
-    image: "/images/gallery-kitchen.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-kitchen.jpg",
   },
   {
     title: "Parts & accessories",
@@ -49,7 +49,7 @@ const SERVICES: Service[] = [
       "Slide toppers, awning care, covers",
       "Dash cams, solar, battery upgrades",
     ],
-    image: "/images/gallery-bed.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-bed.jpg",
   },
   {
     title: "Delivery & walkthrough",
@@ -60,7 +60,7 @@ const SERVICES: Service[] = [
       "Hitching lesson for first-timers",
       "Storage guidance for the off-season",
     ],
-    image: "/images/life-camp.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-camp.jpg",
   },
   {
     title: "Trade-ins & consignment",
@@ -70,7 +70,7 @@ const SERVICES: Service[] = [
       "Trade credit applies to any unit on the lot",
       "Consignment handled end to end",
     ],
-    image: "/images/life-lawn.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-lawn.jpg",
   },
   {
     title: "Warranty support",
@@ -80,7 +80,7 @@ const SERVICES: Service[] = [
       "Third-party plans honored and serviced here",
       "Claim paperwork filed by our team",
     ],
-    image: "/images/gallery-lounge.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-lounge.jpg",
   },
 ];
 

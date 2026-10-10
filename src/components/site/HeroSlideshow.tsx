@@ -4,12 +4,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const IMAGES = [
-  "/images/hero-road.jpg",
-  "/images/life-camp.jpg",
-  "/images/life-lot.jpg",
-  "/images/gallery-kitchen.jpg",
-  "/images/gallery-lounge.jpg",
-  "/images/gallery-bed.jpg",
+  "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/hero-road.jpg",
+  "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-camp.jpg",
+  "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-lot.jpg",
+  "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-kitchen.jpg",
+  "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-lounge.jpg",
+  "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-bed.jpg",
 ];
 
 export function HeroSlideshow() {

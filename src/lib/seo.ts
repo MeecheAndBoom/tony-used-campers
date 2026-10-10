@@ -97,6 +97,8 @@ export function siteOrigin(): string {
 }
 
 function url(path = ""): string {
+  // Absolute URLs (e.g. Cloudinary-hosted assets) pass through untouched.
+  if (/^https?:\/\//.test(path)) return path;
   return `${siteOrigin()}${path}`;
 }
 
@@ -184,7 +186,7 @@ export function localBusinessJsonLd(
     "@type": "AutoDealer",
     name: site.name,
     url: url(),
-    image: url("/tony-campers-og.png"),
+    image: url("https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-og.png"),
     description: `${site.name} sells inspected used campers, travel trailers, fifth wheels and motorhomes in ${site.location}.`,
     telephone: site.phone,
     priceRange: "$$",
@@ -277,7 +279,7 @@ export function articleJsonLd(post: BlogPostRecord): JsonLd {
     publisher: {
       "@type": "Organization",
       name: SITE.name,
-      logo: { "@type": "ImageObject", url: url("/tony-campers-logo.png") },
+      logo: { "@type": "ImageObject", url: url("https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-logo.png") },
     },
     articleSection: post.category,
     keywords: post.tags.join(", "),

@@ -67,7 +67,7 @@ export function Footer({ site }: { site?: SiteInfo }) {
           className="mb-10 inline-block"
         >
           <Image
-            src="/tony-campers-logo.png"
+            src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-logo.png"
             alt={info.name}
             width={2117}
             height={743}

@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 const AUTOPLAY_MS = 4000;
 
 export function Gallery({ images, title }: { images: string[]; title: string }) {
-  const shown = images.length ? images : ["/images/hero-road.jpg"];
+  const shown = images.length ? images : ["https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/hero-road.jpg"];
   const total = shown.length;
 
   const [active, setActive] = useState(0);

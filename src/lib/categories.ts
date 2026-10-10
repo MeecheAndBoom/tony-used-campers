@@ -15,13 +15,13 @@ const LOCAL_FILE = path.join(DATA_DIR, "categories.json");
 
 /** Seed categories used on the homepage and as the no-store fallback. */
 export const DEFAULT_CATEGORIES: Category[] = [
-  { id: "travel-trailer", name: "Travel Trailer", image: "/images/carav-cat/Travel Trailer.png" },
-  { id: "camper-van", name: "Camper Van", image: "/images/carav-cat/Camper Van.png" },
-  { id: "class-c-motorhome", name: "Class C Motorhome", image: "/images/carav-cat/Class C Motorhome.png" },
-  { id: "class-a-motorhome", name: "Class A Motorhome", image: "/images/carav-cat/Class A Motorhome.png" },
-  { id: "fifth-wheel", name: "Fifth Wheel", image: "/images/carav-cat/Fifth Wheel.png" },
-  { id: "pop-up", name: "Pop-Up", image: "/images/carav-cat/Pop-Up.png" },
-  { id: "teardrop", name: "Teardrop", image: "/images/carav-cat/Teardrop.png" },
+  { id: "travel-trailer", name: "Travel Trailer", image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/carav-cat/Travel_Trailer.png" },
+  { id: "camper-van", name: "Camper Van", image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/carav-cat/Camper_Van.png" },
+  { id: "class-c-motorhome", name: "Class C Motorhome", image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/carav-cat/Class_C_Motorhome.png" },
+  { id: "class-a-motorhome", name: "Class A Motorhome", image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/carav-cat/Class_A_Motorhome.png" },
+  { id: "fifth-wheel", name: "Fifth Wheel", image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/carav-cat/Fifth_Wheel.png" },
+  { id: "pop-up", name: "Pop-Up", image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/carav-cat/Pop-Up.png" },
+  { id: "teardrop", name: "Teardrop", image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/carav-cat/Teardrop.png" },
 ];
 
 async function readLocal(): Promise<Category[]> {

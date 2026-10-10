@@ -67,7 +67,7 @@ export default async function WhyBuyFromUsPage() {
       <Reveal delay={150} className="section">
         <div className="relative aspect-[16/9] overflow-hidden rounded-card bg-alt">
           <Image
-            src="/images/hero-road.jpg"
+            src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/hero-road.jpg"
             alt="A camper parked at a Michigan campsite at golden hour"
             fill
             priority

@@ -57,7 +57,7 @@ export default async function AdminCategoriesPage({ searchParams }: Props) {
             <input
               id="image"
               name="image"
-              placeholder="/images/carav-cat/Truck Camper.png"
+              placeholder="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/carav-cat/Travel_Trailer.png"
               className={FIELD}
             />
           </div>

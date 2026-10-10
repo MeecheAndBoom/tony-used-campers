@@ -6,6 +6,7 @@ import { money } from "@/lib/format";
 import { getProducts } from "@/lib/products";
 import { getReviews, ratingSummary } from "@/lib/reviews";
 import { HeroSlideshow } from "@/components/site/HeroSlideshow";
+import { HeroVideo } from "@/components/site/HeroVideo";
 import { getSettings } from "@/lib/settings";
 import { getCategories } from "@/lib/categories";
 import { getBlogPosts } from "@/lib/blog";
@@ -56,19 +57,8 @@ export default async function HomePage() {
       <JsonLd data={blogJsonLd(posts)} />
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-white pb-16 pt-16 md:pb-24 md:pt-24">
-        {/* Looping background video — poster covers it until it plays. */}
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          src="/video/rv-road.mp4"
-          poster="/images/hero-road.jpg"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-          tabIndex={-1}
-        />
+        {/* Looping background video — poster covers it if autoplay is blocked. */}
+        <HeroVideo src="https://res.cloudinary.com/hrnohv4p/video/upload/q_auto,w_1280,c_limit/tuc/video/rv-road.mp4" poster="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/hero-road.jpg" />
         <div
           className="absolute inset-0 bg-white/78"
           aria-hidden="true"
@@ -272,7 +262,7 @@ export default async function HomePage() {
           <Reveal delay={100} className="order-1 md:order-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-alt">
               <Image
-                src="/images/deliveries/jayco-eagle-ht-hitched.webp"
+                src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/deliveries/jayco-eagle-ht-hitched.webp"
                 alt="Customers hitched up with their fifth wheel on delivery day"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"

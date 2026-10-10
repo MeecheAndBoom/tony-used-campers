@@ -21,7 +21,7 @@ export const SEED_BLOG_POSTS: BlogPost[] = [
     ],
     author: "Dana Whitfield",
     date: "2026-09-18",
-    image: "/images/services-interior.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-interior.jpg",
     featured: true,
     status: "live",
     body: `A camper can shine under the LED lights on the lot and still hide five figures of damage. Water gets in through one tired roof seal, sits behind a wall panel for a season, and by the time the carpet feels soft the repair is a full gut job. That is why every unit we take in gets walked roof-to-tires before anyone writes a price on it — and why we hand you the report whether it helps us or not.
@@ -91,7 +91,7 @@ Bring your own inspector too. We would rather spend an afternoon proving the uni
     ],
     author: "Dana Whitfield",
     date: "2026-09-26",
-    image: "/images/gallery-kitchen.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-kitchen.jpg",
     featured: false,
     status: "live",
     body: `The first hard freeze of the year does the damage, and it does it quietly. A half-gallon of water left in a P-trap, a water heater tank that was never drained, or a line with a low-point you forgot — that is all it takes to split a fitting while the camper sits under a snow load for four months.
@@ -160,7 +160,7 @@ If you would rather not do it, bring the camper to our service bays before the f
     ],
     author: "Dana Whitfield",
     date: "2026-08-27",
-    image: "/images/camper-four-winds.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/camper-four-winds.jpg",
     featured: false,
     status: "live",
     body: `A trailer with 8/32 of tread and four-year-old tires is not a safe trailer. That sentence surprises more first-time buyers than anything else we say on the lot, because tire marketing is all about tread depth and almost nothing about age.
@@ -215,7 +215,7 @@ If you are shopping used and the tires date back to the build year, factor a rep
     ],
     author: "Tony Marchetti",
     date: "2026-08-14",
-    image: "/images/life-lawn.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-lawn.jpg",
     featured: true,
     status: "live",
     body: `The sticker price is the part everyone budgets for. It is also, over five years, the smaller part.
@@ -261,7 +261,7 @@ Is it worth it? That depends entirely on how you use it. What we will say is tha
     ],
     author: "Marco Reyes",
     date: "2026-07-23",
-    image: "/images/camper-airstream.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/camper-airstream.jpg",
     featured: false,
     status: "live",
     body: `We have delivered close to two thousand campers since 2009, and the first-time buyers who come back to trade in tell us the same stories every time. None of these mistakes are stupid. They are all the kind of thing that only becomes obvious after the money is spent.
@@ -317,7 +317,7 @@ Come in with your tow vehicle's payload sticker, your credit union's pre-approva
     ],
     author: "Tony Marchetti",
     date: "2026-06-30",
-    image: "/images/life-camp.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-camp.jpg",
     featured: true,
     status: "live",
     body: `Every season somebody walks onto the lot ready to buy a rig for full-time living, and we ask the same three questions first: where will you get mail, how will you work, and what is your plan for a month of rain in February?
@@ -369,7 +369,7 @@ Then go. The owners who make it past year two are the ones who stopped researchi
     ],
     author: "Marco Reyes",
     date: "2026-06-11",
-    image: "/images/camper-cherokee.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/camper-cherokee.jpg",
     featured: false,
     status: "live",
     body: `The first time you back a travel trailer into a campsite, you will over-correct, swing wide, and get out four times to look. Everyone does. The skills that matter most for safety are different from the skills that look impressive in the parking lot, and they are all learnable in an afternoon.
@@ -425,7 +425,7 @@ It takes five minutes. It is the five minutes that keeps the rest of the trip a 
     ],
     author: "Marco Reyes",
     date: "2026-05-29",
-    image: "/images/hero-road.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/hero-road.jpg",
     featured: false,
     status: "live",
     body: `Living on Michigan Ave gives us a good view of where people actually go. These are the runs our customers tow most — sorted by how far you are willing to drive on a Friday after work.
@@ -479,7 +479,7 @@ Pick the campground first, then the route. It is a better way to plan than the o
     ],
     author: "Tony Marchetti",
     date: "2026-09-04",
-    image: "/images/life-lot.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-lot.jpg",
     featured: false,
     status: "live",
     body: `People ask why two campers of the same year and model can trade in thousands apart. The answer is boring and consistent once you see the inputs, and knowing them is how you get to the high end of the range.
