@@ -49,18 +49,16 @@ async function walk(dir) {
   return out;
 }
 
-/** All content assets: images, the hero video, the logo and the OG image.
- *  Browser chrome (favicons, manifest icons) stays local on purpose. */
+/** All content images plus the logo and OG image. The hero video intentionally
+ *  stays in public/video (static asset, never changes). Browser chrome
+ *  (favicons, manifest icons) also stays local. */
 async function collectAssets() {
   const files = [];
-  for (const dir of ["images", "video"]) {
-    const abs = path.join(PUBLIC_DIR, dir);
-    files.push(...(await walk(abs)));
-  }
+  files.push(...(await walk(path.join(PUBLIC_DIR, "images"))));
   for (const name of ["tony-campers-logo.png", "tony-campers-og.png"]) {
     files.push(path.join(PUBLIC_DIR, name));
   }
-  const ASSET_EXT = /\.(jpe?g|png|webp|avif|gif|mp4|webm|mov)$/i;
+  const ASSET_EXT = /\.(jpe?g|png|webp|avif|gif)$/i;
   return files
     .filter((abs) => ASSET_EXT.test(abs))
     .map((abs) => ({

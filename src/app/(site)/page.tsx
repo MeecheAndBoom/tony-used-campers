@@ -57,8 +57,12 @@ export default async function HomePage() {
       <JsonLd data={blogJsonLd(posts)} />
       {/* ── Hero ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-white pb-16 pt-16 md:pb-24 md:pt-24">
-        {/* Looping background video — poster covers it if autoplay is blocked. */}
-        <HeroVideo src="https://res.cloudinary.com/hrnohv4p/video/upload/q_auto,w_1280,c_limit/tuc/video/rv-road.mp4" poster="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/hero-road.jpg" />
+        {/* Looping background video — poster covers it if autoplay is blocked.
+            Video stays in the repo (static, never changes); images are on Cloudinary. */}
+        <HeroVideo
+          src="/video/rv-road.mp4"
+          poster="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/hero-road.jpg"
+        />
         <div
           className="absolute inset-0 bg-white/78"
           aria-hidden="true"
