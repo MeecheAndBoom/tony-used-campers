@@ -19,15 +19,23 @@ async function deliver(props: {
   subject: string;
   tag: string;
   template: React.ReactElement;
-}) {
-  const html = await render(props.template);
-  return sendEmail({
-    to: props.to,
-    subject: props.subject,
-    tag: props.tag,
-    html,
-    text: toText(html),
-  });
+}): Promise<{ delivered: boolean; previewPath?: string; error?: string }> {
+  // Email is best-effort: a render or send failure must never crash the
+  // page or server action that triggered it.
+  try {
+    const html = await render(props.template);
+    return await sendEmail({
+      to: props.to,
+      subject: props.subject,
+      tag: props.tag,
+      html,
+      text: toText(html),
+    });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`[email] ${props.tag} failed: ${message}`);
+    return { delivered: false, error: message };
+  }
 }
 
 /** Email 1 (client) + email 2 (admin), fired when an order is placed. */

@@ -1,4 +1,5 @@
 import { promises as fs } from "fs";
+import os from "os";
 import path from "path";
 
 const OUTBOX = path.join(process.cwd(), "data", "outbox");
@@ -23,59 +24,83 @@ function transportConfigured() {
   return Boolean(process.env.SMTP_HOST && process.env.SMTP_USER);
 }
 
-/** Writes a rendered message to `data/outbox/` for inspection/testing. */
-async function writeOutbox(payload: EmailPayload) {
-  await fs.mkdir(OUTBOX, { recursive: true });
+/**
+ * Writes a rendered message for inspection/testing. Tries `data/outbox/`
+ * (writable locally), then the OS temp dir (serverless runtimes such as
+ * Vercel have a read-only project filesystem). Never throws — an unwritable
+ * disk must not break the caller.
+ */
+async function writeOutbox(payload: EmailPayload): Promise<string | undefined> {
+  const body = `<!-- To: ${payload.to}\nSubject: ${payload.subject} -->\n${payload.html}`;
   const stamp = new Date().toISOString().replace(/[:.]/g, "-");
   const safeTag = (payload.tag ?? "message").replace(/[^a-z0-9-]/gi, "-");
   const safeTo = payload.to.replace(/[^a-z0-9.@_+-]/gi, "_");
-  const file = path.join(OUTBOX, `${stamp}-${safeTag}-${safeTo}.html`);
-  const body = `<!-- To: ${payload.to}\nSubject: ${payload.subject} -->\n${payload.html}`;
-  await fs.writeFile(file, body, "utf8");
-  return file;
+  const name = `${stamp}-${safeTag}-${safeTo}.html`;
+
+  for (const dir of [OUTBOX, path.join(os.tmpdir(), "tuc-outbox")]) {
+    try {
+      await fs.mkdir(dir, { recursive: true });
+      const file = path.join(dir, name);
+      await fs.writeFile(file, body, "utf8");
+      return file;
+    } catch {
+      /* try the next location */
+    }
+  }
+  return undefined;
 }
 
 /**
  * Sends through the configured SMTP relay. Without SMTP credentials — or if
- * the relay rejects the message — a copy is written to `data/outbox/` so the
- * admin flow never breaks on a transient email failure.
+ * the relay rejects the message — a copy is written to the outbox when
+ * possible. This function never rejects: email is best-effort and must never
+ * crash the page or server action that triggered it.
  */
 export async function sendEmail(payload: EmailPayload): Promise<SendResult> {
-  if (transportConfigured()) {
-    try {
-      const nodemailer = (await import("nodemailer")).default;
-      const transport = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT ?? 587),
-        secure: process.env.SMTP_SECURE === "true",
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-        },
-      });
+  try {
+    if (transportConfigured()) {
+      try {
+        const nodemailer = (await import("nodemailer")).default;
+        const transport = nodemailer.createTransport({
+          host: process.env.SMTP_HOST,
+          port: Number(process.env.SMTP_PORT ?? 587),
+          secure: process.env.SMTP_SECURE === "true",
+          auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS,
+          },
+        });
 
-      await transport.sendMail({
-        from:
-          process.env.EMAIL_FROM ??
-          `"Tony Used Campers" <${process.env.SMTP_USER}>`,
-        to: payload.to,
-        subject: payload.subject,
-        html: payload.html,
-        text: payload.text,
-      });
-      return { delivered: true };
-    } catch (error) {
-      const previewPath = await writeOutbox(payload);
-      return {
-        delivered: false,
-        previewPath,
-        error: error instanceof Error ? error.message : String(error),
-      };
+        await transport.sendMail({
+          from:
+            process.env.EMAIL_FROM ??
+            `"Tony Used Campers" <${process.env.SMTP_USER}>`,
+          to: payload.to,
+          subject: payload.subject,
+          html: payload.html,
+          text: payload.text,
+        });
+        return { delivered: true };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.error(`[email] SMTP delivery failed (${payload.tag}): ${message}`);
+        return {
+          delivered: false,
+          previewPath: await writeOutbox(payload),
+          error: message,
+        };
+      }
     }
-  }
 
-  const previewPath = await writeOutbox(payload);
-  return { delivered: false, previewPath };
+    console.warn(`[email] SMTP not configured — wrote preview for ${payload.tag}`);
+    return { delivered: false, previewPath: await writeOutbox(payload) };
+  } catch (error) {
+    // Belt and braces: a send must never reject.
+    return {
+      delivered: false,
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
 }
 
 /** Plain-text fallback derived from the sections of a React Email body. */
