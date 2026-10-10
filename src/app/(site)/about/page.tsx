@@ -25,12 +25,20 @@ const VALUES = [
   },
 ];
 
-const TEAM = [
+const TEAM: {
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+  position?: string;
+}[] = [
   {
     name: "Tony Marchetti",
     role: "Founder",
     bio: "Started selling campers out of a two-space lot in 2009. Still inspects every trade-in himself.",
-    image: "/images/about-family.jpg",
+    image: "/images/founder/family-portrait.webp",
+    // Portrait source — bias upward so faces survive the 4/3 crop.
+    position: "object-[center_22%]",
   },
   {
     name: "Dana Whitfield",
@@ -186,7 +194,7 @@ export default async function AboutPage() {
                     alt={person.name}
                     fill
                     sizes="(max-width: 640px) 90vw, 300px"
-                    className="object-cover"
+                    className={`object-cover ${person.position ?? ""}`}
                   />
                 </div>
                 <h3 className="mt-4 text-[17px] font-semibold tracking-[-0.01em]">

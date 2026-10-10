@@ -9,8 +9,11 @@ import { HeroSlideshow } from "@/components/site/HeroSlideshow";
 import { getSettings } from "@/lib/settings";
 import { getCategories } from "@/lib/categories";
 import { getBlogPosts } from "@/lib/blog";
+import { getDeliveries } from "@/lib/deliveries";
+import { DeliveryStrip } from "@/components/site/DeliveryStrip";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { localBusinessJsonLd, websiteJsonLd, blogJsonLd } from "@/lib/seo";
+import type { Product, Review } from "@/lib/types";
 const WHY = [
   {
     title: "120-point inspection",
@@ -34,14 +37,16 @@ const STATS = [
 ];
 
 export default async function HomePage() {
-  const [featured, reviews, categories, posts] = await Promise.all([
+  const [featured, reviews, categories, posts, deliveries] = await Promise.all([
     getProducts({ featured: true }),
     getReviews(),
     getCategories(),
     getBlogPosts(),
+    getDeliveries(),
   ]);
   const { site } = await getSettings();
   const shown = featured.slice(0, 4);
+  const stripDeliveries = deliveries.filter((d) => d.featured).slice(0, 10);
   const { average, count } = ratingSummary(reviews);
 
   return (
@@ -168,7 +173,7 @@ export default async function HomePage() {
           </Reveal>
 
           <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-            {shown.map((product: any, i: number) => (
+            {shown.map((product: Product, i: number) => (
               <Reveal key={product.slug} delay={i * 70} as="div" className="h-full">
                 <ProductCard product={product} />
               </Reveal>
@@ -176,6 +181,34 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ── Fresh off the lot ───────────────────────────────── */}
+      {stripDeliveries.length > 0 && (
+        <section className="bg-white pb-16 md:pb-24">
+          <div className="section">
+            <Reveal>
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <h2 className="text-[clamp(1.75rem,4vw,2.75rem)] font-semibold tracking-[-0.015em] text-ink">
+                  Fresh off the lot.
+                </h2>
+                <Link
+                  href="/testimonials#deliveries"
+                  className="group inline-flex items-center gap-1.5 text-[17px] text-accent transition-colors duration-[120ms] hover:underline"
+                >
+                  See every delivery
+                  <i
+                    className="fa-solid fa-chevron-right text-[12px] transition-transform duration-[160ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </div>
+            </Reveal>
+            <Reveal delay={90} className="mt-10">
+              <DeliveryStrip deliveries={stripDeliveries} />
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* ── Why us ───────────────────────────────────────────── */}
       <section className="bg-alt py-16 md:py-24">
@@ -239,8 +272,8 @@ export default async function HomePage() {
           <Reveal delay={100} className="order-1 md:order-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-alt">
               <Image
-                src="/images/about-family.jpg"
-                alt="A family relaxing outside their camper"
+                src="/images/deliveries/jayco-eagle-ht-hitched.webp"
+                alt="Customers hitched up with their fifth wheel on delivery day"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
@@ -284,7 +317,7 @@ export default async function HomePage() {
           </Reveal>
 
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {reviews.slice(0, 3).map((review: any, i: number) => (
+            {reviews.slice(0, 3).map((review: Review, i: number) => (
               <Reveal key={review.name} delay={i * 80} as="div">
                 <figure className="flex h-full flex-col rounded-card border border-line-soft bg-white p-7">
                   <div

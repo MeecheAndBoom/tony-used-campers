@@ -1,14 +1,23 @@
 import type { Metadata } from "next";
 import { ReviewForm } from "@/components/site/ReviewForm";
+import { DeliveryWall } from "@/components/site/DeliveryWall";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Reveal } from "@/components/ui/Reveal";
 import { shortDate } from "@/lib/format";
+import { getDeliveries } from "@/lib/deliveries";
 import { getReviews, ratingSummary } from "@/lib/reviews";
 import type { Review } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "Testimonials & Reviews",
   description:
-    "Ratings and reviews from customers who bought campers at Tony Used Campers in Detroit.",
+    "Ratings, reviews and real delivery-day photos from customers who bought used campers at Tony Used Campers in Detroit.",
+  keywords: [
+    "RV dealer Detroit reviews",
+    "used camper dealer Michigan reviews",
+    "Tony Used Campers reviews",
+    "customer RV delivery photos",
+  ],
 };
 
 function Stars({ rating }: { rating: number }) {
@@ -55,7 +64,10 @@ function ReviewCard({ review }: { review: Review }) {
 }
 
 export default async function TestimonialsPage() {
-  const reviews = await getReviews();
+  const [reviews, deliveries] = await Promise.all([
+    getReviews(),
+    getDeliveries(),
+  ]);
   const { average, count } = ratingSummary(reviews);
 
   const breakdown = [5, 4, 3, 2, 1].map((stars) => ({
@@ -67,6 +79,17 @@ export default async function TestimonialsPage() {
 
   return (
     <div className="bg-white">
+      {count > 0 && (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "AggregateRating",
+            ratingValue: average,
+            reviewCount: count,
+            bestRating: 5,
+          }}
+        />
+      )}
       <section className="section pb-8 pt-16 md:pt-24">
         <Reveal>
           <h1 className="text-balance text-[clamp(2.25rem,5vw,3.5rem)] font-semibold leading-[1.05] tracking-[-0.02em] text-ink">
@@ -106,6 +129,26 @@ export default async function TestimonialsPage() {
           </div>
         </Reveal>
       </section>
+
+      {/* Delivery wall */}
+      {deliveries.length > 0 && (
+        <section id="deliveries" className="section content-auto pb-16 pt-14">
+          <Reveal>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <h2 className="text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-[1.1] tracking-[-0.02em]">
+                The delivery wall.
+              </h2>
+              <p className="text-[15px] text-muted">
+                {deliveries.length} real handovers — every type of camper,
+                every kind of family.
+              </p>
+            </div>
+          </Reveal>
+          <Reveal delay={90} className="mt-9">
+            <DeliveryWall deliveries={deliveries} />
+          </Reveal>
+        </section>
+      )}
 
       {/* Reviews grid */}
       <section className="section content-auto pb-16 pt-10">

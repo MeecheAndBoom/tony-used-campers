@@ -54,6 +54,19 @@ export type Review = {
   published: boolean;
 };
 
+/** A real delivery-day customer photo shown on the home strip and /testimonials. */
+export type Delivery = {
+  id: string;
+  image: string;
+  /** Anonymous caption, e.g. "Jayco Eagle HT fifth wheel". */
+  unit: string;
+  category: "Travel Trailer" | "Fifth Wheel" | "Class A" | "Class C" | "Pop-Up";
+  alt: string;
+  width: number;
+  height: number;
+  featured?: boolean;
+};
+
 export type BlogCategory =
   | "Buying Guides"
   | "Maintenance"
