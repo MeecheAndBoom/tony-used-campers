@@ -81,13 +81,13 @@ Machine-readable version of the exact same records: [`products-to-seed.json`](./
 |---|---|
 | slug | `2020-cedar-creek-champagne-38efk` |
 | brand / model / year | Forest River / Cedar Creek Champagne Edition 38EFK / 2020 |
-| type / condition | Fifth Wheel / used |
+| type / condition | Class A Motorhome / used |
 | price / monthly | $30,000 · $2,000 down · $500 per month |
 | stock | TUC-20-CC38 |
-| specs | 40' · sleeps 4 · ≈16,000 lb · 2 axles · 6 slides |
+| specs | 40' · sleeps 4 · ≈26,000 lb GVWR · 2 axles · 6 slides |
 | images | 10 (exterior only — no interior photos supplied) |
 
-**Description:** The big one — a 2020 Cedar Creek Champagne Edition 38EFK that stacks up six slide-outs, full-body paint and three roof A/Cs around a 40-foot front-kitchen floorplan that feels like a small apartment. The front kitchen is loaded with a dishwasher, while the rear king walk-around bedroom comes with washer/dryer hookups and there's a built-in vacuum, fireplace, four flat-screen TVs, electric awning, automatic leveling jacks, backup camera and a generator hookup for full-time-ready camping. New tires round out the package, and the whole rig is leak-free and water-damage-free with no pets and no smoke. Easy-approval financing available with low down payment.
+**Description:** The big one — a 2020 Cedar Creek Champagne Edition 38EFK Class A motorhome that stacks up six slide-outs, full-body paint and three roof A/Cs around a 40-foot front-kitchen floorplan that feels like a small apartment. The front kitchen is loaded with a dishwasher, while the rear king walk-around bedroom comes with washer/dryer hookups and there's a built-in vacuum, fireplace, four flat-screen TVs, electric awning, automatic leveling jacks, backup camera and a generator hookup for full-time-ready camping. New tires round out the package, and the whole rig is leak-free and water-damage-free with no pets and no smoke. Easy-approval financing available with low down payment.
 
 **Features:** 6 slides, 40' front-kitchen · full-body paint, 3 roof A/Cs · front kitchen w/ dishwasher · rear king + W/D hookups · built-in vacuum · fireplace, 4 flat-screen TVs · electric awning, auto leveling jacks · backup camera, generator hookup · new tires · no leaks/water damage/pets/smoke
 
@@ -302,7 +302,7 @@ Machine-readable version of the exact same records: [`products-to-seed.json`](./
 | 1 | 2017 Forrester 30518 | Class C | $17,800 | — | $500 | 1 | 6 | ★ |
 | 2 | 2018 KZ Connect Lite 211RBK | TT | $5,500 | — | $500 | 1 | 4 | |
 | 3 | 2022 Coleman 263BH | TT | $6,000 | $500 | $500 | 1 | 8 | |
-| 4 | 2020 Cedar Creek Champagne 38EFK | 5W | $30,000 | $2,000 | $500 | 6 | 4 | ★ |
+| 4 | 2020 Cedar Creek Champagne 38EFK | Class A | $30,000 | $2,000 | $500 | 6 | 4 | ★ |
 | 5 | 2015 Torque XLT T30 | TT toyhauler | $8,000 | $1,000 | $500 | 2 | 6 | |
 | 6 | 2018 Jayco Eagle 26.5RLDS | 5W | $8,000 | $1,000 | $500 | 2 | 4 | |
 | 7 | 2016 Keystone Laredo 340FL | 5W | $10,000 | $1,000 | $500 | 3 | 6 | |
