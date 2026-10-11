@@ -8,6 +8,10 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
+// Payment methods are set in the admin (Settings) and stored in the database.
+// Render per-request so edits show up at checkout without a redeploy.
+export const dynamic = "force-dynamic";
+
 export default async function CheckoutPage() {
   const { site, paymentMethods } = await getSettings();
 
