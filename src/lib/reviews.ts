@@ -31,6 +31,18 @@ async function writeJson(file: string, list: unknown[]) {
   await fs.writeFile(file, JSON.stringify(list, null, 2), "utf8");
 }
 
+/** Mongo docs carry createdAt; the UI renders a `date` string. */
+function withDates<T extends ReviewRecord & { createdAt?: Date | string }>(
+  docs: T[],
+): Array<T & { date: string }> {
+  return docs.map((doc) => ({
+    ...doc,
+    date: doc.createdAt
+      ? new Date(doc.createdAt).toISOString()
+      : (doc.date ?? new Date().toISOString()),
+  }));
+}
+
 export async function getReviews(): Promise<ReviewRecord[]> {
   const fallback = SEED_REVIEWS.filter((r) => r.published);
   if (!hasDatabase()) return fallback;
@@ -39,8 +51,8 @@ export async function getReviews(): Promise<ReviewRecord[]> {
     await connectDB();
     const docs = (await Review.find({ published: true })
       .sort({ createdAt: -1 })
-      .lean()) as unknown as ReviewRecord[];
-    return docs.length ? docs : fallback;
+      .lean()) as unknown as Array<ReviewRecord & { createdAt?: Date | string }>;
+    return docs.length ? withDates(docs) : fallback;
   } catch {
     return fallback;
   }

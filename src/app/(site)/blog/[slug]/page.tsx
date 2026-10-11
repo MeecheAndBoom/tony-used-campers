@@ -79,7 +79,7 @@ export default async function BlogPostPage({ params }: Props) {
     {
       question: `Who writes the ${SITE.name} blog?`,
       answer:
-        "The lot itself — Dana Whitfield runs service and inspections, Marco Reyes handles sales and delivery, and Tony Marchetti has been selling campers in Detroit since 2009.",
+        "The lot itself — Tony Marchetti runs the shop, inspects every unit and writes these posts. He's been selling campers in Detroit since 2015.",
     },
     {
       question: "Can I get this kind of advice in person?",

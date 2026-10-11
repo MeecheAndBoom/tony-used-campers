@@ -30,12 +30,11 @@ const WHY = [
   },
 ];
 
-const STATS = [
+const STATIC_STATS_BEFORE_RATING = [
   { value: "120", label: "Point inspection on every unit" },
-  { value: "1,900+", label: "Campers delivered since 2009" },
-  { value: "4.9", label: "Average rating from 380 reviews" },
-  { value: "48 hrs", label: "Typical payment-to-pickup time" },
+  { value: "700+", label: "Campers delivered since 2015" },
 ];
+const STAT_AFTER_RATING = { value: "48 hrs", label: "Typical payment-to-pickup time" };
 
 export default async function HomePage() {
   const [featured, reviews, categories, posts, deliveries] = await Promise.all([
@@ -49,6 +48,11 @@ export default async function HomePage() {
   const shown = featured.slice(0, 4);
   const stripDeliveries = deliveries.filter((d) => d.featured).slice(0, 10);
   const { average, count } = ratingSummary(reviews);
+  const STATS = [
+    ...STATIC_STATS_BEFORE_RATING,
+    { value: String(average), label: `Average rating from ${count} reviews` },
+    STAT_AFTER_RATING,
+  ];
 
   return (
     <>
@@ -77,7 +81,7 @@ export default async function HomePage() {
           </Reveal>
           <Reveal delay={90}>
             <p className="text-balance mx-auto mt-6 max-w-[640px] text-[clamp(1.0625rem,2vw,1.3125rem)] leading-relaxed text-muted">
-              Inspected, honestly priced and sold from Detroit since 2009.
+              Inspected, honestly priced and sold from Detroit since 2015.
               Shop {site.location.split(",")[0]}&apos;s best-stocked lot of
               pre-owned trailers, vans and motorhomes.
             </p>
@@ -250,7 +254,7 @@ export default async function HomePage() {
             </h2>
             <p className="mt-5 text-[17px] leading-relaxed text-muted">
               Tony started wrenching on campers out of a two-bay garage in
-              2009. Today the family runs {site.address.split(",")[0]} with the
+              2015. Today the family runs {site.address.split(",")[0]} with the
               same rule: nothing leaves the lot until we&apos;d camp in it
               ourselves.
             </p>

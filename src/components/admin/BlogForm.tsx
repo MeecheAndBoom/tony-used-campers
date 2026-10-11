@@ -118,7 +118,7 @@ export function BlogForm({
           name="author"
           label="Author"
           defaultValue={post?.author}
-          placeholder="Dana Whitfield"
+          placeholder="Tony Marchetti"
         />
         <div>
           <label htmlFor="status" className={LABEL}>

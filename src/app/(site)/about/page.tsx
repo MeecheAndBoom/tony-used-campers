@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
+import { getReviews, ratingSummary } from "@/lib/reviews";
 import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Tony Used Campers has been inspecting, pricing straight and selling used campers out of Detroit since 2009.",
+    "Tony Used Campers has been inspecting, pricing straight and selling used campers out of Detroit since 2015.",
 };
 
 const VALUES = [
@@ -25,44 +26,16 @@ const VALUES = [
   },
 ];
 
-const TEAM: {
-  name: string;
-  role: string;
-  bio: string;
-  image: string;
-  position?: string;
-}[] = [
-  {
-    name: "Tony Marchetti",
-    role: "Founder",
-    bio: "Started selling campers out of a two-space lot in 2009. Still inspects every trade-in himself.",
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/founder/family-portrait.webp",
-    // Portrait source — bias upward so faces survive the 4/3 crop.
-    position: "object-[center_22%]",
-  },
-  {
-    name: "Dana Whitfield",
-    role: "Lead Technician",
-    bio: "ASE-certified, 22 years in RV service. Runs the 120-point inspection and the service bays.",
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-interior.jpg",
-  },
-  {
-    name: "Marco Reyes",
-    role: "Sales & Delivery",
-    bio: "Handles deliveries from Ann Arbor to Traverse City — and the walkthrough when your camper arrives.",
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-lot.jpg",
-  },
-];
-
-const STATS = [
-  { value: "2009", label: "Selling campers in Detroit since" },
-  { value: "1,900+", label: "Campers delivered" },
-  { value: "120", label: "Inspection points per unit" },
-  { value: "4.9", label: "Average rating, 380 reviews" },
-];
-
 export default async function AboutPage() {
-  const { site } = await getSettings();
+  const [{ site }, reviews] = await Promise.all([getSettings(), getReviews()]);
+  const { average, count } = ratingSummary(reviews);
+
+  const STATS = [
+    { value: "2015", label: "Selling campers in Detroit since" },
+    { value: "700+", label: "Campers delivered" },
+    { value: "120", label: "Inspection points per unit" },
+    { value: String(average), label: `Average rating, ${count} reviews` },
+  ];
 
   return (
     <div className="bg-white">
@@ -76,22 +49,34 @@ export default async function AboutPage() {
         <Reveal delay={90}>
           <p className="mt-5 max-w-[640px] text-[clamp(1.0625rem,1.8vw,1.3125rem)] leading-relaxed text-muted">
             We started with two spaces and a handshake rule: sell only what
-            we&apos;d put our own family in. Seventeen years later, that&apos;s
+            we&apos;d put our own family in. Eleven years later, that&apos;s
             still the whole business.
           </p>
         </Reveal>
       </section>
 
       <Reveal delay={150} className="section">
-        <div className="relative aspect-[16/9] overflow-hidden rounded-card bg-alt">
-          <Image
-            src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/about-family.jpg"
-            alt="The Tony Used Campers team on the lot"
-            fill
-            priority
-            sizes="(max-width: 1180px) 100vw, 1180px"
-            className="object-cover"
-          />
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-alt">
+            <Image
+              src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/founder/fair-day.webp"
+              alt="Tony and his daughter at a summer fair"
+              fill
+              priority
+              sizes="(max-width: 640px) 100vw, 50vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-alt">
+            <Image
+              src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/founder/station-day.webp"
+              alt="Tony Marchetti outside the fire station"
+              fill
+              sizes="(max-width: 640px) 100vw, 50vw"
+              // Portrait source — bias upward so the face survives the 4/3 crop.
+              className="object-cover object-[center_20%]"
+            />
+          </div>
         </div>
       </Reveal>
 
@@ -124,17 +109,17 @@ export default async function AboutPage() {
               <p>
                 Tony bought his first camper to fix it up for a friend, sold it
                 for a profit, and never went back to his old job. The lot at
-                4120 Michigan Ave opened in 2009 with two units and a folding
+                4120 Michigan Ave opened in 2015 with two units and a folding
                 table.
               </p>
             </Reveal>
             <Reveal delay={140}>
               <p>
                 What changed is scale — service bays, a delivery truck, a
-                technician bench full of tools. What didn&apos;t change is how a
-                unit gets here: trade-in or auction, then the same 120-point
+                bench full of tools. What didn&apos;t change is how a unit
+                gets here: trade-in or auction, then the same 120-point
                 inspection, then the price card. Nothing moves to the front row
-                until Dana signs the report.
+                until Tony signs the report.
               </p>
             </Reveal>
             <Reveal delay={210}>
@@ -184,30 +169,33 @@ export default async function AboutPage() {
             Who you&apos;ll deal with.
           </h2>
         </Reveal>
-        <div className="mt-10 grid gap-8 sm:grid-cols-3">
-          {TEAM.map((person, i) => (
-            <Reveal key={person.name} delay={i * 90}>
-              <article>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-alt">
-                  <Image
-                    src={person.image}
-                    alt={person.name}
-                    fill
-                    sizes="(max-width: 640px) 90vw, 300px"
-                    className={`object-cover ${person.position ?? ""}`}
-                  />
-                </div>
-                <h3 className="mt-4 text-[17px] font-semibold tracking-[-0.01em]">
-                  {person.name}
-                </h3>
-                <p className="text-[13px] text-accent">{person.role}</p>
-                <p className="mt-2 text-[15px] leading-relaxed text-muted">
-                  {person.bio}
-                </p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
+        <Reveal delay={90}>
+          <article className="mt-10 grid max-w-[760px] gap-6 sm:grid-cols-[300px_1fr] sm:items-start sm:gap-10">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-alt sm:aspect-square">
+              <Image
+                src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/founder/family-portrait.webp"
+                alt="Tony Marchetti with his wife and daughter"
+                fill
+                sizes="(max-width: 640px) 100vw, 300px"
+                // Portrait source — bias upward so faces survive the crop.
+                className="object-cover object-[center_22%]"
+              />
+            </div>
+            <div>
+              <h3 className="text-[19px] font-semibold tracking-[-0.01em]">
+                Tony Marchetti
+              </h3>
+              <p className="text-[13px] text-accent">Founder</p>
+              <p className="mt-3 text-[15px] leading-relaxed text-muted">
+                Started selling campers out of a two-space lot in 2015. Still
+                inspects every trade-in himself, still drives the delivery
+                truck, and you&apos;ll still get him on the phone. If you buy
+                here, you&apos;re dealing with Tony — there&apos;s no one else
+                to deal with.
+              </p>
+            </div>
+          </article>
+        </Reveal>
       </section>
 
       {/* CTA */}

@@ -40,6 +40,8 @@ const DELIVERIES = [
 
 const FOUNDER = [
   ["carav-founder-set/WhatsApp Image 2026-10-10 at 5.47.43 AM.jpeg", "founder/family-portrait.webp"],
+  ["carav-founder-set/WhatsApp Image 2026-10-10 at 5.47.46 AM.jpeg", "founder/fair-day.webp"],
+  ["carav-founder-set/WhatsApp Image 2026-10-10 at 5.47.44 AM.jpeg", "founder/station-day.webp"],
 ];
 
 async function convert(srcRel, outRel, outDir) {
