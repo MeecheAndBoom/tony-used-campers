@@ -49,13 +49,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       tags: post.tags,
       images: post.image
         ? [{ url: post.image, alt: post.title }]
-        : [{ url: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-og.png", width: 1200, height: 630 }],
+        : [{ url: "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/tony-campers-og.png", width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description,
-      images: [post.image || "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-og.png"],
+      images: [post.image || "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/tony-campers-og.png"],
     },
   };
 }

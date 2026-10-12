@@ -195,7 +195,7 @@ export function BlogForm({
           name="image"
           label="Image path"
           defaultValue={post?.image}
-          placeholder="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-interior.jpg"
+          placeholder="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/services-interior.jpg"
           cols={2}
         />
       </div>

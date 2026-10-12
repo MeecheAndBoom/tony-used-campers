@@ -91,7 +91,7 @@ export default function FirstTimeBuyersPage() {
       <Reveal delay={150} className="section">
         <div className="relative aspect-[16/9] overflow-hidden rounded-card bg-alt">
           <Image
-            src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-lounge.jpg"
+            src="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/gallery-lounge.jpg"
             alt="Inside a travel trailer with the dinette set up"
             fill
             priority

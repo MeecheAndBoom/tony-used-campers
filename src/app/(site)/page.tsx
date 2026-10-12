@@ -65,7 +65,7 @@ export default async function HomePage() {
             Video stays in the repo (static, never changes); images are on Cloudinary. */}
         <HeroVideo
           src="/video/rv-road.mp4"
-          poster="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/hero-road.jpg"
+          poster="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/hero-road.jpg"
         />
         <div
           className="absolute inset-0 bg-white/78"
@@ -270,7 +270,7 @@ export default async function HomePage() {
           <Reveal delay={100} className="order-1 md:order-2">
             <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-alt">
               <Image
-                src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/deliveries/jayco-eagle-ht-hitched.webp"
+                src="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/deliveries/jayco-eagle-ht-hitched.webp"
                 alt="Customers hitched up with their fifth wheel on delivery day"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"

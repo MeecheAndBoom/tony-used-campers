@@ -74,7 +74,7 @@ export function EmailShell({
             <Section className="flex items-center justify-between">
               <Link href={siteUrl} className="no-underline">
                 <Img
-                  src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-logo.png"
+                  src="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/tony-campers-logo.png"
                   alt={site.name}
                   width={2117}
                   height={743}

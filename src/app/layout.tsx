@@ -27,7 +27,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       images: [
         {
-          url: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-og.png",
+          url: "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/tony-campers-og.png",
           width: 1200,
           height: 630,
           alt: `${site.name} — ${site.tagline}`,
@@ -39,7 +39,7 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${site.name} — ${site.tagline}`,
       description:
         "Inspected used campers, travel trailers and motorhomes in Detroit, Michigan.",
-      images: ["https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-og.png"],
+      images: ["https://res.cloudinary.com/qkbrqtav/image/upload/tuc/tony-campers-og.png"],
     },
     icons: {
       icon: [

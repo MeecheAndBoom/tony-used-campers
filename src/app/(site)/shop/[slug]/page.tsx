@@ -41,13 +41,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       locale: "en_US",
       images: product.images.length
         ? [{ url: product.images[0], alt: product.title }]
-        : [{ url: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-og.png", width: 1200, height: 630 }],
+        : [{ url: "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/tony-campers-og.png", width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title: productTitle(product),
       description,
-      images: [product.images[0] || "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-og.png"],
+      images: [product.images[0] || "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/tony-campers-og.png"],
     },
   };
 }

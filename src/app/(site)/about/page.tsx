@@ -59,7 +59,7 @@ export default async function AboutPage() {
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-alt">
             <Image
-              src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/founder/fair-day.webp"
+              src="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/founder/fair-day.webp"
               alt="Tony and his daughter at a summer fair"
               fill
               priority
@@ -69,7 +69,7 @@ export default async function AboutPage() {
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-alt">
             <Image
-              src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/founder/station-day.webp"
+              src="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/founder/station-day.webp"
               alt="Tony Marchetti outside the fire station"
               fill
               sizes="(max-width: 640px) 100vw, 50vw"
@@ -173,7 +173,7 @@ export default async function AboutPage() {
           <article className="mt-10 grid max-w-[760px] gap-6 sm:grid-cols-[300px_1fr] sm:items-start sm:gap-10">
             <div className="relative aspect-[4/3] overflow-hidden rounded-card bg-alt sm:aspect-square">
               <Image
-                src="https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/founder/family-portrait.webp"
+                src="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/founder/family-portrait.webp"
                 alt="Tony Marchetti with his wife and daughter"
                 fill
                 sizes="(max-width: 640px) 100vw, 300px"

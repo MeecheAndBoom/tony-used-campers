@@ -29,7 +29,7 @@ const SERVICES: Service[] = [
       "Brakes, bearings, suspension and hitch setup",
       "Pre-season checkups before your first trip",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-repair.jpg",
+    image: "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/services-repair.jpg",
     imagePos: "center 35%",
   },
   {
@@ -41,7 +41,7 @@ const SERVICES: Service[] = [
       "Undercarriage, tires and brakes",
       "Written report with photos within 24 hours",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-inspection.jpg",
+    image: "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/services-inspection.jpg",
   },
   {
     title: "Parts & accessories",
@@ -52,7 +52,7 @@ const SERVICES: Service[] = [
       "Slide toppers, awning care, covers",
       "Dash cams, solar, battery upgrades",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-parts.jpg",
+    image: "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/services-parts.jpg",
   },
   {
     title: "Delivery & walkthrough",
@@ -63,7 +63,7 @@ const SERVICES: Service[] = [
       "Hitching lesson for first-timers",
       "Storage guidance for the off-season",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-delivery.jpg",
+    image: "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/services-delivery.jpg",
   },
   {
     title: "Trade-ins & consignment",
@@ -73,7 +73,7 @@ const SERVICES: Service[] = [
       "Trade credit applies to any unit on the lot",
       "Consignment handled end to end",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-tradein.jpg",
+    image: "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/services-tradein.jpg",
   },
   {
     title: "Warranty support",
@@ -83,7 +83,7 @@ const SERVICES: Service[] = [
       "Third-party plans honored and serviced here",
       "Claim paperwork filed by our team",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-warranty.jpg",
+    image: "https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/services-warranty.jpg",
   },
 ];
 

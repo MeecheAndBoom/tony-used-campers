@@ -193,7 +193,7 @@ export function localBusinessJsonLd(
     "@type": "AutoDealer",
     name: site.name,
     url: url(),
-    image: url("https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-og.png"),
+    image: url("https://res.cloudinary.com/qkbrqtav/image/upload/tuc/tony-campers-og.png"),
     description: `${site.name} sells inspected used campers, travel trailers, fifth wheels and motorhomes in ${site.location}.`,
     telephone: site.phone,
     priceRange: "$$",
@@ -286,7 +286,7 @@ export function articleJsonLd(post: BlogPostRecord): JsonLd {
     publisher: {
       "@type": "Organization",
       name: SITE.name,
-      logo: { "@type": "ImageObject", url: url("https://res.cloudinary.com/hrnohv4p/image/upload/tuc/tony-campers-logo.png") },
+      logo: { "@type": "ImageObject", url: url("https://res.cloudinary.com/qkbrqtav/image/upload/tuc/tony-campers-logo.png") },
     },
     articleSection: post.category,
     keywords: post.tags.join(", "),
