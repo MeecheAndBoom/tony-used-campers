@@ -6,7 +6,7 @@ export const SITE = {
   phone: "(313) 364-9615",
   phoneHref: "+13133649615",
   email: "sales@tonyusedcampers.com",
-  adminEmail: "orders@tonyusedcampers.com",
+  adminEmail: "sales@tonyusedcampers.com",
   hours: [
     { days: "Monday – Friday", time: "9:00 AM – 6:00 PM" },
     { days: "Saturday", time: "10:00 AM – 5:00 PM" },
