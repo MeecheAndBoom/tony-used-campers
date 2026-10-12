@@ -1,3 +1,4 @@
+import Script from "next/script";
 import { CartDrawer } from "@/components/site/CartDrawer";
 import { Footer } from "@/components/site/Footer";
 import { Nav } from "@/components/site/Nav";
@@ -21,6 +22,11 @@ export default async function SiteLayout({
       </main>
       <Footer site={site} />
       <CartDrawer />
+      <Script
+        id="chatway"
+        src="https://cdn.chatway.app/widget.js?id=Fc8seOuv9Yy3"
+        strategy="afterInteractive"
+      />
     </>
   );
 }
