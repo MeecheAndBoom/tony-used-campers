@@ -107,7 +107,7 @@ export default function ServicesPage() {
             <Link href="/contact" className="btn btn-primary">
               Book service
             </Link>
-            <a href="tel:+13135550142" className="btn btn-ghost">
+            <a href="tel:+13133649615" className="btn btn-ghost">
               Call the shop
             </a>
           </div>

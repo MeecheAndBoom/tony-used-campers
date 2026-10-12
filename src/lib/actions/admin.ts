@@ -288,8 +288,12 @@ export async function saveSettingsAction(formData: FormData) {
     adminEmail: String(formData.get("adminEmail") ?? "").trim(),
     hours: parseHours(formData),
   };
-  const stripped = site.phone?.replace(/[^+\d]/g, "");
-  if (stripped && stripped.length >= 10) site.phoneHref = stripped;
+  const digits = site.phone?.replace(/\D/g, "");
+  if (digits && digits.length >= 10) {
+    // Store E.164 so `tel:` links always carry a leading "+".
+    site.phoneHref =
+      digits.startsWith("1") && digits.length === 11 ? `+${digits}` : `+1${digits}`;
+  }
 
   const ids = formData.getAll("methodId").map((id) => String(id));
   const labels = formData.getAll("methodLabel").map((l) => String(l).trim());

@@ -2,10 +2,11 @@ import { Section, Text } from "@react-email/components";
 import type { OrderRecord } from "@/lib/orders";
 import { money } from "@/lib/format";
 import type { SiteInfo } from "@/lib/settings";
+import { siteOrigin } from "@/lib/seo";
 import { EmailBody, EmailShell, EmailButton as EmailButtonInline } from "./Shell";
 import { ItemsRows, TotalsRows, paymentLabel } from "./order-shared";
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").trim().replace(/\/+$/, "");
+const siteUrl = siteOrigin();
 
 /** Email 2 — new order alert (admin). */
 export function NewOrderAlertEmail({

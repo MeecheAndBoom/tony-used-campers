@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./globals.css";
 import { getSettings } from "@/lib/settings";
-import { SITE_KEYWORDS } from "@/lib/seo";
+import { SITE_KEYWORDS, siteOrigin } from "@/lib/seo";
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").trim().replace(/\/+$/, "");
+const siteUrl = siteOrigin();
 
 export async function generateMetadata(): Promise<Metadata> {
   const { site } = await getSettings();

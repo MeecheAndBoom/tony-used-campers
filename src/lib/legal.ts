@@ -16,7 +16,7 @@ export const LEGAL_PAGES: LegalPage[] = [
     title: "Privacy Policy",
     updated: "October 8, 2026",
     intro:
-      "This policy explains what we collect when you browse tonyusedcampers.com, place an order or contact us — and what we do with it.",
+      "This policy explains what we collect when you browse www.tonyusedcampers.com, place an order or contact us — and what we do with it.",
     sections: [
       {
         heading: "Information we collect",
@@ -387,7 +387,7 @@ export const LEGAL_PAGES: LegalPage[] = [
       {
         heading: "General information",
         paragraphs: [
-          "Content on tonyusedcampers.com is provided for general information only. It is not professional advice — financial, legal, technical or otherwise — and should not be relied upon as the sole basis for a purchase decision.",
+          "Content on www.tonyusedcampers.com is provided for general information only. It is not professional advice — financial, legal, technical or otherwise — and should not be relied upon as the sole basis for a purchase decision.",
         ],
       },
       {

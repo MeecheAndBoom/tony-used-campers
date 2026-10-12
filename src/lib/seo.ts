@@ -86,14 +86,21 @@ export function postDescription(post: BlogPostRecord): string {
 type JsonLd = Record<string, unknown>;
 
 /**
- * Site origin without a trailing slash — Vercel's env often ends in "/", and
- * concatenating "/path" onto it would emit malformed `//path` URLs in the
- * sitemap, robots.txt and every JSON-LD graph.
+ * The canonical production origin. Kept in code so a stale or missing
+ * NEXT_PUBLIC_SITE_URL on the host can never leak an old *.vercel.app URL into
+ * the sitemap, robots.txt, canonicals, JSON-LD or transactional email links.
+ *
+ * NEXT_PUBLIC_SITE_URL is still honoured for local development, where it
+ * points at a localhost origin.
  */
+const CANONICAL_SITE_URL = "https://www.tonyusedcampers.com";
+const LOCAL_ORIGIN = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/i;
+
+/** Site origin without a trailing slash. */
 export function siteOrigin(): string {
-  return (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000")
-    .trim()
-    .replace(/\/+$/, "");
+  const fromEnv = (process.env.NEXT_PUBLIC_SITE_URL ?? "").trim().replace(/\/+$/, "");
+  if (fromEnv && LOCAL_ORIGIN.test(fromEnv)) return fromEnv;
+  return CANONICAL_SITE_URL;
 }
 
 function url(path = ""): string {

@@ -3,9 +3,10 @@ import type { OrderRecord } from "@/lib/orders";
 import { money } from "@/lib/format";
 import { PAYMENT_METHODS, SITE } from "@/lib/constants";
 import type { PaymentMethodSetting, SiteInfo } from "@/lib/settings";
+import { siteOrigin } from "@/lib/seo";
 import { DetailRow, EmailBody, EmailButton, EmailShell } from "./Shell";
 
-const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000").trim().replace(/\/+$/, "");
+const siteUrl = siteOrigin();
 
 export function paymentLabel(
   order: OrderRecord,

@@ -92,8 +92,8 @@ export default function SellPage() {
                   Contact the lot
                 </Link>{" "}
                 or call{" "}
-                <a href="tel:+13135550142" className="text-accent hover:underline">
-                  (313) 555-0142
+                <a href="tel:+13133649615" className="text-accent hover:underline">
+                  (313) 364-9615
                 </a>
                 .
               </p>
