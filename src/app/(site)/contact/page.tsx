@@ -54,14 +54,6 @@ export default async function ContactPage() {
             >
               Open in Maps →
             </a>
-
-            {/* Map placeholder */}
-            <div className="mt-5 grid aspect-[16/10] place-items-center rounded-box bg-alt-deep">
-              <p className="text-center text-[13px] text-muted">
-                <i className="fa-solid fa-location-dot mb-2 block text-[22px] text-accent" aria-hidden="true" />
-                {site.location}
-              </p>
-            </div>
           </div>
 
           <div className="rounded-card border border-line p-6">

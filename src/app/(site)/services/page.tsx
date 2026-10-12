@@ -14,6 +14,8 @@ type Service = {
   body: string;
   points: string[];
   image?: string;
+  /** object-position for portrait sources so the subject stays framed. */
+  imagePos?: string;
 };
 
 const SERVICES: Service[] = [
@@ -27,7 +29,8 @@ const SERVICES: Service[] = [
       "Brakes, bearings, suspension and hitch setup",
       "Pre-season checkups before your first trip",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-interior.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-repair.jpg",
+    imagePos: "center 35%",
   },
   {
     title: "Inspections",
@@ -38,7 +41,7 @@ const SERVICES: Service[] = [
       "Undercarriage, tires and brakes",
       "Written report with photos within 24 hours",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-kitchen.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-inspection.jpg",
   },
   {
     title: "Parts & accessories",
@@ -49,7 +52,7 @@ const SERVICES: Service[] = [
       "Slide toppers, awning care, covers",
       "Dash cams, solar, battery upgrades",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-bed.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-parts.jpg",
   },
   {
     title: "Delivery & walkthrough",
@@ -60,7 +63,7 @@ const SERVICES: Service[] = [
       "Hitching lesson for first-timers",
       "Storage guidance for the off-season",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-camp.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-delivery.jpg",
   },
   {
     title: "Trade-ins & consignment",
@@ -70,7 +73,7 @@ const SERVICES: Service[] = [
       "Trade credit applies to any unit on the lot",
       "Consignment handled end to end",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/life-lawn.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-tradein.jpg",
   },
   {
     title: "Warranty support",
@@ -80,7 +83,7 @@ const SERVICES: Service[] = [
       "Third-party plans honored and serviced here",
       "Claim paperwork filed by our team",
     ],
-    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/gallery-lounge.jpg",
+    image: "https://res.cloudinary.com/hrnohv4p/image/upload/tuc/images/services-warranty.jpg",
   },
 ];
 
@@ -126,10 +129,15 @@ export default function ServicesPage() {
                     {service.image && (
                       <Image
                         src={service.image}
-                        alt={service.title}
+                        alt={`${service.title} — Tony Used Campers service bay on Michigan Ave, Detroit`}
                         fill
                         sizes="(max-width: 1024px) 100vw, 560px"
                         className="object-cover"
+                        style={
+                          service.imagePos
+                            ? { objectPosition: service.imagePos }
+                            : undefined
+                        }
                       />
                     )}
                   </div>
