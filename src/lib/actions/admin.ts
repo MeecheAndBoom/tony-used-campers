@@ -15,7 +15,12 @@ import {
 } from "@/lib/reviews";
 import { deleteOrder, findOrder } from "@/lib/orders";
 import { deleteEnquiry, listEnquiries, markEnquiryHandled } from "@/lib/enquiries";
-import { updateSettings, type PaymentMethodSetting, type SiteInfo } from "@/lib/settings";
+import {
+  updateSettings,
+  type CloudinarySettings,
+  type PaymentMethodSetting,
+  type SiteInfo,
+} from "@/lib/settings";
 import {
   createCategory,
   updateCategory,
@@ -306,6 +311,15 @@ export async function saveSettingsAction(formData: FormData) {
     }))
     .filter((m) => m.label);
 
-  await updateSettings({ site, paymentMethods });
+  // Cloudinary credentials for dashboard image uploads. The API secret is
+  // write-only: leaving it blank keeps whatever is already saved.
+  const cloudinary: Partial<CloudinarySettings> = {
+    cloudName: String(formData.get("cloudinaryCloudName") ?? "").trim(),
+    apiKey: String(formData.get("cloudinaryApiKey") ?? "").trim(),
+  };
+  const apiSecret = String(formData.get("cloudinaryApiSecret") ?? "").trim();
+  if (apiSecret) cloudinary.apiSecret = apiSecret;
+
+  await updateSettings({ site, paymentMethods, cloudinary });
   redirect("/admin/settings?saved=1");
 }

@@ -25,9 +25,23 @@ export type PaymentMethodSetting = {
   hint: string;
 };
 
+/** Cloudinary account backing dashboard image uploads. Environment variables win when set. */
+export type CloudinarySettings = {
+  cloudName: string;
+  apiKey: string;
+  apiSecret: string;
+};
+
 export type StoreSettings = {
   site: SiteInfo;
   paymentMethods: PaymentMethodSetting[];
+  cloudinary: CloudinarySettings;
+};
+
+const EMPTY_CLOUDINARY: CloudinarySettings = {
+  cloudName: "",
+  apiKey: "",
+  apiSecret: "",
 };
 
 const DATA_DIR = path.join(process.cwd(), "data");
@@ -47,6 +61,7 @@ export function defaultSettings(): StoreSettings {
       hours: SITE.hours.map((h) => ({ ...h })),
     },
     paymentMethods: PAYMENT_METHODS.map((m) => ({ id: m.id, label: m.label, hint: m.hint })),
+    cloudinary: { ...EMPTY_CLOUDINARY },
   };
 }
 
@@ -54,13 +69,14 @@ async function readLocal(): Promise<StoreSettings | null> {
   try {
     const raw = await fs.readFile(LOCAL_FILE, "utf8");
     const parsed = JSON.parse(raw) as Partial<StoreSettings>;
-    if (!parsed.site && !parsed.paymentMethods) return null;
+    if (!parsed.site && !parsed.paymentMethods && !parsed.cloudinary) return null;
     const base = defaultSettings();
     return {
       site: { ...base.site, ...(parsed.site ?? {}) },
       paymentMethods: parsed.paymentMethods?.length
         ? parsed.paymentMethods
         : base.paymentMethods,
+      cloudinary: { ...base.cloudinary, ...(parsed.cloudinary ?? {}) },
     };
   } catch {
     return null;
@@ -86,6 +102,7 @@ export const getSettings = cache(async (): Promise<StoreSettings> => {
           paymentMethods: doc.paymentMethods?.length
             ? doc.paymentMethods
             : defaults.paymentMethods,
+          cloudinary: { ...defaults.cloudinary, ...(doc.cloudinary ?? {}) },
         };
       }
     } catch {
@@ -97,12 +114,17 @@ export const getSettings = cache(async (): Promise<StoreSettings> => {
 
 /** Persists settings, merging partials over the current effective settings. */
 export async function updateSettings(
-  patch: { site?: Partial<SiteInfo>; paymentMethods?: PaymentMethodSetting[] },
+  patch: {
+    site?: Partial<SiteInfo>;
+    paymentMethods?: PaymentMethodSetting[];
+    cloudinary?: Partial<CloudinarySettings>;
+  },
 ): Promise<StoreSettings> {
   const current = await getSettings();
   const next: StoreSettings = {
     site: { ...current.site, ...(patch.site ?? {}) },
     paymentMethods: patch.paymentMethods ?? current.paymentMethods,
+    cloudinary: { ...current.cloudinary, ...(patch.cloudinary ?? {}) },
   };
 
   if (hasDatabase()) {
@@ -110,7 +132,13 @@ export async function updateSettings(
       await connectDB();
       await SettingsStore.updateOne(
         { key: "main" },
-        { $set: { site: next.site, paymentMethods: next.paymentMethods } },
+        {
+          $set: {
+            site: next.site,
+            paymentMethods: next.paymentMethods,
+            cloudinary: next.cloudinary,
+          },
+        },
         { upsert: true },
       );
       return next;

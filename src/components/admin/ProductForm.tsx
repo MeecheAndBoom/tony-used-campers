@@ -1,5 +1,6 @@
 import { PRODUCT_TYPES } from "@/lib/constants";
 import type { Product as ProductRecord } from "@/lib/types";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 const FIELD =
   "w-full rounded-box border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink outline-none transition-colors placeholder:text-muted-light focus:border-accent focus:ring-2 focus:ring-sky";
@@ -191,13 +192,16 @@ export function ProductForm({
         <h2 className="col-span-full text-[18px] font-semibold tracking-[-0.01em]">
           Images
         </h2>
-        <TextArea
-          name="images"
-          label="Image URLs (one per line, first is the main photo)"
-          defaultValue={product?.images.join("\n")}
-          rows={6}
-          hint="Paste /images/… paths or full https:// URLs. The first image shows on cards."
-        />
+        <div className="sm:col-span-2">
+          <ImageUploader
+            name="images"
+            multiple
+            defaultValue={product?.images}
+            label="Product photos"
+            folder="tuc/uploads/products"
+            hint="Upload photos or paste image URLs. The first image is the cover shown on cards and search results."
+          />
+        </div>
       </div>
 
       <div className="flex items-center justify-end gap-3">

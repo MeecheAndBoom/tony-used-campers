@@ -17,6 +17,16 @@ const PaymentMethodSchema = new Schema(
   { _id: false },
 );
 
+/** Cloudinary account used for dashboard image uploads. Env values win when set. */
+const CloudinarySchema = new Schema(
+  {
+    cloudName: { type: String, default: "" },
+    apiKey: { type: String, default: "" },
+    apiSecret: { type: String, default: "" },
+  },
+  { _id: false },
+);
+
 /** Singleton store for store info + payment methods edited from /admin/settings. */
 const SettingsSchema = new Schema(
   {
@@ -33,6 +43,7 @@ const SettingsSchema = new Schema(
       hours: [HoursSchema],
     },
     paymentMethods: [PaymentMethodSchema],
+    cloudinary: { type: CloudinarySchema, default: () => ({}) },
   },
   { timestamps: true },
 );

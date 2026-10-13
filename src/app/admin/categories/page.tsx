@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { getCategories } from "@/lib/categories";
 import { deleteCategoryAction, createCategoryAction, updateCategoryAction } from "@/lib/actions/admin";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 type Props = {
   searchParams: Promise<{ saved?: string }>;
@@ -37,8 +37,8 @@ export default async function AdminCategoriesPage({ searchParams }: Props) {
         <h2 className="text-[18px] font-semibold tracking-[-0.01em]">
           Add a category
         </h2>
-        <form action={createCategoryAction} className="mt-5 grid gap-5 sm:grid-cols-[1fr_1fr_auto]">
-          <div>
+        <form action={createCategoryAction} className="mt-5 space-y-5">
+          <div className="max-w-md">
             <label htmlFor="name" className={LABEL}>
               Name
             </label>
@@ -50,18 +50,13 @@ export default async function AdminCategoriesPage({ searchParams }: Props) {
               required
             />
           </div>
+          <ImageUploader
+            name="image"
+            label="Category image"
+            folder="tuc/uploads/categories"
+            hint="Square images look best — shown on the homepage tiles."
+          />
           <div>
-            <label htmlFor="image" className={LABEL}>
-              Image path
-            </label>
-            <input
-              id="image"
-              name="image"
-              placeholder="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/carav-cat/Travel_Trailer.png"
-              className={FIELD}
-            />
-          </div>
-          <div className="sm:self-end">
             <button type="submit" className="btn btn-primary btn-sm">
               Add category
             </button>
@@ -75,30 +70,9 @@ export default async function AdminCategoriesPage({ searchParams }: Props) {
         </h2>
         <ul className="mt-5 space-y-5">
           {categories.map((category) => (
-            <li
-              key={category.id}
-              className="rounded-box border border-line-soft p-4 md:grid md:grid-cols-[96px_1fr] md:gap-5"
-            >
-              <div>
-                <p className="mb-1.5 text-[12px] font-medium text-muted">
-                  Preview
-                </p>
-                <div className="relative aspect-square w-24 overflow-hidden border border-line bg-alt">
-                  <Image
-                    src={category.image}
-                    alt={category.name}
-                    fill
-                    sizes="96px"
-                    className="object-cover"
-                  />
-                </div>
-              </div>
-
+            <li key={category.id} className="rounded-box border border-line-soft p-4">
               <div className="flex flex-col gap-4">
-                <form
-                  action={updateCategoryAction}
-                  className="grid gap-4 sm:grid-cols-[1fr_1.4fr_auto]"
-                >
+                <form action={updateCategoryAction} className="grid gap-4 sm:grid-cols-2">
                   <input type="hidden" name="id" value={category.id} />
                   <div>
                     <label htmlFor={`name-${category.id}`} className={LABEL}>
@@ -112,18 +86,16 @@ export default async function AdminCategoriesPage({ searchParams }: Props) {
                       required
                     />
                   </div>
-                  <div>
-                    <label htmlFor={`image-${category.id}`} className={LABEL}>
-                      Image path
-                    </label>
-                    <input
-                      id={`image-${category.id}`}
+                  <div className="sm:col-span-2">
+                    <ImageUploader
                       name="image"
-                      defaultValue={category.image}
-                      className={FIELD}
+                      defaultValue={category.image ? [category.image] : []}
+                      label="Category image"
+                      folder="tuc/uploads/categories"
+                      hint="Square images look best — shown on the homepage tiles."
                     />
                   </div>
-                  <div className="flex items-end">
+                  <div className="flex items-end sm:col-span-2">
                     <button type="submit" className="btn btn-secondary btn-sm">
                       Save changes
                     </button>

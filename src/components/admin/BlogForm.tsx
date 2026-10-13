@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BLOG_CATEGORIES } from "@/lib/blog";
 import type { BlogPost as BlogPostRecord } from "@/lib/types";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 const FIELD =
   "w-full rounded-box border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink outline-none transition-colors placeholder:text-muted-light focus:border-accent focus:ring-2 focus:ring-sky";
@@ -191,13 +192,15 @@ export function BlogForm({
         <h2 className="col-span-full text-[18px] font-semibold tracking-[-0.01em]">
           Hero image
         </h2>
-        <Input
-          name="image"
-          label="Image path"
-          defaultValue={post?.image}
-          placeholder="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/images/services-interior.jpg"
-          cols={2}
-        />
+        <div className="sm:col-span-2">
+          <ImageUploader
+            name="image"
+            defaultValue={post?.image ? [post.image] : []}
+            label="Hero image"
+            folder="tuc/uploads/blog"
+            hint="Shown at the top of the post and on the blog card."
+          />
+        </div>
       </div>
 
       <div className="flex items-center justify-end gap-3">
