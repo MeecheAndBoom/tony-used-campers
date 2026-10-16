@@ -61,14 +61,26 @@ export function FinanceCalculator() {
       label: "Term",
       value: term,
       set: setTerm,
-      min: 60,
-      max: 120,
+      min: price >= 10000 ? 60 : 36,
+      max: price >= 10000 ? 120 : 72,
       step: 12,
       format: (v) => `${v} months`,
     },
   ];
 
-  const displayPayment = Math.max(payment, 0);
+  const effectiveTerm = price >= 10000
+    ? Math.max(sliders[2].min, Math.min(sliders[2].max, term))
+    : Math.max(sliders[2].min, Math.min(sliders[2].max, term));
+  const effectiveRate = RATES.find((r) => r.label.startsWith(String(effectiveTerm)))?.rate ?? rate;
+  const effectivePayment =
+    principal === 0
+      ? 0
+      : (effectiveRate / 100 / 12) === 0
+        ? principal / effectiveTerm
+        : (principal * (effectiveRate / 100 / 12)) / (1 - Math.pow(1 + (effectiveRate / 100 / 12), -effectiveTerm));
+  const displayPayment = Math.max(effectivePayment, 350);
+  const displayRate = effectiveRate;
+  const displayTerm = effectiveTerm;
 
   return (
     <div className="rounded-card border border-line p-6 md:p-8">
@@ -111,8 +123,14 @@ export function FinanceCalculator() {
             $350/mo or more.
           </p>
         )}
+        {effectivePayment < 350 && principal > 0 && (
+          <p className="mt-2 text-[13px] font-medium text-ink">
+            Higher down or shorter term raises your payment — we can often tailor terms to hit around
+            $350/mo or more.
+          </p>
+        )}
         <p className="mt-3 text-[13px] leading-relaxed text-muted">
-          {rate.toFixed(2)}% illustrative APR over {term} months on{" "}
+          {displayRate.toFixed(2)}% illustrative APR over {displayTerm} months on{" "}
           {money(principal)} financed. Estimate only — your actual rate depends
           on credit. See our{" "}
           <a href="/legal/finance-disclosure" className="text-accent underline">
