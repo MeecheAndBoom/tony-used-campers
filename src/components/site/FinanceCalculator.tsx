@@ -136,12 +136,6 @@ export function FinanceCalculator() {
             $350/mo or more.
           </p>
         )}
-        {effectivePayment < 350 && principal > 0 && (
-          <p className="mt-2 text-[13px] font-medium text-ink">
-            Higher down or shorter term raises your payment — we can often tailor terms to hit around
-            $350/mo or more.
-          </p>
-        )}
         <p className="mt-3 text-[13px] leading-relaxed text-muted">
           {displayRate.toFixed(2)}% illustrative APR over {displayTerm} months on{" "}
           {money(principal)} financed. Estimate only — your actual rate depends
