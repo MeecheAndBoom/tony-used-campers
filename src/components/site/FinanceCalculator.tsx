@@ -68,18 +68,31 @@ export function FinanceCalculator() {
     },
   ];
 
-  const effectiveTerm = price >= 10000
-    ? Math.max(sliders[2].min, Math.min(sliders[2].max, term))
-    : Math.max(sliders[2].min, Math.min(sliders[2].max, term));
-  const effectiveRate = RATES.find((r) => r.label.startsWith(String(effectiveTerm)))?.rate ?? rate;
-  const effectivePayment =
+  const minTerm = price >= 10000 ? 60 : 36;
+  const maxTerm = price >= 10000 ? 120 : 72;
+  let effectiveTerm = Math.max(minTerm, Math.min(maxTerm, term));
+  const monthlyRateEff = (rate / 100 / 12);
+  let effectivePayment =
     principal === 0
       ? 0
-      : (effectiveRate / 100 / 12) === 0
+      : monthlyRateEff === 0
         ? principal / effectiveTerm
-        : (principal * (effectiveRate / 100 / 12)) / (1 - Math.pow(1 + (effectiveRate / 100 / 12), -effectiveTerm));
-  const displayPayment = Math.max(effectivePayment, 350);
-  const displayRate = effectiveRate;
+        : (principal * monthlyRateEff) / (1 - Math.pow(1 + monthlyRateEff, -effectiveTerm));
+  if (principal > 0 && effectivePayment < 350) {
+    const target = 350;
+    effectiveTerm = Math.max(minTerm, Math.ceil((Math.log(1 - (principal * monthlyRateEff) / target)) / Math.log(1 + monthlyRateEff)) || minTerm);
+    if (effectiveTerm > maxTerm) effectiveTerm = maxTerm;
+    effectivePayment =
+      monthlyRateEff === 0
+        ? principal / effectiveTerm
+        : (principal * monthlyRateEff) / (1 - Math.pow(1 + monthlyRateEff, -effectiveTerm));
+    if (effectivePayment < 350 && effectiveTerm === maxTerm) {
+      // keep max term; payment may be under target but term can't go higher
+      effectivePayment = (monthlyRateEff === 0 ? principal / effectiveTerm : (principal * monthlyRateEff) / (1 - Math.pow(1 + monthlyRateEff, -effectiveTerm)));
+    }
+  }
+  const displayPayment = effectivePayment;
+  const displayRate = rate;
   const displayTerm = effectiveTerm;
 
   return (
