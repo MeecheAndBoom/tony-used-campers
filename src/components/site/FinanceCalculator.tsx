@@ -11,7 +11,7 @@ const RATES = [
 ];
 
 export function FinanceCalculator() {
-  const [price, setPrice] = useState(24500);
+  const [price, setPrice] = useState(15000);
   const [down, setDown] = useState(3000);
   const [term, setTerm] = useState(72);
   const rate = RATES.find((r) => r.label.startsWith(String(term)))?.rate ?? 7.99;
@@ -41,7 +41,7 @@ export function FinanceCalculator() {
       label: "Camper price",
       value: price,
       set: setPrice,
-      min: 5000,
+      min: 4000,
       max: 90000,
       step: 500,
       format: (v) => money(v),
@@ -51,7 +51,7 @@ export function FinanceCalculator() {
       label: "Down payment",
       value: down,
       set: setDown,
-      min: 0,
+      min: 500,
       max: Math.min(price * 0.6, 40000),
       step: 250,
       format: (v) => money(v),
@@ -67,6 +67,8 @@ export function FinanceCalculator() {
       format: (v) => `${v} months`,
     },
   ];
+
+  const displayPayment = Math.max(payment, 0);
 
   return (
     <div className="rounded-card border border-line p-6 md:p-8">
@@ -101,8 +103,14 @@ export function FinanceCalculator() {
       <div className="mt-8 rounded-card bg-alt p-6 text-center">
         <p className="text-[14px] text-muted">Estimated monthly payment</p>
         <p className="mt-1 text-[clamp(2.25rem,5vw,3rem)] font-semibold leading-none tracking-[-0.03em] text-ink">
-          {money(payment, true)}
+          {money(displayPayment, true)}
         </p>
+        {displayPayment < 250 && principal > 0 && (
+          <p className="mt-2 text-[13px] font-medium text-ink">
+            Higher down or shorter term raises your payment — we can often tailor terms to hit around
+            $250/mo or more.
+          </p>
+        )}
         <p className="mt-3 text-[13px] leading-relaxed text-muted">
           {rate.toFixed(2)}% illustrative APR over {term} months on{" "}
           {money(principal)} financed. Estimate only — your actual rate depends
