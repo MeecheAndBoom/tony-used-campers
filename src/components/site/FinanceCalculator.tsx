@@ -105,10 +105,10 @@ export function FinanceCalculator() {
         <p className="mt-1 text-[clamp(2.25rem,5vw,3rem)] font-semibold leading-none tracking-[-0.03em] text-ink">
           {money(displayPayment, true)}
         </p>
-        {displayPayment < 250 && principal > 0 && (
+        {displayPayment < 350 && principal > 0 && (
           <p className="mt-2 text-[13px] font-medium text-ink">
             Higher down or shorter term raises your payment — we can often tailor terms to hit around
-            $250/mo or more.
+            $350/mo or more.
           </p>
         )}
         <p className="mt-3 text-[13px] leading-relaxed text-muted">
