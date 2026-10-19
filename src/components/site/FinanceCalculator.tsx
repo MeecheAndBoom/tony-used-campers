@@ -3,28 +3,54 @@
 import { useState } from "react";
 import { money } from "@/lib/format";
 
-const RATES = [
-  { label: "36 months", rate: 7.49 },
-  { label: "48 months", rate: 7.74 },
-  { label: "60 months", rate: 7.99 },
-  { label: "72 months", rate: 8.24 },
-];
+/** Every combination must clear this monthly payment. */
+const PAYMENT_FLOOR = 350;
+const DOWN_MIN = 500;
+
+/** Whichever setup you pick, the headline payment never drops below this. */
+function rateForTerm(term: number): number {
+  if (term <= 12) return 6.99;
+  if (term <= 24) return 7.24;
+  if (term <= 36) return 7.49;
+  if (term <= 48) return 7.74;
+  if (term <= 60) return 7.99;
+  return 8.24;
+}
+
+function monthlyPayment(principal: number, term: number, ratePct: number): number {
+  if (principal <= 0 || term <= 0) return 0;
+  const r = ratePct / 100 / 12;
+  if (r === 0) return principal / term;
+  return (principal * r) / (1 - Math.pow(1 + r, -term));
+}
+
+/**
+ * Term choices are dense at the short end. The longest term we ever offer is
+ * the one whose payment (at that rate) still clears PAYMENT_FLOOR; anything
+ * longer would dip below it.
+ */
+const TERM_CANDIDATES = [3, 4, 5, 6, 9, 12, 15, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72];
 
 export function FinanceCalculator() {
   const [price, setPrice] = useState(12000);
   const [down, setDown] = useState(2000);
   const [term, setTerm] = useState(60);
-  const rate = RATES.find((r) => r.label.startsWith(String(term)))?.rate ?? 7.99;
 
-  const principal = Math.max(price - down, 0);
-  const monthlyRate = rate / 100 / 12;
-  const n = term;
-  const payment =
-    principal === 0
-      ? 0
-      : monthlyRate === 0
-        ? principal / n
-        : (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -n));
+  const downMax = Math.min(price * 0.6, 40000);
+  const effectiveDown = Math.min(Math.max(down, DOWN_MIN), downMax);
+  const principal = Math.max(price - effectiveDown, 0);
+
+  // Only terms that keep this balance at >= $350/mo stay selectable.
+  const affordable = TERM_CANDIDATES.filter(
+    (m) => monthlyPayment(principal, m, rateForTerm(m)) >= PAYMENT_FLOOR,
+  );
+  const minTerm = affordable.length ? affordable[0] : TERM_CANDIDATES[0];
+  const maxTerm = affordable.length
+    ? affordable[affordable.length - 1]
+    : TERM_CANDIDATES[0];
+  const effectiveTerm = Math.min(Math.max(term, minTerm), maxTerm);
+  const rate = rateForTerm(effectiveTerm);
+  const payment = monthlyPayment(principal, effectiveTerm, rate);
 
   const sliders: {
     id: string;
@@ -49,52 +75,24 @@ export function FinanceCalculator() {
     {
       id: "down",
       label: "Down payment",
-      value: down,
+      value: effectiveDown,
       set: setDown,
-      min: 500,
-      max: Math.min(price * 0.6, 40000),
+      min: DOWN_MIN,
+      max: downMax,
       step: 250,
       format: (v) => money(v),
     },
     {
       id: "term",
       label: "Term",
-      value: term,
+      value: effectiveTerm,
       set: setTerm,
-      min: 36,
-      max: 72,
-      step: 12,
+      min: minTerm,
+      max: maxTerm,
+      step: 1,
       format: (v) => `${v} months`,
     },
   ];
-
-  const minTerm = 36;
-  const maxTerm = 72;
-  const monthlyRateBase = (rate / 100 / 12);
-  const findTermForMinPayment = (p: number, minPmt: number, rMonthly: number): number => {
-    if (p <= 0) return minTerm;
-    let t = minTerm;
-    while (t <= maxTerm) {
-      const pmt =
-        rMonthly === 0
-          ? p / t
-          : (p * rMonthly) / (1 - Math.pow(1 + rMonthly, -t));
-      if (pmt >= minPmt) return t;
-      t += 12;
-    }
-    return maxTerm;
-  };
-  const effectiveTerm = findTermForMinPayment(principal, 350, monthlyRateBase);
-  const effectiveMonthlyRate = monthlyRateBase;
-  const effectivePayment =
-    principal === 0
-      ? 0
-      : effectiveMonthlyRate === 0
-        ? principal / effectiveTerm
-        : (principal * effectiveMonthlyRate) / (1 - Math.pow(1 + effectiveMonthlyRate, -effectiveTerm));
-  const displayPayment = principal === 0 ? 0 : effectivePayment;
-  const displayRate = RATES.find((r) => r.label.startsWith(String(effectiveTerm)))?.rate ?? rate;
-  const displayTerm = effectiveTerm;
 
   return (
     <div className="rounded-card border border-line p-6 md:p-8">
@@ -129,15 +127,21 @@ export function FinanceCalculator() {
       <div className="mt-8 rounded-card bg-alt p-6 text-center">
         <p className="text-[14px] text-muted">Estimated monthly payment</p>
         <p className="mt-1 text-[clamp(2.25rem,5vw,3rem)] font-semibold leading-none tracking-[-0.03em] text-ink">
-          {money(displayPayment, true)}
+          {money(payment, true)}
         </p>
         {principal > 0 && (
-          <p className="mt-2 text-[13px] font-medium text-ink">
-            Minimum estimated payment shown is $350/mo. Adjust price/down to fit your budget.
+          <p className="mt-2.5 text-[13px] leading-relaxed text-muted">
+            Financing {money(principal)} over {effectiveTerm} months keeps the
+            estimate at or above{" "}
+            <span className="font-medium text-ink">
+              {money(PAYMENT_FLOOR)}/mo
+            </span>
+            . Terms are capped for smaller balances so the minimum is never
+            missed.
           </p>
         )}
         <p className="mt-3 text-[13px] leading-relaxed text-muted">
-          {displayRate.toFixed(2)}% illustrative APR over {displayTerm} months on{" "}
+          {rate.toFixed(2)}% illustrative APR over {effectiveTerm} months on{" "}
           {money(principal)} financed. Estimate only — your actual rate depends
           on credit. See our{" "}
           <a href="/legal/finance-disclosure" className="text-accent underline">
