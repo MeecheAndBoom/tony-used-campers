@@ -4,16 +4,16 @@ import { useState } from "react";
 import { money } from "@/lib/format";
 
 const RATES = [
-  { label: "60 months", rate: 7.49 },
-  { label: "72 months", rate: 7.99 },
-  { label: "84 months", rate: 8.49 },
-  { label: "120 months", rate: 8.99 },
+  { label: "36 months", rate: 7.49 },
+  { label: "48 months", rate: 7.74 },
+  { label: "60 months", rate: 7.99 },
+  { label: "72 months", rate: 8.24 },
 ];
 
 export function FinanceCalculator() {
-  const [price, setPrice] = useState(15000);
-  const [down, setDown] = useState(3000);
-  const [term, setTerm] = useState(72);
+  const [price, setPrice] = useState(12000);
+  const [down, setDown] = useState(2000);
+  const [term, setTerm] = useState(60);
   const rate = RATES.find((r) => r.label.startsWith(String(term)))?.rate ?? 7.99;
 
   const principal = Math.max(price - down, 0);
@@ -61,38 +61,39 @@ export function FinanceCalculator() {
       label: "Term",
       value: term,
       set: setTerm,
-      min: price >= 10000 ? 60 : 36,
-      max: price >= 10000 ? 120 : 72,
+      min: 36,
+      max: 72,
       step: 12,
       format: (v) => `${v} months`,
     },
   ];
 
-  const minTerm = price >= 10000 ? 60 : 36;
-  const maxTerm = price >= 10000 ? 120 : 72;
-  let effectiveTerm = Math.max(minTerm, Math.min(maxTerm, term));
-  const monthlyRateEff = (rate / 100 / 12);
-  let effectivePayment =
+  const minTerm = 36;
+  const maxTerm = 72;
+  const monthlyRateBase = (rate / 100 / 12);
+  const findTermForMinPayment = (p: number, minPmt: number, rMonthly: number): number => {
+    if (p <= 0) return minTerm;
+    let t = minTerm;
+    while (t <= maxTerm) {
+      const pmt =
+        rMonthly === 0
+          ? p / t
+          : (p * rMonthly) / (1 - Math.pow(1 + rMonthly, -t));
+      if (pmt >= minPmt) return t;
+      t += 12;
+    }
+    return maxTerm;
+  };
+  const effectiveTerm = findTermForMinPayment(principal, 350, monthlyRateBase);
+  const effectiveMonthlyRate = monthlyRateBase;
+  const effectivePayment =
     principal === 0
       ? 0
-      : monthlyRateEff === 0
+      : effectiveMonthlyRate === 0
         ? principal / effectiveTerm
-        : (principal * monthlyRateEff) / (1 - Math.pow(1 + monthlyRateEff, -effectiveTerm));
-  if (principal > 0 && effectivePayment < 350) {
-    const target = 350;
-    effectiveTerm = Math.max(minTerm, Math.ceil((Math.log(1 - (principal * monthlyRateEff) / target)) / Math.log(1 + monthlyRateEff)) || minTerm);
-    if (effectiveTerm > maxTerm) effectiveTerm = maxTerm;
-    effectivePayment =
-      monthlyRateEff === 0
-        ? principal / effectiveTerm
-        : (principal * monthlyRateEff) / (1 - Math.pow(1 + monthlyRateEff, -effectiveTerm));
-    if (effectivePayment < 350 && effectiveTerm === maxTerm) {
-      // keep max term; payment may be under target but term can't go higher
-      effectivePayment = (monthlyRateEff === 0 ? principal / effectiveTerm : (principal * monthlyRateEff) / (1 - Math.pow(1 + monthlyRateEff, -effectiveTerm)));
-    }
-  }
-  const displayPayment = effectivePayment;
-  const displayRate = rate;
+        : (principal * effectiveMonthlyRate) / (1 - Math.pow(1 + effectiveMonthlyRate, -effectiveTerm));
+  const displayPayment = principal === 0 ? 0 : effectivePayment;
+  const displayRate = RATES.find((r) => r.label.startsWith(String(effectiveTerm)))?.rate ?? rate;
   const displayTerm = effectiveTerm;
 
   return (
@@ -130,10 +131,9 @@ export function FinanceCalculator() {
         <p className="mt-1 text-[clamp(2.25rem,5vw,3rem)] font-semibold leading-none tracking-[-0.03em] text-ink">
           {money(displayPayment, true)}
         </p>
-        {displayPayment < 350 && principal > 0 && (
+        {principal > 0 && (
           <p className="mt-2 text-[13px] font-medium text-ink">
-            Higher down or shorter term raises your payment — we can often tailor terms to hit around
-            $350/mo or more.
+            Minimum estimated payment shown is $350/mo. Adjust price/down to fit your budget.
           </p>
         )}
         <p className="mt-3 text-[13px] leading-relaxed text-muted">
