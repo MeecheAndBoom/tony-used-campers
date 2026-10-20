@@ -19,6 +19,41 @@ import { siteOrigin } from "@/lib/seo";
 
 const siteUrl = siteOrigin();
 
+/**
+ * Email-safe brand mark: a 360px-wide PNG (~6 KB) from Cloudinary, displayed
+ * at 180px. Explicit width/height attributes matter because Outlook's renderer
+ * ignores CSS sizing and would otherwise try to draw the full-size original.
+ */
+export const BRAND_LOGO_URL =
+  "https://res.cloudinary.com/qkbrqtav/image/upload/c_limit,w_360,q_auto:good,f_png/tuc/tony-campers-logo.png";
+
+const LOGO_ASPECT = 2117 / 743;
+
+export function BrandLogo({
+  site,
+  width = 180,
+}: {
+  site: SiteInfo;
+  width?: number;
+}) {
+  return (
+    <Img
+      src={BRAND_LOGO_URL}
+      alt={`${site.name} logo`}
+      width={width}
+      height={Math.round(width / LOGO_ASPECT)}
+      style={{
+        display: "block",
+        width: `${width}px`,
+        height: "auto",
+        border: 0,
+        outline: "none",
+        textDecoration: "none",
+      }}
+    />
+  );
+}
+
 const theme = {
   ink: "#1d1d1f",
   muted: "#6e6e73",
@@ -73,13 +108,7 @@ export function EmailShell({
             {/* Header: logo left, reference right */}
             <Section className="flex items-center justify-between">
               <Link href={siteUrl} className="no-underline">
-                <Img
-                  src="https://res.cloudinary.com/qkbrqtav/image/upload/tuc/tony-campers-logo.png"
-                  alt={site.name}
-                  width={2117}
-                  height={743}
-                  style={{ width: "auto", height: 32 }}
-                />
+                <BrandLogo site={site} />
               </Link>
               {reference ? (
                 <Text className="m-0 text-[13px] text-muted">{reference}</Text>

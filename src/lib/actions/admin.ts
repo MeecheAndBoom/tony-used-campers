@@ -27,9 +27,9 @@ import {
   updateCategory,
   deleteCategory,
 } from "@/lib/categories";
-import { sendOrderReply, sendEnquiryReply, sendPaymentInstructions, sendPaymentConfirmed, sendStatusUpdate } from "@/lib/notifications";
+import { sendOrderReply, sendEnquiryReply, sendPaymentInstructions, sendPaymentConfirmed, sendStatusUpdate, sendTestEmail } from "@/lib/notifications";
 import { mailQuery } from "@/lib/mail-result";
-import { sendEmail, verifyMailer } from "@/lib/mailer";
+import { verifyMailer } from "@/lib/mailer";
 import {
   createBlogPost,
   updateBlogPost,
@@ -368,13 +368,7 @@ export async function verifyMailerAction() {
 export async function sendTestEmailAction(formData: FormData) {
   const { site } = await getSettings();
   const to = String(formData.get("to") ?? "").trim() || site.adminEmail;
-  const result = await sendEmail({
-    to,
-    subject: "Test email — Tony Used Campers dashboard",
-    tag: "admin-test",
-    html: `<p>This is a test message from the Tony Used Campers admin dashboard.</p><p>If you can read this, SMTP delivery is working.</p>`,
-    text: "This is a test message from the Tony Used Campers admin dashboard. If you can read this, SMTP delivery is working.",
-  });
+  const result = await sendTestEmail(to);
   redirect(
     result.delivered
       ? `/admin/diagnostics?test=sent&to=${encodeURIComponent(to)}`

@@ -92,7 +92,7 @@ export function PaymentInstructionsEmail({
       footerNote="Questions about payment? Call us and reference your order number."
     >
       <EmailBody>
-        Your camper is reserved. Complete payment using the details below and we'll
+        Your camper is reserved. Complete payment using the details below and we&apos;ll
         start prepping your order right away.
       </EmailBody>
 
@@ -112,7 +112,7 @@ export function PaymentInstructionsEmail({
 
       <EmailBody>
         After sending payment, reply to this email with your confirmation number — or
-        just wait, we'll confirm receipt automatically once it lands.
+        just wait, we&apos;ll confirm receipt automatically once it lands.
       </EmailBody>
 
       <EmailButtonInline href={`${siteUrl}/track?ref=${order.reference}`}>
@@ -140,7 +140,7 @@ export function PaymentConfirmedEmail({
       footerNote="Your order is now moving through prep. We'll email you when it's ready."
     >
       <EmailBody>
-        We've confirmed your payment of {money(amount)} for order {order.reference}.
+        We&apos;ve confirmed your payment of {money(amount)} for order {order.reference}.
         Your camper is being prepped now — most orders are ready for pickup or delivery
         within 48 hours.
       </EmailBody>
@@ -271,7 +271,7 @@ export function EnquiryReplyEmail({
       footerNote="Questions? Just reply to this email — it reaches the lot directly."
     >
       <EmailBody>
-        Hi {name.split(" ")[0] || "there"}, here's a note from the team at
+        Hi {name.split(" ")[0] || "there"}, here&apos;s a note from the team at
         {site?.name ? ` ${site.name}` : " the lot"}:
       </EmailBody>
       <Section className="mt-4 rounded border border-line p-4">
@@ -279,6 +279,24 @@ export function EnquiryReplyEmail({
           {reply}
         </Text>
       </Section>
+    </EmailShell>
+  );
+}
+
+/** Email 9 — SMTP test from the admin diagnostics page (same shell/branding). */
+export function TestEmail({ site }: { site?: SiteInfo }) {
+  return (
+    <EmailShell
+      preview="Test email — Tony Used Campers"
+      heading="Email delivery is working."
+      site={site}
+      footerNote="This is a test message sent from the admin dashboard. You can safely ignore it."
+    >
+      <EmailBody>
+        The mail server accepted this message, rendered the branded template and
+        delivered it to your inbox. Order confirmations, payment instructions and
+        replies will use this same layout.
+      </EmailBody>
     </EmailShell>
   );
 }

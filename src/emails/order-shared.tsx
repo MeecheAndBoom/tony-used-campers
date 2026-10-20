@@ -72,7 +72,7 @@ export function OrderReceivedEmail({
       footerNote="Keep this reference handy — you'll need it with your email address to track your order any time."
     >
       <EmailBody>
-        Thanks, {first}. We've reserved {order.items.length === 1 ? "your camper" : "your campers"} and
+        Thanks, {first}. We&apos;ve reserved {order.items.length === 1 ? "your camper" : "your campers"} and
         our team will call you within one business day to confirm pickup or delivery.
       </EmailBody>
 
@@ -101,7 +101,7 @@ export function OrderReceivedEmail({
       </Section>
 
       <EmailBody>
-        Next: we'll email your payment details shortly. Once payment is confirmed, your
+        Next: we&apos;ll email your payment details shortly. Once payment is confirmed, your
         camper is prepped and ready — most orders are ready within 48 hours.
       </EmailBody>
 

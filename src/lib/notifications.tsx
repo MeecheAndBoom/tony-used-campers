@@ -11,6 +11,7 @@ import {
   PaymentConfirmedEmail,
   PaymentInstructionsEmail,
   StatusUpdateEmail,
+  TestEmail,
 } from "@/emails/templates";
 import { OrderReceivedEmail } from "@/emails/order-shared";
 
@@ -138,6 +139,17 @@ export async function sendOrderReply(order: OrderRecord, reply: string) {
     subject: `Re: Order ${order.reference} — ${site.name}`,
     tag: "order-reply",
     template: <OrderReplyEmail order={order} reply={reply} site={site} />,
+  });
+}
+
+/** Email 9 — diagnostics test; uses the same shell so branding is verified too. */
+export async function sendTestEmail(to: string) {
+  const { site } = await getSettings();
+  return deliver({
+    to,
+    subject: `Test email — ${site.name}`,
+    tag: "admin-test",
+    template: <TestEmail site={site} />,
   });
 }
 
