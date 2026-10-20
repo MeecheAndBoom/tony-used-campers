@@ -1,18 +1,27 @@
-import { findOrder, updateOrder } from "@/lib/orders";
+import { findOrder } from "@/lib/orders";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { dateTime, money } from "@/lib/format";
 import { ORDER_STATUSES } from "@/lib/constants";
 import { getSettings } from "@/lib/settings";
-import { updateAction } from "../page";
-import { replyToOrderAction, deleteOrderAction } from "@/lib/actions/admin";
+import {
+  deleteOrderAction,
+  replyToOrderAction,
+  updateOrderAction,
+} from "@/lib/actions/admin";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { PendingButton } from "@/components/admin/PendingButton";
+import { MailNotice } from "@/components/admin/MailNotice";
 
 export default async function OrderDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ ref: string }>;
+  searchParams: Promise<{ mail?: string; reason?: string }>;
 }) {
   const { ref } = await params;
+  const { mail, reason } = await searchParams;
   const order = await findOrder(ref);
   if (!order) notFound();
 
@@ -30,10 +39,12 @@ export default async function OrderDetailPage({
             {order.createdAt ? dateTime(order.createdAt) : "—"}
           </p>
         </div>
-        <a href="/admin/orders" className="text-[14px] text-accent hover:underline">
+        <Link href="/admin/orders" className="text-[14px] text-accent hover:underline">
           ← Back to orders
-        </a>
+        </Link>
       </div>
+
+      <MailNotice mail={mail} reason={reason} />
 
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         {/* Left */}
@@ -151,12 +162,11 @@ export default async function OrderDetailPage({
               <textarea
                 name="reply"
                 rows={4}
+                required
                 className="field"
                 placeholder="Write a message to the customer…"
               />
-              <button type="submit" className="btn btn-primary">
-                Send reply
-              </button>
+              <PendingButton label="Send reply" pendingLabel="Sending reply…" />
             </form>
           </div>
         </div>
@@ -171,7 +181,7 @@ export default async function OrderDetailPage({
               Fills the “Payment instructions” email with amount, method and
               instructions. Changes status to Payment Pending.
             </p>
-            <form action={updateAction} className="mt-5 space-y-4">
+            <form action={updateOrderAction} className="mt-5 space-y-4">
               <input type="hidden" name="ref" value={order.reference} />
               <input type="hidden" name="action" value="send-payment" />
               <div>
@@ -216,9 +226,11 @@ export default async function OrderDetailPage({
                   }
                 />
               </div>
-              <button type="submit" className="btn btn-primary w-full">
-                Send payment instructions
-              </button>
+              <PendingButton
+                label="Send payment instructions"
+                pendingLabel="Sending payment details…"
+                className="btn btn-primary w-full"
+              />
             </form>
           </div>
 
@@ -229,18 +241,19 @@ export default async function OrderDetailPage({
             <p className="mt-1 text-[14px] text-muted">
               Sends confirmation email #4 and advances status to Payment Received.
             </p>
-            <form action={updateAction} className="mt-4">
+            <form action={updateOrderAction} className="mt-4">
               <input type="hidden" name="ref" value={order.reference} />
               <input type="hidden" name="action" value="mark-paid" />
-              <button
-                type="submit"
+              <PendingButton
+                label={
+                  order.payment.status === "received"
+                    ? "Already marked as received"
+                    : "Mark as payment received"
+                }
+                pendingLabel="Sending confirmation…"
                 disabled={order.payment.status === "received"}
                 className="btn btn-secondary w-full"
-              >
-                {order.payment.status === "received"
-                  ? "Already marked as received"
-                  : "Mark as payment received"}
-              </button>
+              />
             </form>
           </div>
 
@@ -251,7 +264,7 @@ export default async function OrderDetailPage({
             <p className="mt-1 text-[14px] text-muted">
               Moves the stepper and emails the client (status update #5).
             </p>
-            <form action={updateAction} className="mt-4 space-y-3">
+            <form action={updateOrderAction} className="mt-4 space-y-3">
               <input type="hidden" name="ref" value={order.reference} />
               <input type="hidden" name="action" value="status" />
               <select name="status" defaultValue={order.status} className="field">
@@ -261,9 +274,11 @@ export default async function OrderDetailPage({
                   </option>
                 ))}
               </select>
-              <button type="submit" className="btn btn-primary w-full">
-                Apply status update
-              </button>
+              <PendingButton
+                label="Apply status update"
+                pendingLabel="Sending status update…"
+                className="btn btn-primary w-full"
+              />
             </form>
           </div>
 

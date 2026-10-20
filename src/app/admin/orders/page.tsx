@@ -1,77 +1,7 @@
-import { listOrders, updateOrder } from "@/lib/orders";
-import { redirect } from "next/navigation";
+import { listOrders } from "@/lib/orders";
 import { dateTime, money } from "@/lib/format";
-import { sendPaymentInstructions, sendPaymentConfirmed, sendStatusUpdate } from "@/lib/notifications";
 import { deleteOrderAction } from "@/lib/actions/admin";
 import { DeleteButton } from "@/components/admin/DeleteButton";
-
-async function updateAction(formData: FormData) {
-  "use server";
-  const ref = String(formData.get("ref") ?? "").trim();
-  if (!ref) return;
-  const action = String(formData.get("action") ?? "");
-  const order = (await listOrders()).find((o) => o.reference === ref);
-  if (!order) return;
-
-  const now = new Date().toISOString();
-  if (action === "send-payment") {
-    const instructions = String(formData.get("instructions") ?? "");
-    const amountDue = Number(formData.get("amountDue") ?? order.total);
-    const dueDate = String(formData.get("dueDate") ?? "");
-    const methodLabel = String(
-      formData.get("methodLabel") ?? order.payment.label,
-    );
-    const patched = {
-      ...order,
-      payment: {
-        ...order.payment,
-        instructions,
-        amountDue,
-        dueDate,
-        label: methodLabel,
-        status: "pending" as const,
-      },
-      status: "Payment Pending" as const,
-      statusHistory: [
-        ...order.statusHistory,
-        { status: "Payment Pending", note: "Payment details emailed to client", at: now },
-      ],
-    };
-    await updateOrder(ref, patched);
-    await sendPaymentInstructions(patched);
-  } else if (action === "mark-paid") {
-    const patched = {
-      ...order,
-      payment: {
-        ...order.payment,
-        status: "received" as const,
-        receivedAt: now,
-      },
-      status: "Payment Received" as const,
-      statusHistory: [
-        ...order.statusHistory,
-        { status: "Payment Received", note: "Marked as paid by admin", at: now },
-      ],
-    };
-    await updateOrder(ref, patched);
-    await sendPaymentConfirmed(patched);
-  } else if (action === "status") {
-    const status = String(formData.get("status") ?? order.status) as typeof order.status;
-    if (status !== order.status) {
-      const patched = {
-        ...order,
-        status,
-        statusHistory: [
-          ...order.statusHistory,
-          { status, note: "Status updated in dashboard", at: now },
-        ],
-      };
-      await updateOrder(ref, patched);
-      await sendStatusUpdate(patched);
-    }
-  }
-  redirect(`/admin/orders/${ref}`);
-}
 
 export default async function OrdersPage() {
   const orders = await listOrders();
@@ -162,5 +92,3 @@ export default async function OrdersPage() {
     </>
   );
 }
-
-export { updateAction };

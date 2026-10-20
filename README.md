@@ -1,5 +1,23 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Environment variables
+
+Copy `.env.example` to `.env.local` for local development. On Vercel, add the
+same keys under **Project → Settings → Environment Variables** (for Production
+*and* Preview), then redeploy — `.env.local` is never uploaded.
+
+Email needs `SMTP_HOST`, `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASS`
+and `EMAIL_FROM`. If any are missing, the app logs
+`[email] SMTP not configured` and writes a preview to the OS temp folder
+instead of sending; the admin UI now reports that failure on the order page.
+
+### Troubleshooting email
+
+Sign in to the dashboard and open **Email diagnostics**. It shows exactly
+which SMTP variables the running server can see and can send a test email.
+A "SMTP is NOT configured" banner there means the deployment is missing the
+variables above, not that the mailbox is rejecting mail.
+
 ## Getting Started
 
 First, run the development server:

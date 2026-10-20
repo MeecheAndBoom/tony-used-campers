@@ -2,6 +2,8 @@ import { listEnquiries, markEnquiryHandled } from "@/lib/enquiries";
 import { redirect } from "next/navigation";
 import { dateTime } from "@/lib/format";
 import { DeleteButton } from "@/components/admin/DeleteButton";
+import { PendingButton } from "@/components/admin/PendingButton";
+import { MailNotice } from "@/components/admin/MailNotice";
 import { replyToEnquiryAction, deleteEnquiryAction } from "@/lib/actions/admin";
 
 async function handleAction(formData: FormData) {
@@ -11,7 +13,12 @@ async function handleAction(formData: FormData) {
   redirect("/admin/enquiries");
 }
 
-export default async function EnquiriesPage() {
+export default async function EnquiriesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ mail?: string; reason?: string }>;
+}) {
+  const { mail, reason } = await searchParams;
   const enquiries = await listEnquiries();
 
   return (
@@ -25,6 +32,8 @@ export default async function EnquiriesPage() {
           it&apos;s emailed to the sender (SMTP), or delete once resolved.
         </p>
       </div>
+
+      <MailNotice mail={mail} reason={reason} />
 
       <div className="space-y-4">
         {enquiries.length === 0 && (
@@ -78,13 +87,16 @@ export default async function EnquiriesPage() {
                 id={`reply-${enq.id}`}
                 name="reply"
                 rows={3}
+                required
                 className="field"
                 placeholder="Draft your reply… (sent by email, sender marked handled)"
               />
               <div className="mt-3 flex flex-wrap items-center gap-4">
-                <button type="submit" className="btn btn-sm btn-primary">
-                  Send reply
-                </button>
+                <PendingButton
+                  label="Send reply"
+                  pendingLabel="Sending reply…"
+                  className="btn btn-sm btn-primary"
+                />
                 <a
                   href={`mailto:${enq.email}?subject=Re: ${encodeURIComponent(enq.subject ?? "Your enquiry")}`}
                   className="text-[14px] text-accent hover:underline"
