@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  experimental: {
+    // Keep automated upgrade checks running against security advisories.
+    agentUpgrade: "security",
+  },
   images: {
     // Images live on Cloudinary, which already resizes and delivers them from
     // its own CDN. The custom loader keeps <Image> responsive while keeping
