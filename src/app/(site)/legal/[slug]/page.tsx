@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Reveal } from "@/components/ui/Reveal";
-import { LEGAL_PAGES, getLegalPage } from "@/lib/legal";
+import { LEGAL_SLUGS, legalPages, getLegalPage } from "@/lib/legal";
+import { getSettings } from "@/lib/settings";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return LEGAL_PAGES.map((page) => ({ slug: page.slug }));
+  return LEGAL_SLUGS.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -19,15 +20,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LegalPage({ params }: Props) {
   const { slug } = await params;
-  const page = getLegalPage(slug);
+  const { site } = await getSettings();
+  const page = getLegalPage(slug, site);
   if (!page) notFound();
+  const pages = legalPages(site);
 
   return (
     <div className="bg-white">
       <section className="section grid gap-12 pb-20 pt-16 md:pb-28 md:pt-24 lg:grid-cols-[220px_1fr] lg:gap-16">
         <nav aria-label="Legal documents" className="hidden lg:block">
           <ul className="sticky top-24 space-y-3 text-[15px]">
-            {LEGAL_PAGES.map((item) => (
+            {pages.map((item) => (
               <li key={item.slug}>
                 <Link
                   href={`/legal/${item.slug}`}

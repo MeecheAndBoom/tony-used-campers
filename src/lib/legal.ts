@@ -1,4 +1,5 @@
 import { SITE } from "./constants";
+import type { SiteInfo } from "./settings";
 
 export type LegalPage = {
   slug: string;
@@ -8,9 +9,15 @@ export type LegalPage = {
   sections: { heading: string; paragraphs: string[]; bullets?: string[] }[];
 };
 
-const BUSINESS = `${SITE.name}, LLC (“${SITE.name}”, “we”, “us”) of ${SITE.address}`;
+type LegalSite = Pick<SiteInfo, "name" | "address" | "phone" | "email" | "hours">;
 
-export const LEGAL_PAGES: LegalPage[] = [
+const DEFAULT_SITE = SITE as unknown as LegalSite;
+
+/** Builds the legal copy from the live store settings so contact details stay current. */
+export function legalPages(site: LegalSite = DEFAULT_SITE): LegalPage[] {
+  const BUSINESS = `${site.name}, LLC (“${site.name}”, “we”, “us”) of ${site.address}`;
+
+  return [
   {
     slug: "privacy",
     title: "Privacy Policy",
@@ -85,7 +92,7 @@ export const LEGAL_PAGES: LegalPage[] = [
       {
         heading: "Changes and contact",
         paragraphs: [
-          `We'll post any changes on this page and update the date above. Questions about privacy go to ${SITE.email} or ${SITE.address}.`,
+          `We'll post any changes on this page and update the date above. Questions about privacy go to ${site.email} or ${site.address}.`,
         ],
       },
     ],
@@ -168,7 +175,7 @@ export const LEGAL_PAGES: LegalPage[] = [
       {
         heading: "Contact",
         paragraphs: [
-          `Questions about these terms: ${SITE.email} or ${SITE.address}.`,
+          `Questions about these terms: ${site.email} or ${site.address}.`,
         ],
       },
     ],
@@ -216,7 +223,7 @@ export const LEGAL_PAGES: LegalPage[] = [
       {
         heading: "Changes and contact",
         paragraphs: [
-          `If we change the cookies we use, we'll update this page and re-ask for consent where required. Contact: ${SITE.email}.`,
+          `If we change the cookies we use, we'll update this page and re-ask for consent where required. Contact: ${site.email}.`,
         ],
       },
     ],
@@ -238,7 +245,7 @@ export const LEGAL_PAGES: LegalPage[] = [
       {
         heading: "Pickup",
         paragraphs: [
-          `Pickup is available at ${SITE.address} during business hours — ${SITE.hours[0].time} Monday through Friday, ${SITE.hours[1].time} Saturday. Bring your ID, your payment confirmation and, if applicable, your trade-in title. We block 45 minutes for a handover walkthrough.`,
+          `Pickup is available at ${site.address} during business hours — ${site.hours[0].time} Monday through Friday, ${site.hours[1].time} Saturday. Bring your ID, your payment confirmation and, if applicable, your trade-in title. We block 45 minutes for a handover walkthrough.`,
         ],
       },
       {
@@ -269,7 +276,7 @@ export const LEGAL_PAGES: LegalPage[] = [
       },
       {
         heading: "Contact",
-        paragraphs: [`Delivery questions: ${SITE.phone} or ${SITE.email}.`, BUSINESS],
+        paragraphs: [`Delivery questions: ${site.phone} or ${site.email}.`, BUSINESS],
       },
     ],
   },
@@ -312,7 +319,7 @@ export const LEGAL_PAGES: LegalPage[] = [
       {
         heading: "How to start a return or exchange",
         paragraphs: [
-          `Call ${SITE.phone} or email ${SITE.email} with your order reference (TUC-XXXXXX) and what's going on. We'll respond within one business day with the next step — usually a quick inspection slot at the lot.`,
+          `Call ${site.phone} or email ${site.email} with your order reference (TUC-XXXXXX) and what's going on. We'll respond within one business day with the next step — usually a quick inspection slot at the lot.`,
           "Do not ship or deliver a unit back to us without written authorization from our team.",
         ],
       },
@@ -360,13 +367,13 @@ export const LEGAL_PAGES: LegalPage[] = [
       {
         heading: "Alternative ways to use our services",
         paragraphs: [
-          `Everything on this website can also be done by phone: orders, financing requests, trade-in valuations, tracking and support. Call ${SITE.phone} during business hours and a person will handle it for you.`,
+          `Everything on this website can also be done by phone: orders, financing requests, trade-in valuations, tracking and support. Call ${site.phone} during business hours and a person will handle it for you.`,
         ],
       },
       {
         heading: "Feedback",
         paragraphs: [
-          `Found a barrier? Tell us at ${SITE.email} or ${SITE.address} — include the page and what went wrong, and we'll fix it and reply within two business days.`,
+          `Found a barrier? Tell us at ${site.email} or ${site.address} — include the page and what went wrong, and we'll fix it and reply within two business days.`,
         ],
       },
       {
@@ -422,7 +429,7 @@ export const LEGAL_PAGES: LegalPage[] = [
       },
       {
         heading: "Contact",
-        paragraphs: [`Corrections and questions: ${SITE.email}.`, BUSINESS],
+        paragraphs: [`Corrections and questions: ${site.email}.`, BUSINESS],
       },
     ],
   },
@@ -477,14 +484,15 @@ export const LEGAL_PAGES: LegalPage[] = [
       },
       {
         heading: "Contact",
-        paragraphs: [`Financing questions: ${SITE.email} or ${SITE.phone}.`, BUSINESS],
+        paragraphs: [`Financing questions: ${site.email} or ${site.phone}.`, BUSINESS],
       },
     ],
   },
-];
+  ];
+}
 
-export const LEGAL_SLUGS = LEGAL_PAGES.map((page) => page.slug);
+export const LEGAL_SLUGS = legalPages().map((page) => page.slug);
 
-export function getLegalPage(slug: string) {
-  return LEGAL_PAGES.find((page) => page.slug === slug) ?? null;
+export function getLegalPage(slug: string, site?: LegalSite) {
+  return legalPages(site).find((page) => page.slug === slug) ?? null;
 }

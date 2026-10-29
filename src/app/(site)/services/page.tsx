@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
+import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "Services",
@@ -87,7 +88,9 @@ const SERVICES: Service[] = [
   },
 ];
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const { site } = await getSettings();
+
   return (
     <div className="bg-white">
       <section className="section pb-14 pt-16 md:pt-24">
@@ -107,7 +110,7 @@ export default function ServicesPage() {
             <Link href="/contact" className="btn btn-primary">
               Book service
             </Link>
-            <a href="tel:+13133649615" className="btn btn-ghost">
+            <a href={`tel:${site.phoneHref}`} className="btn btn-ghost">
               Call the shop
             </a>
           </div>

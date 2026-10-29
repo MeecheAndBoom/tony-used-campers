@@ -1,6 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import {
   createProduct,
   updateProduct,
@@ -422,12 +423,14 @@ export async function saveSettingsAction(formData: FormData) {
     adminEmail: String(formData.get("adminEmail") ?? "").trim(),
     hours: parseHours(formData),
   };
-  const digits = site.phone?.replace(/\D/g, "");
-  if (digits && digits.length >= 10) {
-    // Store E.164 so `tel:` links always carry a leading "+".
-    site.phoneHref =
-      digits.startsWith("1") && digits.length === 11 ? `+${digits}` : `+1${digits}`;
-  }
+  const digits = site.phone?.replace(/\D/g, "") ?? "";
+  // Store E.164 so `tel:` links always carry a leading "+".
+  site.phoneHref =
+    digits.length >= 10
+      ? digits.startsWith("1") && digits.length === 11
+        ? `+${digits}`
+        : `+1${digits}`
+      : "";
 
   const ids = formData.getAll("methodId").map((id) => String(id));
   const labels = formData.getAll("methodLabel").map((l) => String(l).trim());
@@ -450,5 +453,7 @@ export async function saveSettingsAction(formData: FormData) {
   if (apiSecret) cloudinary.apiSecret = apiSecret;
 
   await updateSettings({ site, paymentMethods, cloudinary });
+  // Settings feed the root/site layouts, so purge every cached page.
+  revalidatePath("/", "layout");
   redirect("/admin/settings?saved=1");
 }

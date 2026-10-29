@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { SellForm } from "@/components/site/SellForm";
+import { getSettings } from "@/lib/settings";
 
 export const metadata: Metadata = {
   title: "Sell or Trade Your Camper",
@@ -25,7 +26,9 @@ const PROCESS = [
   },
 ];
 
-export default function SellPage() {
+export default async function SellPage() {
+  const { site } = await getSettings();
+
   return (
     <div className="bg-white">
       <section className="section pb-12 pt-16 md:pt-24">
@@ -92,8 +95,8 @@ export default function SellPage() {
                   Contact the lot
                 </Link>{" "}
                 or call{" "}
-                <a href="tel:+13133649615" className="text-accent hover:underline">
-                  (313) 364-9615
+                <a href={`tel:${site.phoneHref}`} className="text-accent hover:underline">
+                  {site.phone}
                 </a>
                 .
               </p>
